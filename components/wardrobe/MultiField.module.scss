@@ -1,0 +1,58 @@
+.root {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  legend {
+    display: block;
+    margin-top: 14px;
+    padding: 0;
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+}
+
+.chips {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  button {
+    min-height: 36px;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.72rem;
+    font-weight: 650;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      border-color: var(--sage-deep);
+    }
+
+    &:active {
+      transform: translateY(1px) scale(0.985);
+    }
+
+    &.active {
+      border-color: var(--sage-deep);
+      background: var(--surface-accent);
+      color: var(--sage-deep);
+      box-shadow: inset 0 0 0 1px var(--sage-deep);
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .chips button.active {
+    outline: 2px solid CanvasText;
+  }
+}

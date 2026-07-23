@@ -1,0 +1,213 @@
+import type { Messages } from "./fr";
+
+export const en = {
+  metadata: {
+    rootTitle: "Vestiaire — Your intelligent wardrobe",
+    rootDescription:
+      "Catalog your wardrobe and create outfits with the clothes you already own.",
+    homeTitle: "Vestiaire — Reveal your wardrobe’s potential",
+    homeDescription:
+      "A personal style assistant for organizing your clothes, creating outfits and choosing what truly complements your wardrobe.",
+    wardrobeTitle: "My wardrobe — Vestiaire",
+    wardrobeDescription: "Organize the clothes you already own.",
+    studioTitle: "Style studio — Vestiaire",
+    studioDescription: "Create outfits with pieces from your wardrobe.",
+  },
+  common: {
+    brand: "Vestiaire",
+    homeLabel: "Vestiaire home",
+    skipToContent: "Skip to main content",
+    close: "Close",
+    language: "Language",
+    publicNavigation: "Public navigation",
+    mainNavigation: "Main navigation",
+    wardrobe: "My wardrobe",
+    studio: "Style studio",
+    all: "All",
+    theme: {
+      label: "Display theme",
+      system: "System",
+      light: "Light",
+      dark: "Dark",
+    },
+  },
+  landing: {
+    navigation: {
+      concept: "The concept",
+      vision: "The vision",
+    },
+    openPrototype: "Open the prototype",
+    heroEyebrow: "YOUR WARDROBE, AUGMENTED",
+    heroTitle: "More style. Fewer unnecessary purchases.",
+    heroIntro:
+      "Vestiaire turns the clothes you already own into a world of possibilities. Organize your pieces, create outfits and discover what is truly missing.",
+    discoverPrototype: "Explore the prototype",
+    understandConcept: "Understand the concept",
+    localNote:
+      "Personal prototype · Your photographs currently stay on this device",
+    dailySuggestion: "Today’s suggestion",
+    casual: "Casual",
+    shirt: "Shirt",
+    jacket: "Jacket",
+    trousers: "Trousers",
+    threePieces: "3 pieces from your wardrobe",
+    conceptEyebrow: "THE CONCEPT",
+    conceptTitle: "Your wardrobe becomes a creative medium.",
+    pillars: [
+      {
+        number: "01",
+        title: "Understand",
+        description:
+          "Each piece is organized by category, colors, seasons, patterns and style potential.",
+      },
+      {
+        number: "02",
+        title: "Compose",
+        description:
+          "The studio reveals new combinations using the clothes you already own.",
+      },
+      {
+        number: "03",
+        title: "Complete",
+        description:
+          "Eventually, recommendations will identify genuine gaps without encouraging unnecessary purchases.",
+      },
+    ],
+    visionEyebrow: "PRODUCT IN PROGRESS",
+    visionTitle: "A real experiment, designed to go further.",
+    visionDescription:
+      "This first version explores a simple belief: understanding what we own helps us dress better and make more thoughtful purchases.",
+    visionListLabel: "Development areas",
+    visionItems: [
+      "Visual garment analysis and background removal",
+      "Personalized, explainable recommendations",
+      "Virtual try-on as a projection tool",
+    ],
+    exploreCurrentVersion: "Explore the current version",
+    footerDescription:
+      "A Next.js, TypeScript and visual intelligence project.",
+    accessApplication: "Open the application",
+  },
+  wardrobe: {
+    heroEyebrow: "YOUR WARDROBE, MADE BETTER",
+    heroTitleFirst: "Rediscover what",
+    heroTitleSecond: "you already own.",
+    heroIntro:
+      "Bring your wardrobe together, organize every piece and create outfits that feel like you. Everything stays on this device.",
+    itemCountOne: "piece cataloged",
+    itemCountMany: "pieces cataloged",
+    categoryCount: "categories",
+    collection: "COLLECTION",
+    title: "My wardrobe",
+    filterByCategory: "Filter by category",
+    composeAround: "Build an outfit around this piece",
+    removeItem: "Remove {name}",
+    emptyFilteredTitle: "No pieces in “{category}”",
+    emptyTitle: "Your wardrobe starts here",
+    emptyFilteredDescription:
+      "Choose another category or add new photographs.",
+    emptyDescription:
+      "Import one or more photographs. File names will help us create an initial classification.",
+  },
+  studio: {
+    eyebrow: "STYLE STUDIO",
+    title: "One piece, many possibilities.",
+    intro:
+      "Choose your starting point and desired look. The studio finds the best combinations in your wardrobe.",
+    emptyTitle: "Add a few pieces first",
+    emptyDescription: "The studio needs your wardrobe to get started.",
+    backToWardrobe: "Return to my wardrobe",
+    anchorLabel: "1. Starting piece",
+    itemNameLabel: "Item name",
+    categoryLabel: "Category",
+    colorsLabel: "Colors",
+    seasonsLabel: "Seasons",
+    patternsLabel: "Patterns",
+    potentialStylesLabel: "Potential styles",
+    wantedStyleLabel: "2. Desired look",
+    composeOutfit: "Create my outfit",
+    suggestion: "SUGGESTION",
+    outfitTitle: "A natural balance",
+    pieceCountOne: "piece",
+    pieceCountMany: "pieces",
+    whyItWorks: "Why it works",
+    neutralExplanation:
+      "Neutral tones create a common thread. The pieces share a {style} intention, while the different layers give structure to the silhouette.",
+    colorfulExplanation:
+      "The tones form a cohesive palette. The pieces share a {style} intention, while the different layers give structure to the silhouette.",
+    placeholderTitle: "Your outfit will appear here",
+    placeholderDescription:
+      "Add colors, seasons and styles to your pieces for a more relevant suggestion.",
+  },
+  upload: {
+    ariaLabel: "Add photographs of clothing",
+    choosePhotos: "Choose my photos",
+    addItems: "Add pieces",
+  },
+  notices: {
+    storageReadError: "Your saved wardrobe could not be loaded.",
+    storageFull:
+      "Local storage is full. Please use smaller photographs.",
+    itemAdded: "{count} piece added — remember to check its category.",
+    itemsAdded: "{count} pieces added — remember to check their categories.",
+  },
+  routeState: {
+    loading: "Preparing your wardrobe…",
+    errorTitle: "The wardrobe could not be displayed.",
+    errorFallback: "An unexpected error occurred.",
+    retry: "Try again",
+    notFound: "This page does not exist.",
+    backHome: "Return home",
+  },
+  api: {
+    filenameRequired: "The “filename” field is required.",
+  },
+  attributes: {
+    categories: {
+      Hauts: "Tops",
+      Bas: "Bottoms",
+      Robes: "Dresses",
+      Vestes: "Jackets",
+      Chaussures: "Shoes",
+      Accessoires: "Accessories",
+    },
+    seasons: {
+      "Toute saison": "All seasons",
+      Printemps: "Spring",
+      Été: "Summer",
+      Automne: "Autumn",
+      Hiver: "Winter",
+    },
+    styles: {
+      Décontracté: "Casual",
+      Chic: "Chic",
+      Créatif: "Creative",
+      Minimal: "Minimal",
+      Travail: "Work",
+    },
+    patterns: {
+      Uni: "Solid",
+      Rayures: "Stripes",
+      Carreaux: "Checks",
+      Fleurs: "Floral",
+      Pois: "Polka dots",
+      Graphique: "Graphic",
+      Animal: "Animal print",
+      Texturé: "Textured",
+    },
+    colors: {
+      Noir: "Black",
+      Blanc: "White",
+      Gris: "Grey",
+      Beige: "Beige",
+      Marron: "Brown",
+      Bleu: "Blue",
+      Vert: "Green",
+      Rouge: "Red",
+      Rose: "Pink",
+      Jaune: "Yellow",
+      Orange: "Orange",
+      Violet: "Purple",
+    },
+  },
+} satisfies Messages;

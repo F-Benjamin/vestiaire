@@ -1,0 +1,149 @@
+"use client";
+
+/* Les images sont des fichiers locaux en Base64 : next/image ne peut pas les optimiser. */
+/* eslint-disable @next/next/no-img-element */
+
+import Link from "next/link";
+import { useI18n } from "@/components/i18n/LocalizationProvider";
+import {
+  formatMessage,
+  getCategoryLabel,
+  getColorLabel,
+} from "@/i18n/format";
+import { categories } from "./wardrobe.constants";
+import { useWardrobe } from "./WardrobeContext";
+import UploadButton from "./UploadButton";
+import styles from "./WardrobeView.module.scss";
+
+const WardrobeView = () => {
+  const {
+    items,
+    visibleItems,
+    category,
+    setCategory,
+    setSelectedId,
+    removeItem,
+  } = useWardrobe();
+  const { messages, href } = useI18n();
+  const copy = messages.wardrobe;
+  const categoryCount = new Set(items.map((item) => item.category)).size;
+
+  return (
+    <>
+      <section className={styles.hero}>
+        <div>
+          <p className={styles.eyebrow}>{copy.heroEyebrow}</p>
+          <h1>
+            {copy.heroTitleFirst}
+            <br />
+            {copy.heroTitleSecond}
+          </h1>
+          <p className={styles.intro}>{copy.heroIntro}</p>
+        </div>
+        <div className={styles.stats}>
+          <strong>{items.length}</strong>
+          <span>
+            {items.length === 1 ? copy.itemCountOne : copy.itemCountMany}
+          </span>
+          <div>
+            <b>{categoryCount}</b>
+            <span>{copy.categoryCount}</span>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.wardrobe}>
+        <div className={styles.sectionTitle}>
+          <div>
+            <p className={styles.eyebrow}>{copy.collection}</p>
+            <h2>{copy.title}</h2>
+          </div>
+          <div
+            className={styles.tabs}
+            role="group"
+            aria-label={copy.filterByCategory}
+          >
+            {(["Tout", ...categories] as const).map((value) => (
+              <button
+                key={value}
+                className={category === value ? styles.active : undefined}
+                onClick={() => setCategory(value)}
+                aria-pressed={category === value}
+              >
+                {value === "Tout"
+                  ? messages.common.all
+                  : getCategoryLabel(messages, value)}
+                {value !== "Tout" && (
+                  <sup>
+                    {items.filter((item) => item.category === value).length}
+                  </sup>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {visibleItems.length ? (
+          <div className={styles.itemGrid}>
+            {visibleItems.map((item) => (
+              <article className={styles.itemCard} key={item.id}>
+                <Link
+                  className={styles.photo}
+                  href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}`}
+                  onClick={() => {
+                    setSelectedId(item.id);
+                  }}
+                >
+                  <img src={item.image} alt={item.name} />
+                  <span>{copy.composeAround}</span>
+                </Link>
+                <div className={styles.itemMeta}>
+                  <div>
+                    <h3>{item.name}</h3>
+                    <p>
+                      {getCategoryLabel(messages, item.category)} ·{" "}
+                      {item.colors
+                        .map((color) => getColorLabel(messages, color))
+                        .join(", ")}
+                    </p>
+                  </div>
+                  <button
+                    className={styles.remove}
+                    onClick={() => removeItem(item.id)}
+                    aria-label={formatMessage(copy.removeItem, {
+                      name: item.name,
+                    })}
+                  >
+                    ×
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.empty}>
+            <div className={styles.emptyMark}>⌁</div>
+            <h3>
+              {items.length
+                ? formatMessage(copy.emptyFilteredTitle, {
+                    category:
+                      category === "Tout"
+                        ? messages.common.all
+                        : getCategoryLabel(messages, category),
+                  })
+                : copy.emptyTitle}
+            </h3>
+            <p>
+              {items.length
+                ? copy.emptyFilteredDescription
+                : copy.emptyDescription}
+            </p>
+            <UploadButton large />
+          </div>
+        )}
+      </section>
+    </>
+  );
+};
+
+export default WardrobeView;

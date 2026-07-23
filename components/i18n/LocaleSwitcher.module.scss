@@ -1,0 +1,43 @@
+.root {
+  min-height: 38px;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+
+  a {
+    min-width: 34px;
+    min-height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+
+  .active {
+    background: var(--surface-accent);
+    color: var(--sage-deep);
+  }
+}
+
+@media (max-width: 620px) {
+  .root {
+    a {
+      min-width: 30px;
+    }
+  }
+}
