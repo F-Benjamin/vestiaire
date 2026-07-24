@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { LocalizationProvider } from "@/components/i18n/LocalizationProvider";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -21,10 +22,39 @@ export const generateMetadata = async ({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const messages = await getDictionary(locale);
+  const requestHeaders = await headers();
+  const host =
+    requestHeaders.get("x-forwarded-host") ??
+    requestHeaders.get("host") ??
+    "localhost:3000";
+  const protocol =
+    requestHeaders.get("x-forwarded-proto") ??
+    (host.startsWith("localhost") ? "http" : "https");
+  const metadataBase = new URL(`${protocol}://${host}`);
 
   return {
+    metadataBase,
     title: messages.metadata.rootTitle,
     description: messages.metadata.rootDescription,
+    openGraph: {
+      type: "website",
+      title: messages.metadata.homeTitle,
+      description: messages.metadata.homeDescription,
+      images: [
+        {
+          url: new URL("/og.png", metadataBase),
+          width: 1733,
+          height: 907,
+          alt: messages.metadata.homeTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: messages.metadata.homeTitle,
+      description: messages.metadata.homeDescription,
+      images: [new URL("/og.png", metadataBase)],
+    },
   };
 };
 
