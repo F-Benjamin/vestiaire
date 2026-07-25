@@ -14,9 +14,12 @@
     "check": "npm run lint && npm run typecheck"
   },
   "dependencies": {
+    "mongodb": "7.5.0",
     "next": "^16.2.11",
     "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "react-dom": "19.2.6",
+    "server-only": "0.0.1",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@types/node": "22.19.19",

@@ -45,7 +45,9 @@ app/
 │   └── RouteState.module.scss      # États de route partagés
 ├── api/
 │   ├── analyze/route.ts            # API d’analyse des vêtements
-│   └── health/route.ts             # Vérification du serveur
+│   └── health/
+│       ├── route.ts                 # Vérification du serveur
+│       └── database/route.ts        # État de la connexion MongoDB
 └── globals.scss                    # Tokens, thèmes et styles globaux
 
 components/
@@ -71,11 +73,16 @@ components/
 
 lib/
 ├── analyze-filename.ts             # Analyse réutilisable côté serveur
-├── runtime-environment.ts           # Local, Deploy Preview ou production
+├── environment/mongodb.ts          # Validation des variables MongoDB
+├── mongodb/client.ts               # Pool de connexions MongoDB partagé
+├── repositories/                   # Accès serveur aux collections
+├── schemas/                        # Validation Zod des données métier
+├── runtime-environment.ts          # Local, Deploy Preview ou production
 └── wardrobe.ts                     # Logique pure de composition
 
 docs/
 ├── ENVIRONMENTS.md                 # Configuration locale et Netlify
+├── MONGODB.md                      # Création et sécurisation d'Atlas
 └── PRODUCT_BRIEF.md                # Vision, MVP, exigences et roadmap
 
 i18n/
@@ -128,6 +135,12 @@ curl http://localhost:3000/api/health
 Cette route indique également si l’application s’exécute en environnement
 `development`, `preview` ou `production`.
 
+La connexion à MongoDB peut être contrôlée séparément :
+
+```bash
+curl http://localhost:3000/api/health/database
+```
+
 Et pour tester l’analyse du nom d’un fichier :
 
 ```bash
@@ -177,9 +190,15 @@ La procédure complète est détaillée dans
 
 ## Stockage cible
 
-La première version garde encore les données sur l’appareil. La prochaine
-architecture prévue est :
+La connexion MongoDB Atlas, la validation des vêtements et la couche
+d'accès aux données sont maintenant prêtes côté serveur. La première version
+garde néanmoins les vêtements sur l'appareil jusqu'à l'ajout de
+l'authentification : aucune route publique ne doit pouvoir lire ou écrire les
+données d'un utilisateur sans vérifier son identité.
 
-- MongoDB Atlas pour les utilisateurs, vêtements, tenues et analyses ;
+La procédure Atlas est détaillée dans [`docs/MONGODB.md`](docs/MONGODB.md).
+Les prochaines briques seront :
+
+- Auth.js pour rattacher chaque vêtement à son propriétaire ;
 - un stockage objet pour les photographies ;
-- un worker Heroku pour les futurs traitements IA longs.
+- un worker pour les futurs traitements IA longs.
