@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
+import { getRuntimeEnvironment } from "@/lib/runtime-environment";
 
-/**
- * Une première route API très simple.
- * Ouvrez /api/health pour vérifier que le serveur Next.js répond.
- */
 export const GET = () =>
   NextResponse.json({
     status: "ok",
     application: "Vestiaire",
+    environment: getRuntimeEnvironment(),
     timestamp: new Date().toISOString(),
   });
