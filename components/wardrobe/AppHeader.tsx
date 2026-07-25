@@ -1,20 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
+import { formatMessage } from "@/i18n/format";
+import { authClient } from "@/lib/auth-client";
 import { useWardrobe } from "./WardrobeContext";
 import UploadButton from "./UploadButton";
 import styles from "./AppHeader.module.scss";
 
-const AppHeader = () => {
+type AppHeaderProps = {
+  user: {
+    name: string;
+    email: string;
+  } | null;
+};
+
+const AppHeader = ({ user }: AppHeaderProps) => {
   const pathname = usePathname();
+  const router = useRouter();
   const { notice, setNotice } = useWardrobe();
   const { messages, href } = useI18n();
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const wardrobeHref = href("/wardrobe");
   const studioHref = href("/studio");
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      const result = await authClient.signOut();
+      if (result.error) return;
+      router.replace(href());
+      router.refresh();
+    } finally {
+      setIsSigningOut(false);
+    }
+  };
 
   return (
     <>
@@ -61,6 +85,26 @@ const AppHeader = () => {
           <LocaleSwitcher />
           <ThemeSwitcher />
           <UploadButton />
+          {user && (
+            <div className={styles.account}>
+              <span
+                title={user.email}
+                aria-label={formatMessage(messages.common.account, {
+                  name: user.name,
+                })}
+              >
+                {user.name.slice(0, 1).toLocaleUpperCase()}
+              </span>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+                aria-label={messages.common.signOut}
+              >
+                <span>{messages.common.signOut}</span>
+              </button>
+            </div>
+          )}
         </div>
       </header>
 

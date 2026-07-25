@@ -6,14 +6,22 @@ import { localizePath, type Locale } from "@/i18n/routing";
 import styles from "./LandingPage.module.scss";
 
 type LandingPageProps = {
+  isAuthenticated: boolean;
   locale: Locale;
   messages: Messages;
 };
 
-const LandingPage = ({ locale, messages }: LandingPageProps) => {
+const LandingPage = ({
+  isAuthenticated,
+  locale,
+  messages,
+}: LandingPageProps) => {
   const { common, landing } = messages;
   const homeHref = localizePath(locale);
   const wardrobeHref = localizePath(locale, "/wardrobe");
+  const headerCtaHref = isAuthenticated
+    ? wardrobeHref
+    : localizePath(locale, "/sign-in");
 
   return (
     <>
@@ -39,8 +47,8 @@ const LandingPage = ({ locale, messages }: LandingPageProps) => {
       <div className={styles.actions}>
         <LocaleSwitcher />
         <ThemeSwitcher />
-        <Link className={styles.headerCta} href={wardrobeHref}>
-          {landing.openPrototype}
+        <Link className={styles.headerCta} href={headerCtaHref}>
+          {isAuthenticated ? landing.openPrototype : common.signIn}
         </Link>
       </div>
     </header>

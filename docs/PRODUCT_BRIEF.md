@@ -131,7 +131,7 @@ comme étude de cas de portfolio.
 - application Next.js avec App Router ;
 - séparation des routes publiques et applicatives ;
 - couche d’accès aux données centralisée ;
-- base PostgreSQL ;
+- base MongoDB Atlas ;
 - stockage objet compatible S3 ;
 - authentification éprouvée ;
 - traitements IA exécutés côté serveur ;
@@ -224,7 +224,7 @@ Navigateur
     → Next.js (pages, Server Actions, Route Handlers)
         → Authentification
         → Couche d’accès aux données
-            → PostgreSQL
+            → MongoDB Atlas
         → Service de stockage d’images
         → File de traitements
             → Fournisseurs IA
@@ -241,19 +241,19 @@ app/
 └── [locale]/             # Français et anglais
     ├── (marketing)/      # Pages accessibles sans connexion
     │   └── page.tsx      # /fr et /en
-    ├── (auth)/           # Futurs parcours de connexion
-    │   ├── login/
-    │   └── register/
-    └── (app)/            # Espace personnel, à protéger
+    ├── (auth)/           # Parcours publics de compte
+    │   ├── sign-in/
+    │   └── sign-up/
+    └── (app)/            # Espace personnel protégé
         ├── wardrobe/     # /fr/wardrobe et /en/wardrobe
         ├── studio/       # /fr/studio et /en/studio
         └── profile/      # /fr/profile et /en/profile
 ```
 
-Le groupe `(app)` constitue la future frontière applicative. Une authentification
-réelle ne sera ajoutée qu’après le choix du fournisseur et du mode de
-déploiement. Les URLs sans langue sont redirigées vers le français ou l’anglais
-à partir des préférences du navigateur.
+Chaque page du groupe `(app)` vérifie une session Better Auth côté serveur.
+Les utilisateurs, comptes et sessions sont stockés dans MongoDB Atlas. Les
+URLs sans langue sont redirigées vers le français ou l’anglais à partir des
+préférences du navigateur.
 
 ## 15. Données et vie privée
 
@@ -299,9 +299,9 @@ déploiement. Les URLs sans langue sont redirigées vers le français ou l’ang
 
 ### Phase 2 — Produit connecté
 
-- authentification ;
+- authentification par e-mail et mot de passe ;
 - profil ;
-- PostgreSQL ;
+- MongoDB Atlas ;
 - stockage objet ;
 - migration des données locales.
 
@@ -330,7 +330,8 @@ déploiement. Les URLs sans langue sont redirigées vers le français ou l’ang
 
 - Quel nom définitif et quel positionnement de marque retenir ?
 - Le code du portfolio sera-t-il public ou le produit restera-t-il privé ?
-- Quel mode d’authentification correspondra au futur hébergeur ?
+- Quel service d’e-mail transactionnel utiliser pour la vérification et la
+  récupération de mot de passe ?
 - Quelles photographies minimales demander pour une analyse fiable ?
 - Quelles sources de tendances peuvent être utilisées légalement ?
 - Quel niveau de fidélité rend l’essayage virtuel réellement utile ?

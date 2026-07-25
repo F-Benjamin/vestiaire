@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LandingPage from "@/components/marketing/LandingPage";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale } from "@/i18n/routing";
+import { getSession } from "@/lib/auth-session";
 import { notFound } from "next/navigation";
 
 type HomePageProps = {
@@ -25,8 +26,15 @@ const HomePage = async ({ params }: HomePageProps) => {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const messages = await getDictionary(locale);
+  const session = await getSession();
 
-  return <LandingPage locale={locale} messages={messages} />;
+  return (
+    <LandingPage
+      locale={locale}
+      messages={messages}
+      isAuthenticated={Boolean(session)}
+    />
+  );
 };
 
 export default HomePage;

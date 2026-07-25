@@ -11,6 +11,10 @@ export const fr = {
     studioTitle: "Studio de style — Vestiaire",
     studioDescription:
       "Composez des tenues avec les pièces de votre garde-robe.",
+    signInTitle: "Connexion — Vestiaire",
+    signInDescription: "Connectez-vous à votre espace Vestiaire.",
+    signUpTitle: "Créer un compte — Vestiaire",
+    signUpDescription: "Créez votre espace personnel Vestiaire.",
   },
   common: {
     brand: "Vestiaire",
@@ -22,6 +26,9 @@ export const fr = {
     mainNavigation: "Navigation principale",
     wardrobe: "Ma garde-robe",
     studio: "Studio de style",
+    signIn: "Se connecter",
+    signOut: "Se déconnecter",
+    account: "Compte de {name}",
     all: "Tout",
     theme: {
       label: "Thème d’affichage",
@@ -86,6 +93,41 @@ export const fr = {
     footerDescription:
       "Un projet Next.js, TypeScript et intelligence visuelle.",
     accessApplication: "Accéder à l’application",
+  },
+  auth: {
+    signInEyebrow: "HEUREUX DE VOUS REVOIR",
+    signInTitle: "Retrouvez votre vestiaire.",
+    signInIntro:
+      "Connectez-vous pour accéder à votre garde-robe et à votre studio de style.",
+    signUpEyebrow: "VOTRE ESPACE PERSONNEL",
+    signUpTitle: "Créez votre vestiaire.",
+    signUpIntro:
+      "Un compte suffit pour préparer la synchronisation sécurisée de votre garde-robe.",
+    name: "Nom",
+    namePlaceholder: "Votre nom",
+    email: "Adresse e-mail",
+    emailPlaceholder: "vous@exemple.fr",
+    password: "Mot de passe",
+    passwordHint: "12 caractères minimum",
+    rememberMe: "Rester connecté sur cet appareil",
+    submitSignIn: "Se connecter",
+    submitSignUp: "Créer mon compte",
+    submittingSignIn: "Connexion…",
+    submittingSignUp: "Création du compte…",
+    noAccount: "Vous n’avez pas encore de compte ?",
+    alreadyAccount: "Vous avez déjà un compte ?",
+    createAccount: "Créer un compte",
+    goToSignIn: "Se connecter",
+    registered:
+      "Votre compte est prêt. Vous pouvez maintenant vous connecter.",
+    invalidCredentials:
+      "Adresse e-mail ou mot de passe incorrect.",
+    signUpFailed:
+      "Le compte n’a pas pu être créé. Vérifiez les informations saisies.",
+    genericError:
+      "Une erreur est survenue. Réessayez dans quelques instants.",
+    privacyNote:
+      "Votre mot de passe est haché avant son enregistrement et n’est jamais stocké en clair.",
   },
   wardrobe: {
     heroEyebrow: "VOTRE DRESSING, EN MIEUX",

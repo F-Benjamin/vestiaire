@@ -42,10 +42,10 @@ Ajoutez les variables suivantes en choisissant des valeurs contextuelles :
 | `APP_ENV` | All scopes | `production` | `preview` | `preview` |
 | `MONGODB_URI` | All scopes sur Free, Functions sur Pro+ | URI de production | URI de test | URI de test |
 | `MONGODB_DB_NAME` | All scopes | `vestiaire` | `vestiaire_preview` | `vestiaire_preview` |
-| `AUTH_SECRET` | All scopes sur Free, Functions sur Pro+ | secret de production | secret distinct | secret distinct |
+| `BETTER_AUTH_SECRET` | All scopes sur Free, Functions sur Pro+ | secret de production | secret de test | secret de test |
 | `OPENAI_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé de production | clé de test limitée | clé de test limitée |
 
-Pour `MONGODB_URI`, `AUTH_SECRET` et `OPENAI_API_KEY`, activez l'option
+Pour `MONGODB_URI`, `BETTER_AUTH_SECRET` et `OPENAI_API_KEY`, activez l'option
 **Contains secret values**.
 
 Netlify réserve la sélection de scopes précis aux offres Pro et Enterprise. Sur
@@ -53,8 +53,10 @@ l’offre Free, laissez **All scopes** : une variable serveur ne devient pas
 publique pour autant. Seules les variables préfixées par `NEXT_PUBLIC_` sont
 intégrées au code envoyé au navigateur par Next.js.
 
-`AUTH_SECRET` et `OPENAI_API_KEY` peuvent rester absentes tant que
-l'authentification et l'analyse IA ne sont pas encore branchées.
+`BETTER_AUTH_SECRET` est obligatoire avant de déployer l'authentification.
+Générez des secrets d'au moins 32 caractères avec
+`openssl rand -base64 32`. `OPENAI_API_KEY` peut rester absente tant que
+l'analyse IA n'est pas encore branchée.
 
 ## Variables versionnées
 
@@ -93,3 +95,6 @@ La connexion MongoDB possède son propre contrôle :
 
 La configuration complète d'Atlas est détaillée dans
 [`docs/MONGODB.md`](MONGODB.md).
+
+La configuration de Better Auth est détaillée dans
+[`docs/AUTHENTICATION.md`](AUTHENTICATION.md).

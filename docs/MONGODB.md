@@ -3,7 +3,7 @@
 Cette étape prépare le stockage persistant de Vestiaire sans exposer la base
 directement au navigateur. Le code client continue temporairement à utiliser le
 stockage local ; la migration des vêtements vers MongoDB sera réalisée après
-l'authentification afin que chaque requête puisse être rattachée à son
+la fondation d'authentification, afin que chaque requête soit rattachée à son
 propriétaire.
 
 ## 1. Créer le projet Atlas
@@ -131,5 +131,5 @@ L'endpoint ne renvoie jamais l'URI, le nom du cluster ou les identifiants.
   secret.
 
 Les opérations de lecture et d'écriture ne sont volontairement pas publiques.
-Elles seront exposées après l'ajout de l'authentification et utiliseront
-obligatoirement l'identifiant de l'utilisateur connecté.
+La prochaine migration les exposera derrière les contrôles Better Auth et
+utilisera obligatoirement l'identifiant de l'utilisateur connecté.

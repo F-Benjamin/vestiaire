@@ -34,8 +34,11 @@ app/
 ├── [locale]/
 │   ├── (marketing)/
 │   │   └── page.tsx                # Accueils /fr et /en
+│   ├── (auth)/
+│   │   ├── sign-in/page.tsx        # Connexion localisée
+│   │   └── sign-up/page.tsx        # Création de compte
 │   ├── (app)/
-│   │   ├── layout.tsx              # Future frontière authentifiée
+│   │   ├── layout.tsx              # Navigation de l'espace connecté
 │   │   ├── wardrobe/page.tsx       # /fr/wardrobe et /en/wardrobe
 │   │   ├── studio/page.tsx         # /fr/studio et /en/studio
 │   │   ├── loading.tsx             # État de chargement localisé
@@ -45,12 +48,16 @@ app/
 │   └── RouteState.module.scss      # États de route partagés
 ├── api/
 │   ├── analyze/route.ts            # API d’analyse des vêtements
+│   ├── auth/[...all]/route.ts       # API Better Auth
 │   └── health/
 │       ├── route.ts                 # Vérification du serveur
 │       └── database/route.ts        # État de la connexion MongoDB
 └── globals.scss                    # Tokens, thèmes et styles globaux
 
 components/
+├── auth/
+│   ├── AuthPage.tsx                # Connexion et inscription
+│   └── AuthPage.module.scss        # Styles des parcours de compte
 ├── i18n/
 │   ├── LocalizationProvider.tsx    # Dictionnaire actif
 │   └── LocaleSwitcher.tsx          # Sélecteur FR / EN
@@ -73,6 +80,10 @@ components/
 
 lib/
 ├── analyze-filename.ts             # Analyse réutilisable côté serveur
+├── auth.ts                         # Configuration Better Auth
+├── auth-client.ts                  # Client React Better Auth
+├── auth-session.ts                 # Session et protection des pages
+├── auth-indexes.ts                 # Index MongoDB d'authentification
 ├── environment/mongodb.ts          # Validation des variables MongoDB
 ├── mongodb/client.ts               # Pool de connexions MongoDB partagé
 ├── repositories/                   # Accès serveur aux collections
@@ -81,6 +92,7 @@ lib/
 └── wardrobe.ts                     # Logique pure de composition
 
 docs/
+├── AUTHENTICATION.md               # Sécurité et configuration Better Auth
 ├── ENVIRONMENTS.md                 # Configuration locale et Netlify
 ├── MONGODB.md                      # Création et sécurisation d'Atlas
 └── PRODUCT_BRIEF.md                # Vision, MVP, exigences et roadmap
@@ -116,11 +128,10 @@ sur une URL sans préfixe est redirigée vers `/fr` ou `/en` selon l’en-tête
 `Accept-Language` du navigateur. Tous les textes d’interface sont centralisés
 dans `i18n/dictionaries`.
 
-Le groupe `(marketing)` contient la surface publique. Le layout du groupe
-`(app)` installe le `WardrobeProvider` autour des routes localisées de la
-garde-robe et du studio. Ce groupe constitue la future frontière de l’espace
-connecté, sans simuler une authentification tant que le fournisseur et
-l’hébergement ne sont pas choisis.
+Le groupe `(marketing)` contient la surface publique et `(auth)` les parcours
+de connexion et d'inscription. Le groupe `(app)` contient la garde-robe et le
+studio. Chacune de ces pages vérifie sa session côté serveur avant de charger
+la vue, puis le layout installe le `WardrobeProvider`.
 Les vues utilisent le hook `useWardrobe` pour accéder aux états et actions sans
 props drilling. La navigation utilise `next/link`, avec `useRouter` uniquement
 pour les changements programmatiques du studio.
@@ -188,17 +199,22 @@ différentes en production et en preview.
 La procédure complète est détaillée dans
 [`docs/ENVIRONMENTS.md`](docs/ENVIRONMENTS.md).
 
-## Stockage cible
+## Authentification et stockage
 
 La connexion MongoDB Atlas, la validation des vêtements et la couche
-d'accès aux données sont maintenant prêtes côté serveur. La première version
-garde néanmoins les vêtements sur l'appareil jusqu'à l'ajout de
-l'authentification : aucune route publique ne doit pouvoir lire ou écrire les
-données d'un utilisateur sans vérifier son identité.
+d'accès aux données sont prêtes côté serveur. Better Auth fournit maintenant
+l'inscription, la connexion, les sessions MongoDB et la protection des pages.
+Les mots de passe sont hachés par Better Auth et ne sont jamais stockés en
+clair.
 
 La procédure Atlas est détaillée dans [`docs/MONGODB.md`](docs/MONGODB.md).
-Les prochaines briques seront :
+La configuration de l'authentification est détaillée dans
+[`docs/AUTHENTICATION.md`](docs/AUTHENTICATION.md).
 
-- Auth.js pour rattacher chaque vêtement à son propriétaire ;
+La première version garde encore les vêtements sur l'appareil. Les prochaines
+briques seront :
+
+- migration des vêtements vers MongoDB avec leur propriétaire ;
+- vérification des e-mails et récupération de mot de passe ;
 - un stockage objet pour les photographies ;
 - un worker pour les futurs traitements IA longs.
