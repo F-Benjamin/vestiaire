@@ -17,7 +17,7 @@ const emailAuthEnabled = isEmailAuthEnabled();
 if (emailAuthEnabled) getEmailEnvironment();
 
 export const auth = betterAuth({
-  appName: "Vestiaire",
+  appName: "Wearsona",
   secret: getAuthSecret(),
   baseURL: {
     allowedHosts: [

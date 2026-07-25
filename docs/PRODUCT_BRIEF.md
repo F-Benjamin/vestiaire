@@ -1,20 +1,19 @@
-# Product Brief — Vestiaire
+# Product Brief — Wearsona
 
 | Champ | Valeur |
 |---|---|
 | Version | 0.1 |
 | Statut | Document de cadrage initial |
 | Date | 23 juillet 2026 |
-| Produit | Vestiaire |
+| Produit | Wearsona |
 | Responsable produit | Projet personnel |
 
 ## 1. Résumé
 
-Vestiaire est un assistant vestimentaire personnel qui aide une personne à
-mieux utiliser les vêtements qu’elle possède déjà. Le produit organise la
-garde-robe à partir de photographies, propose des associations cohérentes et
-identifie les pièces qui augmenteraient réellement le nombre de tenues
-possibles.
+Wearsona est un assistant vestimentaire personnel qui transforme la garde-robe
+en outil d’expression. Le produit part d’une question simple — « qui ai-je
+envie d’être aujourd’hui ? » — puis organise les vêtements possédés, propose
+des associations cohérentes et aide à traduire une intention en tenue.
 
 Le projet est un outil personnel et une étude de cas de portfolio. Il reste
 déployé sur le web pour être utilisé par son créateur et présenter son
@@ -37,7 +36,7 @@ l’achat sans mesurer la complémentarité avec la garde-robe existante.
 Faire de la garde-robe existante la première source d’inspiration vestimentaire,
 avant tout nouvel achat.
 
-À terme, Vestiaire doit être capable de :
+À terme, Wearsona doit être capable de :
 
 1. comprendre automatiquement les vêtements présents sur une photographie ;
 2. extraire et présenter chaque pièce proprement ;
@@ -78,8 +77,8 @@ comme étude de cas, sans accéder aux données personnelles de la garde-robe.
 
 ## 6. Proposition de valeur
 
-**Vestiaire révèle les tenues déjà présentes dans votre garde-robe et vous aide
-à compléter uniquement ce qui manque vraiment.**
+**Wearsona vous aide à porter la personne que vous choisissez d’être
+aujourd’hui, avec les vêtements que vous possédez déjà.**
 
 ### Différenciation
 
@@ -168,12 +167,12 @@ Ces sujets restent dans la roadmap ou dans le laboratoire de recherche.
 1. L’utilisateur ouvre sa garde-robe.
 2. Il filtre ou sélectionne une pièce.
 3. Il choisit une allure et éventuellement un contexte.
-4. Vestiaire propose une tenue et explique l’association.
+4. Wearsona propose une tenue et explique l’association.
 5. L’utilisateur conserve, régénère ou ajuste la proposition.
 
 ### Recommandation d’achat future
 
-1. Vestiaire analyse la couverture de la garde-robe.
+1. Wearsona analyse la couverture de la garde-robe.
 2. Le système détecte les catégories ou associations limitées.
 3. Il propose une pièce générique, pas nécessairement un produit marchand.
 4. Il affiche les nouvelles tenues rendues possibles.

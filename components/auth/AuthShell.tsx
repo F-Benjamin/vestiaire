@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
+import BrandMark from "@/components/brand/BrandMark";
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
@@ -31,14 +31,7 @@ const AuthShell = ({
       </a>
 
       <header className={styles.header}>
-        <Link
-          className={styles.brand}
-          href={href()}
-          aria-label={messages.common.homeLabel}
-        >
-          <i aria-hidden="true">V</i>
-          <span>{messages.common.brand}</span>
-        </Link>
+        <BrandMark homeLabel={messages.common.homeLabel} href={href()} />
         <div className={styles.headerActions}>
           <LocaleSwitcher />
           <ThemeSwitcher />
@@ -51,11 +44,15 @@ const AuthShell = ({
           <h1>{title}</h1>
           <p>{intro}</p>
           <div className={styles.decorativeCard} aria-hidden="true">
-            <span>V</span>
+            <span>
+              wear<br />
+              <em>who</em><br />
+              you are.
+            </span>
             <div>
-              <i />
-              <i />
-              <i />
+              <i>01</i>
+              <i>choose a mood</i>
+              <i>become the look</i>
             </div>
           </div>
         </section>

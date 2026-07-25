@@ -36,6 +36,9 @@ export const generateMetadata = async ({
     metadataBase,
     title: messages.metadata.rootTitle,
     description: messages.metadata.rootDescription,
+    icons: {
+      icon: "/favicon.svg",
+    },
     openGraph: {
       type: "website",
       title: messages.metadata.homeTitle,
@@ -43,7 +46,7 @@ export const generateMetadata = async ({
       images: [
         {
           url: new URL("/og.png", metadataBase),
-          width: 1733,
+          width: 1734,
           height: 907,
           alt: messages.metadata.homeTitle,
         },
@@ -61,7 +64,7 @@ export const generateMetadata = async ({
 const themeInitializationScript = `
 (() => {
   try {
-    const stored = localStorage.getItem("vestiaire-theme");
+    const stored = localStorage.getItem("wearsona-theme") ?? localStorage.getItem("vestiaire-theme");
     const preference = ["light", "dark", "system"].includes(stored) ? stored : "system";
     const resolved = preference === "system"
       ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
@@ -85,7 +88,7 @@ const RootLayout = async ({ children, params }: LocaleLayoutProps) => {
     <html lang={locale} suppressHydrationWarning>
       <body>
         <Script
-          id="vestiaire-theme"
+          id="wearsona-theme"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeInitializationScript }}
         />

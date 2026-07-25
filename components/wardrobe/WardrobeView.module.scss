@@ -10,9 +10,10 @@
   overflow: hidden;
   position: relative;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 8px;
   background:
-    radial-gradient(circle at 88% 14%, rgb(174 188 157 / 34%), transparent 28%),
+    radial-gradient(circle at 88% 14%, color-mix(in srgb, var(--lilac) 72%, transparent), transparent 28%),
+    radial-gradient(circle at 8% 100%, color-mix(in srgb, var(--coral) 16%, transparent), transparent 30%),
     linear-gradient(
       135deg,
       var(--surface-soft),
@@ -39,7 +40,7 @@
 
 .eyebrow {
   margin: 0 0 13px;
-  color: var(--sage-deep);
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -58,8 +59,8 @@
   z-index: 1;
   padding: 32px;
   display: grid;
-  border: 1px solid color-mix(in srgb, var(--sage-deep) 50%, var(--line));
-  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
+  border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 5px;
   background: color-mix(in srgb, var(--surface) 74%, transparent);
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(8px);
@@ -175,7 +176,7 @@
   overflow: hidden;
   position: relative;
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 5px;
   aspect-ratio: 4 / 5;
   background: var(--surface-soft);
   color: inherit;
@@ -204,7 +205,7 @@
     align-items: center;
     justify-content: center;
     border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-sm) var(--radius-sm) var(--radius-sm) 4px;
     background: color-mix(in srgb, var(--surface) 90%, transparent);
     color: var(--ink);
     font-size: 0.78rem;
@@ -295,7 +296,7 @@
 }
 
 .emptyMark {
-  color: var(--sage-deep);
+  color: var(--accent);
   font: 4.5rem / 1 var(--font-serif);
   transform: rotate(180deg);
 }

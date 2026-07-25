@@ -1,6 +1,7 @@
-# Vestiaire
+# Wearsona
 
-Une garde-robe intelligente construite avec Next.js, React et TypeScript.
+Une garde-robe intelligente qui aide à porter la personne que l’on choisit
+d’être aujourd’hui, construite avec Next.js, React et TypeScript.
 
 Le projet réunit :
 
@@ -105,6 +106,7 @@ lib/
 └── wardrobe.ts                     # Logique pure de composition
 
 docs/
+├── BRAND.md                        # Plateforme de marque et architecture produit
 ├── AUTHENTICATION.md               # Sécurité et configuration Better Auth
 ├── ENVIRONMENTS.md                 # Configuration locale et Netlify
 ├── GARMENT_API.md                   # Contrat CRUD privé des vêtements

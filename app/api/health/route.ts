@@ -4,7 +4,7 @@ import { getRuntimeEnvironment } from "@/lib/runtime-environment";
 export const GET = () =>
   NextResponse.json({
     status: "ok",
-    application: "Vestiaire",
+    application: "Wearsona",
     environment: getRuntimeEnvironment(),
     timestamp: new Date().toISOString(),
   });

@@ -2,40 +2,40 @@ import type { Messages } from "./fr";
 
 export const en = {
   metadata: {
-    rootTitle: "Vestiaire — Your intelligent wardrobe",
+    rootTitle: "Wearsona — Wear who you want to be today",
     rootDescription:
       "Catalog your wardrobe and create outfits with the clothes you already own.",
-    homeTitle: "Vestiaire — Reveal your wardrobe’s potential",
+    homeTitle: "Wearsona — Your style, in the present tense",
     homeDescription:
-      "A personal style assistant for organizing your clothes, creating outfits and choosing what truly complements your wardrobe.",
-    wardrobeTitle: "My wardrobe — Vestiaire",
+      "An intelligent wardrobe that helps you dress for your mood, your day and the person you want to be right now.",
+    wardrobeTitle: "My wardrobe — Wearsona",
     wardrobeDescription: "Organize the clothes you already own.",
-    studioTitle: "Style studio — Vestiaire",
+    studioTitle: "Identity studio — Wearsona",
     studioDescription: "Create outfits with pieces from your wardrobe.",
-    signInTitle: "Sign in — Vestiaire",
-    signInDescription: "Sign in to your Vestiaire space.",
-    signUpTitle: "Create an account — Vestiaire",
-    signUpDescription: "Create your personal Vestiaire space.",
-    forgotPasswordTitle: "Forgot password — Vestiaire",
+    signInTitle: "Sign in — Wearsona",
+    signInDescription: "Sign in to your Wearsona space.",
+    signUpTitle: "Create an account — Wearsona",
+    signUpDescription: "Create your personal Wearsona space.",
+    forgotPasswordTitle: "Forgot password — Wearsona",
     forgotPasswordDescription:
       "Request a secure link to reset your password.",
-    resetPasswordTitle: "New password — Vestiaire",
+    resetPasswordTitle: "New password — Wearsona",
     resetPasswordDescription:
-      "Choose a new password for your Vestiaire space.",
-    profileTitle: "My profile — Vestiaire",
+      "Choose a new password for your Wearsona space.",
+    profileTitle: "My profile — Wearsona",
     profileDescription:
       "Manage your identity, preferences, security and data.",
   },
   common: {
-    brand: "Vestiaire",
-    homeLabel: "Vestiaire home",
+    brand: "Wearsona",
+    homeLabel: "Wearsona home",
     skipToContent: "Skip to main content",
     close: "Close",
     language: "Language",
     publicNavigation: "Public navigation",
     mainNavigation: "Main navigation",
     wardrobe: "My wardrobe",
-    studio: "Style studio",
+    studio: "Studio",
     profile: "My profile",
     signIn: "Sign in",
     signOut: "Sign out",
@@ -50,70 +50,70 @@ export const en = {
   },
   landing: {
     navigation: {
-      concept: "The concept",
-      vision: "The vision",
+      concept: "The experience",
+      vision: "The future",
     },
-    openPrototype: "Open the prototype",
-    heroEyebrow: "YOUR WARDROBE, AUGMENTED",
-    heroTitle: "More style. Fewer unnecessary purchases.",
+    openPrototype: "Open Wearsona",
+    heroEyebrow: "YOUR STYLE, IN THE PRESENT TENSE",
+    heroTitle: "Wear who you want to be today.",
     heroIntro:
-      "Vestiaire turns the clothes you already own into a world of possibilities. Organize your pieces, create outfits and discover what is truly missing.",
-    discoverPrototype: "Explore the prototype",
-    understandConcept: "Understand the concept",
+      "Wearsona turns your wardrobe into a personal language. Start with your mood, your day or one piece — and shape the version of you that feels right now.",
+    discoverPrototype: "Enter Wearsona",
+    understandConcept: "Discover the experience",
     localNote:
       "Personal space · Your photographs are private and linked to your account",
-    dailySuggestion: "Today’s suggestion",
-    casual: "Casual",
+    dailySuggestion: "Today’s Wearsona",
+    casual: "confident",
     shirt: "Shirt",
     jacket: "Jacket",
     trousers: "Trousers",
     threePieces: "3 pieces from your wardrobe",
-    conceptEyebrow: "THE CONCEPT",
-    conceptTitle: "Your wardrobe becomes a creative medium.",
+    conceptEyebrow: "AN IDENTITY IN MOTION",
+    conceptTitle: "Your clothes do not define who you are. They help you choose.",
     pillars: [
       {
         number: "01",
-        title: "Understand",
+        title: "Know",
         description:
-          "Each piece is organized by category, colors, seasons, patterns and style potential.",
+          "Wearsona structures what you own to reveal the possibilities already living in your wardrobe.",
       },
       {
         number: "02",
-        title: "Compose",
+        title: "Intend",
         description:
-          "The studio reveals new combinations using the clothes you already own.",
+          "Choose a mood, a context or a starting piece. The studio translates that intention into an outfit.",
       },
       {
         number: "03",
-        title: "Complete",
+        title: "Become",
         description:
-          "Eventually, recommendations will identify genuine gaps without encouraging unnecessary purchases.",
+          "Move from “what should I wear?” to “who do I want to be?” — without costume and without overconsumption.",
       },
     ],
-    visionEyebrow: "PRODUCT IN PROGRESS",
-    visionTitle: "A real experiment, designed to go further.",
+    visionEyebrow: "THE WEARSONA VISION",
+    visionTitle: "A creative mirror, not an algorithm that decides for you.",
     visionDescription:
-      "This first version explores a simple belief: understanding what we own helps us dress better and make more thoughtful purchases.",
+      "Wearsona’s intelligence should understand your clothes, learn from your corrections and explain every suggestion. The goal is not to chase every trend, but to make your style freer, more personal and more conscious.",
     visionListLabel: "Development areas",
     visionItems: [
-      "Visual garment analysis and background removal",
-      "Personalized, explainable recommendations",
-      "Virtual try-on as a projection tool",
+      "Frictionless visual analysis and cataloging",
+      "Personal, contextual and explainable outfits",
+      "Virtual projection that respects your image",
     ],
-    exploreCurrentVersion: "Explore the current version",
+    exploreCurrentVersion: "Create my first Wearsona",
     footerDescription:
-      "A Next.js, TypeScript and visual intelligence project.",
-    accessApplication: "Open the application",
+      "A personal style lab built with Next.js and visual intelligence.",
+    accessApplication: "Open Wearsona",
   },
   auth: {
-    signInEyebrow: "WELCOME BACK",
-    signInTitle: "Return to your wardrobe.",
+    signInEyebrow: "YOURS TO CHOOSE",
+    signInTitle: "Who do you want to be today?",
     signInIntro:
-      "Sign in to access your wardrobe and your personal style studio.",
-    signUpEyebrow: "YOUR PERSONAL SPACE",
-    signUpTitle: "Create your wardrobe.",
+      "Return to your wardrobe and compose a look that carries today’s intention.",
+    signUpEyebrow: "YOUR STYLE STARTS HERE",
+    signUpTitle: "Create your Wearsona space.",
     signUpIntro:
-      "Create your space to access your private wardrobe on the web.",
+      "Bring your clothes into one private space and turn them into new ways of being yourself.",
     name: "Name",
     namePlaceholder: "Your name",
     email: "Email address",
@@ -143,7 +143,7 @@ export const en = {
     genericError: "Something went wrong. Please try again in a moment.",
     forgotPassword: "Forgot password?",
     forgotPasswordEyebrow: "ACCOUNT RECOVERY",
-    forgotPasswordTitle: "Regain access to your wardrobe.",
+    forgotPasswordTitle: "Regain access to your Wearsona.",
     forgotPasswordIntro:
       "Enter your email address. If an account matches it, we’ll send you a secure link.",
     sendResetLink: "Send reset link",
@@ -171,7 +171,7 @@ export const en = {
   },
   authEmail: {
     verification: {
-      subject: "Verify your email address — Vestiaire",
+      subject: "Verify your email address — Wearsona",
       heading: "Verify your email address",
       greeting: "Hello {name},",
       introduction:
@@ -179,10 +179,10 @@ export const en = {
       action: "Verify my address",
       expiration: "This link is valid for one hour.",
       ignore:
-        "If you didn’t create a Vestiaire account, you can safely ignore this email.",
+        "If you didn’t create a Wearsona account, you can safely ignore this email.",
     },
     passwordReset: {
-      subject: "Reset your password — Vestiaire",
+      subject: "Reset your password — Wearsona",
       heading: "Reset your password",
       greeting: "Hello {name},",
       introduction:
@@ -192,11 +192,11 @@ export const en = {
       ignore:
         "If you didn’t make this request, you can safely ignore this email.",
     },
-    signature: "Automated email sent by Vestiaire.",
+    signature: "Automated email sent by Wearsona.",
   },
   profile: {
-    eyebrow: "YOUR SPACE",
-    title: "A profile that feels like you.",
+    eyebrow: "YOUR IDENTITY",
+    title: "Your space, on your terms.",
     intro:
       "Manage your identity, preferences and account security from one place.",
     overviewNavigation: "Profile contents",
@@ -303,16 +303,16 @@ export const en = {
       "The account could not be deleted. Check your password.",
   },
   wardrobe: {
-    heroEyebrow: "YOUR WARDROBE, MADE BETTER",
-    heroTitleFirst: "Rediscover what",
-    heroTitleSecond: "you already own.",
+    heroEyebrow: "YOUR RAW MATERIAL",
+    heroTitleFirst: "Everything you are",
+    heroTitleSecond: "already ready to wear.",
     heroIntro:
-      "Bring your wardrobe together, organize every piece and create outfits that feel like you. Your data stays private in your account.",
+      "Every piece is a possibility. Organize what you own, then let the studio connect it to the intention you choose today.",
     itemCountOne: "piece cataloged",
     itemCountMany: "pieces cataloged",
     categoryCount: "categories",
-    collection: "COLLECTION",
-    title: "My wardrobe",
+    collection: "YOUR UNIVERSE",
+    title: "The wardrobe",
     filterByCategory: "Filter by category",
     composeAround: "Build an outfit around this piece",
     removeItem: "Remove {name}",
@@ -324,10 +324,10 @@ export const en = {
       "Import one or more photographs. File names will help us create an initial classification.",
   },
   studio: {
-    eyebrow: "STYLE STUDIO",
-    title: "One piece, many possibilities.",
+    eyebrow: "WEARSONA STUDIO",
+    title: "Give form to your intention.",
     intro:
-      "Choose your starting point and desired look. The studio finds the best combinations in your wardrobe.",
+      "Start with one piece and choose the energy you want to carry. The studio finds the combination that expresses it with your own wardrobe.",
     emptyTitle: "Add a few pieces first",
     emptyDescription: "The studio needs your wardrobe to get started.",
     backToWardrobe: "Return to my wardrobe",
