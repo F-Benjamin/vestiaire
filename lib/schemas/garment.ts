@@ -8,12 +8,12 @@ import {
 
 const uniqueValues = <T>(values: T[]) => new Set(values).size === values.length;
 
-const imageUrlSchema = z
-  .url()
-  .refine((value) => {
-    const protocol = new URL(value).protocol;
-    return protocol === "https:" || protocol === "http:";
-  }, "Image URL must use HTTP or HTTPS.");
+export const wardrobeImageKeySchema = z
+  .string()
+  .regex(
+    /^[a-f0-9]{64}\/[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\.(?:jpg|png|webp)$/,
+    "Invalid wardrobe image key.",
+  );
 
 const garmentFieldsSchema = z.object({
   name: z.string().trim().min(1).max(120),
@@ -38,12 +38,12 @@ const garmentFieldsSchema = z.object({
     .min(1)
     .max(patterns.length)
     .refine(uniqueValues, "Patterns must be unique."),
-  imageUrl: imageUrlSchema.nullable(),
+  imageKey: wardrobeImageKeySchema.nullable(),
 });
 
 export const garmentInputSchema = garmentFieldsSchema
   .extend({
-    imageUrl: imageUrlSchema.nullable().default(null),
+    imageKey: wardrobeImageKeySchema.nullable().default(null),
   })
   .strict();
 

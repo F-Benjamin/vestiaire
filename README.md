@@ -52,6 +52,9 @@ app/
 │   ├── garments/
 │   │   ├── route.ts                 # Liste et création privées
 │   │   └── [id]/route.ts            # Modification et suppression privées
+│   ├── wardrobe-images/
+│   │   ├── route.ts                 # Upload privé vers Netlify Blobs
+│   │   └── [...key]/route.ts         # Lecture et suppression privées
 │   └── health/
 │       ├── route.ts                 # Vérification du serveur
 │       └── database/route.ts        # État de la connexion MongoDB
@@ -92,6 +95,7 @@ lib/
 ├── mongodb/client.ts               # Pool de connexions MongoDB partagé
 ├── repositories/                   # Accès serveur aux collections
 ├── schemas/                        # Validation Zod des données métier
+├── storage/                        # Stockage privé des photographies
 ├── runtime-environment.ts          # Local, Deploy Preview ou production
 └── wardrobe.ts                     # Logique pure de composition
 
@@ -99,6 +103,7 @@ docs/
 ├── AUTHENTICATION.md               # Sécurité et configuration Better Auth
 ├── ENVIRONMENTS.md                 # Configuration locale et Netlify
 ├── GARMENT_API.md                   # Contrat CRUD privé des vêtements
+├── IMAGE_STORAGE.md                 # Upload et lecture des photographies
 ├── MONGODB.md                      # Création et sécurisation d'Atlas
 └── PRODUCT_BRIEF.md                # Vision, MVP, exigences et roadmap
 
@@ -217,11 +222,13 @@ La configuration de l'authentification est détaillée dans
 [`docs/AUTHENTICATION.md`](docs/AUTHENTICATION.md).
 Le contrat des vêtements est documenté dans
 [`docs/GARMENT_API.md`](docs/GARMENT_API.md).
+Le stockage des photographies est détaillé dans
+[`docs/IMAGE_STORAGE.md`](docs/IMAGE_STORAGE.md).
 
 La première version garde encore les vêtements sur l'appareil. Les prochaines
 briques seront :
 
-- stockage objet des photographies et upload signé ;
 - branchement du catalogue sur l’API privée ;
+- migration guidée des pièces présentes dans `localStorage` ;
 - vérification des e-mails et récupération de mot de passe ;
 - un worker pour les futurs traitements IA longs.

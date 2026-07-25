@@ -67,6 +67,28 @@ export const listGarments = async (
     .toArray();
 };
 
+export const getGarment = async (
+  ownerId: string,
+  id: string,
+): Promise<WithId<GarmentDocument> | null> => {
+  const objectId = toObjectId(id);
+
+  if (!objectId) {
+    return null;
+  }
+
+  return getGarmentsCollection().findOne({ _id: objectId, ownerId });
+};
+
+export const isGarmentImageReferenced = async (
+  ownerId: string,
+  imageKey: string,
+) =>
+  (await getGarmentsCollection().countDocuments(
+    { ownerId, imageKey },
+    { limit: 1 },
+  )) > 0;
+
 export const updateGarment = async (
   ownerId: string,
   id: string,
@@ -95,17 +117,15 @@ export const updateGarment = async (
 export const deleteGarment = async (
   ownerId: string,
   id: string,
-): Promise<boolean> => {
+): Promise<WithId<GarmentDocument> | null> => {
   const objectId = toObjectId(id);
 
   if (!objectId) {
-    return false;
+    return null;
   }
 
-  const result = await getGarmentsCollection().deleteOne({
+  return getGarmentsCollection().findOneAndDelete({
     _id: objectId,
     ownerId,
   });
-
-  return result.deletedCount === 1;
 };

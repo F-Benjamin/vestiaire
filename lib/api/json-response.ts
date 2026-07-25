@@ -4,7 +4,14 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { detectLocale } from "@/i18n/routing";
 
 type ApiErrorCode =
+  | "FORBIDDEN"
   | "GARMENT_NOT_FOUND"
+  | "IMAGE_IN_USE"
+  | "IMAGE_NOT_FOUND"
+  | "IMAGE_QUOTA_EXCEEDED"
+  | "IMAGE_REQUIRED"
+  | "IMAGE_TOO_LARGE"
+  | "IMAGE_TYPE_UNSUPPORTED"
   | "INTERNAL_ERROR"
   | "INVALID_REQUEST"
   | "UNAUTHORIZED";

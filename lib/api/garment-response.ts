@@ -10,7 +10,7 @@ export const toGarmentResponse = ({
   seasons,
   styles,
   patterns,
-  imageUrl,
+  imageKey,
   createdAt,
   updatedAt,
 }: WithId<GarmentDocument>) => ({
@@ -21,7 +21,8 @@ export const toGarmentResponse = ({
   seasons,
   styles,
   patterns,
-  imageUrl,
+  imageKey: imageKey ?? null,
+  imageUrl: imageKey ? `/api/wardrobe-images/${imageKey}` : null,
   createdAt: createdAt.toISOString(),
   updatedAt: updatedAt.toISOString(),
 });
