@@ -42,6 +42,3 @@ jobs:
 
       - name: Build application
         run: npm run build
-
-      - name: Build deployment bundle
-        run: npm run build:sites

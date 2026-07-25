@@ -71,9 +71,11 @@ components/
 
 lib/
 ├── analyze-filename.ts             # Analyse réutilisable côté serveur
+├── runtime-environment.ts           # Local, Deploy Preview ou production
 └── wardrobe.ts                     # Logique pure de composition
 
 docs/
+├── ENVIRONMENTS.md                 # Configuration locale et Netlify
 └── PRODUCT_BRIEF.md                # Vision, MVP, exigences et roadmap
 
 i18n/
@@ -86,6 +88,7 @@ i18n/
 
 proxy.ts                    # Détection de la langue du navigateur
 .env.example               # Exemple de variables secrètes
+netlify.toml               # Compilation et réglages publics Netlify
 ```
 
 Chaque composant visuel possède un fichier `*.module.scss` colocalisé. Les
@@ -122,6 +125,9 @@ exemple :
 curl http://localhost:3000/api/health
 ```
 
+Cette route indique également si l’application s’exécute en environnement
+`development`, `preview` ou `production`.
+
 Et pour tester l’analyse du nom d’un fichier :
 
 ```bash
@@ -157,11 +163,23 @@ incorrect. Le choix `Jour`, `Nuit` ou `Système` est conservé dans
 La route actuelle analyse le nom du fichier. Elle constitue le bon emplacement
 pour brancher ensuite une API de vision, sans exposer la clé au navigateur.
 
-## Stockage
+## Déploiement et environnements
 
-La première version garde encore les données sur l’appareil. Pour une garde-robe
-volumineuse, la prochaine étape recommandée est :
+Netlify est l’hébergement de référence. `main` alimente la production et chaque
+Pull Request obtient une Deploy Preview isolée.
 
-- PostgreSQL ou SQLite pour les attributs ;
-- un stockage de fichiers compatible S3 pour les photos ;
-- un ORM comme Drizzle ou Prisma pour les requêtes TypeScript.
+Les réglages non secrets sont versionnés dans `netlify.toml`. Les clés privées
+restent dans les variables d’environnement Netlify et peuvent avoir des valeurs
+différentes en production et en preview.
+
+La procédure complète est détaillée dans
+[`docs/ENVIRONMENTS.md`](docs/ENVIRONMENTS.md).
+
+## Stockage cible
+
+La première version garde encore les données sur l’appareil. La prochaine
+architecture prévue est :
+
+- MongoDB Atlas pour les utilisateurs, vêtements, tenues et analyses ;
+- un stockage objet pour les photographies ;
+- un worker Heroku pour les futurs traitements IA longs.
