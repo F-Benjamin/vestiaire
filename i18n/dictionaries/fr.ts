@@ -207,7 +207,17 @@ export const fr = {
     invalidRequest: "Les données de la requête sont invalides.",
     invalidJson: "Le corps de la requête doit contenir du JSON valide.",
     unauthorized: "Une authentification est nécessaire.",
+    forbidden: "Cette requête n’est pas autorisée.",
     garmentNotFound: "Cette pièce est introuvable.",
+    imageRequired: "Une photo est obligatoire.",
+    imageTooLarge: "La photo ne doit pas dépasser 4 Mo.",
+    imageTypeUnsupported:
+      "Seules les images JPEG, PNG et WebP sont acceptées.",
+    imageNotFound: "Cette photo est introuvable.",
+    imageInUse:
+      "Cette photo est encore utilisée par une pièce de la garde-robe.",
+    imageQuotaExceeded:
+      "La limite de 500 photos par compte est atteinte.",
     internalError: "Une erreur inattendue est survenue.",
   },
   attributes: {

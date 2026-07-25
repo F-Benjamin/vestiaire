@@ -17,17 +17,18 @@ Un vêtement accepté par l’API possède la forme suivante :
   "seasons": ["Automne", "Hiver"],
   "styles": ["Travail", "Chic"],
   "patterns": ["Uni"],
-  "imageUrl": null
+  "imageKey": null
 }
 ```
 
-`imageUrl` accepte uniquement une URL `https://` ou `http://`, ou `null`. Les
-images encodées en base64 et les URL `data:` sont refusées : elles ne doivent
-pas être stockées dans MongoDB. Un futur service de stockage objet fournira
-l’URL persistante.
+`imageKey` contient la clé opaque renvoyée par l’API d’upload, ou `null`. Avant
+d’enregistrer la pièce, le serveur vérifie que la photo existe et appartient à
+l’utilisateur connecté. Les images encodées en base64 et les URL `data:` ne
+sont jamais stockées dans MongoDB.
 
 Les réponses utilisent une enveloppe `{ "data": ... }`. Un vêtement renvoyé
-contient également `id`, `createdAt` et `updatedAt`, mais jamais `ownerId`.
+contient également `id`, `createdAt`, `updatedAt` et une `imageUrl` privée
+calculée par le serveur, mais jamais `ownerId`.
 
 ## Routes
 
@@ -49,6 +50,7 @@ catalogue sont rejetés avec un statut `400`.
 - un identifiant invalide, inexistant ou appartenant à un autre utilisateur
   reçoit le même `404 GARMENT_NOT_FOUND` ;
 - les erreurs internes ne renvoient ni secret ni détail MongoDB ;
+- les mutations exigent une origine identique à celle de l’application ;
 - la liste est actuellement limitée aux 200 vêtements les plus récemment
   modifiés.
 
@@ -57,7 +59,6 @@ autre compte.
 
 ## État de la migration
 
-Le catalogue visible continue temporairement à utiliser `localStorage`, car il
-contient aujourd’hui les photos sous forme de données locales. La prochaine
-étape est de mettre en place le stockage objet et son upload signé, puis de
-brancher `WardrobeContext` sur cette API sans envoyer les images à MongoDB.
+Le catalogue visible continue temporairement à utiliser `localStorage`. La
+prochaine étape est de brancher `WardrobeContext` sur les API des vêtements et
+des photographies, avec une migration explicite des données locales.
