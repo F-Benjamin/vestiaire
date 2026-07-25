@@ -7,7 +7,7 @@ import {
 import { getMongoEnvironment } from "@/lib/environment/mongodb";
 
 type MongoGlobal = typeof globalThis & {
-  vestiaireMongoClientPromise?: Promise<MongoClient>;
+  vestiaireMongoClient?: MongoClient;
 };
 
 const mongoGlobal = globalThis as MongoGlobal;
@@ -25,28 +25,23 @@ const createMongoClient = () => {
     },
   });
 
-  return client.connect();
+  return client;
 };
 
-export const getMongoClient = async (): Promise<MongoClient> => {
-  mongoGlobal.vestiaireMongoClientPromise ??= createMongoClient();
+export const getMongoClient = (): MongoClient => {
+  mongoGlobal.vestiaireMongoClient ??= createMongoClient();
 
-  try {
-    return await mongoGlobal.vestiaireMongoClientPromise;
-  } catch (error) {
-    mongoGlobal.vestiaireMongoClientPromise = undefined;
-    throw error;
-  }
+  return mongoGlobal.vestiaireMongoClient;
 };
 
-export const getDatabase = async (): Promise<Db> => {
-  const client = await getMongoClient();
+export const getDatabase = (): Db => {
+  const client = getMongoClient();
   const { MONGODB_DB_NAME } = getMongoEnvironment();
 
   return client.db(MONGODB_DB_NAME);
 };
 
 export const pingDatabase = async () => {
-  const database = await getDatabase();
+  const database = getDatabase();
   await database.command({ ping: 1 });
 };

@@ -12,6 +12,10 @@ export const en = {
     wardrobeDescription: "Organize the clothes you already own.",
     studioTitle: "Style studio — Vestiaire",
     studioDescription: "Create outfits with pieces from your wardrobe.",
+    signInTitle: "Sign in — Vestiaire",
+    signInDescription: "Sign in to your Vestiaire space.",
+    signUpTitle: "Create an account — Vestiaire",
+    signUpDescription: "Create your personal Vestiaire space.",
   },
   common: {
     brand: "Vestiaire",
@@ -23,6 +27,9 @@ export const en = {
     mainNavigation: "Main navigation",
     wardrobe: "My wardrobe",
     studio: "Style studio",
+    signIn: "Sign in",
+    signOut: "Sign out",
+    account: "{name}’s account",
     all: "All",
     theme: {
       label: "Display theme",
@@ -87,6 +94,38 @@ export const en = {
     footerDescription:
       "A Next.js, TypeScript and visual intelligence project.",
     accessApplication: "Open the application",
+  },
+  auth: {
+    signInEyebrow: "WELCOME BACK",
+    signInTitle: "Return to your wardrobe.",
+    signInIntro:
+      "Sign in to access your wardrobe and your personal style studio.",
+    signUpEyebrow: "YOUR PERSONAL SPACE",
+    signUpTitle: "Create your wardrobe.",
+    signUpIntro:
+      "One account is all you need to prepare secure wardrobe synchronization.",
+    name: "Name",
+    namePlaceholder: "Your name",
+    email: "Email address",
+    emailPlaceholder: "you@example.com",
+    password: "Password",
+    passwordHint: "At least 12 characters",
+    rememberMe: "Keep me signed in on this device",
+    submitSignIn: "Sign in",
+    submitSignUp: "Create my account",
+    submittingSignIn: "Signing in…",
+    submittingSignUp: "Creating your account…",
+    noAccount: "Don’t have an account yet?",
+    alreadyAccount: "Already have an account?",
+    createAccount: "Create an account",
+    goToSignIn: "Sign in",
+    registered: "Your account is ready. You can now sign in.",
+    invalidCredentials: "Incorrect email address or password.",
+    signUpFailed:
+      "The account could not be created. Check the information you entered.",
+    genericError: "Something went wrong. Please try again in a moment.",
+    privacyNote:
+      "Your password is hashed before storage and is never stored as plain text.",
   },
   wardrobe: {
     heroEyebrow: "YOUR WARDROBE, MADE BETTER",
