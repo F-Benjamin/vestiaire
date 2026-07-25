@@ -1,36 +1,29 @@
-import type {
-  Category,
-  Pattern,
-  Season,
-  WardrobeStyle,
-} from "./wardrobe.types";
-
-export const categories: Category[] = [
+export const categories = [
   "Hauts",
   "Bas",
   "Robes",
   "Vestes",
   "Chaussures",
   "Accessoires",
-];
+] as const;
 
-export const seasons: Season[] = [
+export const seasons = [
   "Toute saison",
   "Printemps",
   "Été",
   "Automne",
   "Hiver",
-];
+] as const;
 
-export const wardrobeStyles: WardrobeStyle[] = [
+export const wardrobeStyles = [
   "Décontracté",
   "Chic",
   "Créatif",
   "Minimal",
   "Travail",
-];
+] as const;
 
-export const patterns: Pattern[] = [
+export const patterns = [
   "Uni",
   "Rayures",
   "Carreaux",
@@ -39,7 +32,7 @@ export const patterns: Pattern[] = [
   "Graphique",
   "Animal",
   "Texturé",
-];
+] as const;
 
 export const colors = [
   "Noir",
@@ -58,7 +51,7 @@ export const colors = [
 
 export const neutralColors = ["Noir", "Blanc", "Gris", "Beige", "Marron"];
 
-export const categoryHints: Record<Category, string[]> = {
+export const categoryHints: Record<(typeof categories)[number], string[]> = {
   Hauts: ["top", "shirt", "chemise", "pull", "sweat", "tshirt", "blouse"],
   Bas: ["jean", "pantalon", "jupe", "short", "trouser", "skirt"],
   Robes: ["robe", "dress"],

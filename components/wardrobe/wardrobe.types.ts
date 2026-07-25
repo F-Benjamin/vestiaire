@@ -1,9 +1,13 @@
 import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-export type Category = "Hauts" | "Bas" | "Robes" | "Vestes" | "Chaussures" | "Accessoires";
-export type Season = "Toute saison" | "Printemps" | "Été" | "Automne" | "Hiver";
-export type WardrobeStyle = "Décontracté" | "Chic" | "Créatif" | "Minimal" | "Travail";
-export type Pattern = "Uni" | "Rayures" | "Carreaux" | "Fleurs" | "Pois" | "Graphique" | "Animal" | "Texturé";
+export type Category =
+  (typeof import("./wardrobe.constants").categories)[number];
+export type Season =
+  (typeof import("./wardrobe.constants").seasons)[number];
+export type WardrobeStyle =
+  (typeof import("./wardrobe.constants").wardrobeStyles)[number];
+export type Pattern =
+  (typeof import("./wardrobe.constants").patterns)[number];
 export type AttributeKey = "colors" | "seasons" | "styles" | "patterns";
 
 export type WardrobeItem = {

@@ -40,11 +40,12 @@ Ajoutez les variables suivantes en choisissant des valeurs contextuelles :
 | Variable | Scope Netlify | Production | Deploy Previews | Branch deploys |
 | --- | --- | --- | --- | --- |
 | `APP_ENV` | All scopes | `production` | `preview` | `preview` |
-| `MONGODB_URI` | All scopes sur Free, Functions sur Pro+ | future base de production | future base de test | future base de test |
+| `MONGODB_URI` | All scopes sur Free, Functions sur Pro+ | URI de production | URI de test | URI de test |
+| `MONGODB_DB_NAME` | All scopes | `vestiaire` | `vestiaire_preview` | `vestiaire_preview` |
 | `AUTH_SECRET` | All scopes sur Free, Functions sur Pro+ | secret de production | secret distinct | secret distinct |
 | `OPENAI_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé de production | clé de test limitée | clé de test limitée |
 
-Pour `MONGODB_URI`, `AUTH_SECRET` et `OPENAI_API_KEY`, activez l’option
+Pour `MONGODB_URI`, `AUTH_SECRET` et `OPENAI_API_KEY`, activez l'option
 **Contains secret values**.
 
 Netlify réserve la sélection de scopes précis aux offres Pro et Enterprise. Sur
@@ -52,8 +53,8 @@ l’offre Free, laissez **All scopes** : une variable serveur ne devient pas
 publique pour autant. Seules les variables préfixées par `NEXT_PUBLIC_` sont
 intégrées au code envoyé au navigateur par Next.js.
 
-Les trois dernières variables peuvent rester absentes tant que MongoDB,
-l’authentification et l’analyse IA ne sont pas encore branchés.
+`AUTH_SECRET` et `OPENAI_API_KEY` peuvent rester absentes tant que
+l'authentification et l'analyse IA ne sont pas encore branchées.
 
 ## Variables versionnées
 
@@ -83,3 +84,12 @@ La réponse doit contenir :
 
 Sur le domaine de production, `environment` doit valoir `production`. Sur une
 Pull Request Netlify, il doit valoir `preview`.
+
+La connexion MongoDB possède son propre contrôle :
+
+```text
+/api/health/database
+```
+
+La configuration complète d'Atlas est détaillée dans
+[`docs/MONGODB.md`](MONGODB.md).
