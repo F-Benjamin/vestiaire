@@ -204,6 +204,11 @@ export const fr = {
   },
   api: {
     filenameRequired: "Le champ « filename » est obligatoire.",
+    invalidRequest: "Les données de la requête sont invalides.",
+    invalidJson: "Le corps de la requête doit contenir du JSON valide.",
+    unauthorized: "Une authentification est nécessaire.",
+    garmentNotFound: "Cette pièce est introuvable.",
+    internalError: "Une erreur inattendue est survenue.",
   },
   attributes: {
     categories: {

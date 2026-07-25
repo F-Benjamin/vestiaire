@@ -200,6 +200,11 @@ export const en = {
   },
   api: {
     filenameRequired: "The “filename” field is required.",
+    invalidRequest: "The request data is invalid.",
+    invalidJson: "The request body must contain valid JSON.",
+    unauthorized: "Authentication is required.",
+    garmentNotFound: "This garment could not be found.",
+    internalError: "An unexpected error occurred.",
   },
   attributes: {
     categories: {

@@ -49,6 +49,9 @@ app/
 ├── api/
 │   ├── analyze/route.ts            # API d’analyse des vêtements
 │   ├── auth/[...all]/route.ts       # API Better Auth
+│   ├── garments/
+│   │   ├── route.ts                 # Liste et création privées
+│   │   └── [id]/route.ts            # Modification et suppression privées
 │   └── health/
 │       ├── route.ts                 # Vérification du serveur
 │       └── database/route.ts        # État de la connexion MongoDB
@@ -79,6 +82,7 @@ components/
     └── wardrobe.types.ts           # Types TypeScript
 
 lib/
+├── api/                             # Session et réponses des routes métier
 ├── analyze-filename.ts             # Analyse réutilisable côté serveur
 ├── auth.ts                         # Configuration Better Auth
 ├── auth-client.ts                  # Client React Better Auth
@@ -94,6 +98,7 @@ lib/
 docs/
 ├── AUTHENTICATION.md               # Sécurité et configuration Better Auth
 ├── ENVIRONMENTS.md                 # Configuration locale et Netlify
+├── GARMENT_API.md                   # Contrat CRUD privé des vêtements
 ├── MONGODB.md                      # Création et sécurisation d'Atlas
 └── PRODUCT_BRIEF.md                # Vision, MVP, exigences et roadmap
 
@@ -201,20 +206,22 @@ La procédure complète est détaillée dans
 
 ## Authentification et stockage
 
-La connexion MongoDB Atlas, la validation des vêtements et la couche
-d'accès aux données sont prêtes côté serveur. Better Auth fournit maintenant
-l'inscription, la connexion, les sessions MongoDB et la protection des pages.
-Les mots de passe sont hachés par Better Auth et ne sont jamais stockés en
-clair.
+La connexion MongoDB Atlas, la validation des vêtements et leur API CRUD privée
+sont prêtes côté serveur. Better Auth fournit l'inscription, la connexion, les
+sessions MongoDB et la protection des pages. Chaque opération sur un vêtement
+est filtrée avec l'identifiant de l'utilisateur connecté. Les mots de passe
+sont hachés par Better Auth et ne sont jamais stockés en clair.
 
 La procédure Atlas est détaillée dans [`docs/MONGODB.md`](docs/MONGODB.md).
 La configuration de l'authentification est détaillée dans
 [`docs/AUTHENTICATION.md`](docs/AUTHENTICATION.md).
+Le contrat des vêtements est documenté dans
+[`docs/GARMENT_API.md`](docs/GARMENT_API.md).
 
 La première version garde encore les vêtements sur l'appareil. Les prochaines
 briques seront :
 
-- migration des vêtements vers MongoDB avec leur propriétaire ;
+- stockage objet des photographies et upload signé ;
+- branchement du catalogue sur l’API privée ;
 - vérification des e-mails et récupération de mot de passe ;
-- un stockage objet pour les photographies ;
 - un worker pour les futurs traitements IA longs.
