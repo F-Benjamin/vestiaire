@@ -78,5 +78,6 @@ La vérification de l'adresse e-mail et la réinitialisation du mot de passe
 nécessitent un service d'envoi d'e-mails. Elles seront ajoutées avant une
 ouverture publique plus large.
 
-Les vêtements restent encore dans `localStorage`. La prochaine migration les
-enregistrera dans MongoDB avec l'identifiant de l'utilisateur connecté.
+Les vêtements et leurs photographies sont reliés à l’utilisateur connecté via
+les API privées. Aucune donnée de garde-robe n’est conservée dans
+`localStorage`.

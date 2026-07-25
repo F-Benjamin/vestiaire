@@ -7,22 +7,32 @@ type UploadButtonProps = {
 };
 
 const UploadButton = ({ large = false }: UploadButtonProps) => {
-  const { importPhotos } = useWardrobe();
+  const { importPhotos, isUploading } = useWardrobe();
   const { messages } = useI18n();
 
   return (
-    <label className={`${styles.root} ${large ? styles.large : ""}`}>
+    <label
+      className={`${styles.root} ${large ? styles.large : ""} ${
+        isUploading ? styles.disabled : ""
+      }`}
+      aria-busy={isUploading}
+    >
       <input
         className="visually-hidden"
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp"
         multiple
+        disabled={isUploading}
         onChange={importPhotos}
         aria-label={messages.upload.ariaLabel}
       />
-      <span aria-hidden="true">＋</span>
+      <span aria-hidden="true">{isUploading ? "…" : "＋"}</span>
       <span className={styles.label}>
-        {large ? messages.upload.choosePhotos : messages.upload.addItems}
+        {isUploading
+          ? messages.upload.uploading
+          : large
+            ? messages.upload.choosePhotos
+            : messages.upload.addItems}
       </span>
     </label>
   );

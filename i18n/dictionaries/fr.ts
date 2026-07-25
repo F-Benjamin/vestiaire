@@ -50,7 +50,7 @@ export const fr = {
     discoverPrototype: "Découvrir le prototype",
     understandConcept: "Comprendre le concept",
     localNote:
-      "Prototype personnel · Vos photographies restent actuellement sur cet appareil",
+      "Espace personnel · Vos photographies sont privées et liées à votre compte",
     dailySuggestion: "Suggestion du jour",
     casual: "Décontracté",
     shirt: "Chemise",
@@ -102,7 +102,7 @@ export const fr = {
     signUpEyebrow: "VOTRE ESPACE PERSONNEL",
     signUpTitle: "Créez votre vestiaire.",
     signUpIntro:
-      "Un compte suffit pour préparer la synchronisation sécurisée de votre garde-robe.",
+      "Créez votre espace pour retrouver votre garde-robe privée sur le web.",
     name: "Nom",
     namePlaceholder: "Votre nom",
     email: "Adresse e-mail",
@@ -134,7 +134,7 @@ export const fr = {
     heroTitleFirst: "Redécouvrez ce que",
     heroTitleSecond: "vous possédez déjà.",
     heroIntro:
-      "Rassemblez votre garde-robe, organisez chaque pièce et composez des tenues qui vous ressemblent. Tout reste sur cet appareil.",
+      "Rassemblez votre garde-robe, organisez chaque pièce et composez des tenues qui vous ressemblent. Vos données restent privées dans votre compte.",
     itemCountOne: "pièce répertoriée",
     itemCountMany: "pièces répertoriées",
     categoryCount: "catégories",
@@ -185,12 +185,20 @@ export const fr = {
     ariaLabel: "Ajouter des photographies de vêtements",
     choosePhotos: "Choisir mes photos",
     addItems: "Ajouter des pièces",
+    uploading: "Ajout en cours…",
   },
   notices: {
-    storageReadError:
-      "Impossible de relire la garde-robe sauvegardée.",
-    storageFull:
-      "La mémoire locale est pleine. Utilisez des photos plus légères.",
+    wardrobeLoadError:
+      "Impossible de charger votre garde-robe. Réessayez dans quelques instants.",
+    uploading: "Analyse et ajout de vos photos en cours…",
+    itemsUploadFailed:
+      "Les photos n’ont pas pu être ajoutées. Vérifiez leur format et réessayez.",
+    itemsUploadPartial:
+      "Ajouts réussis : {success}. Photos en échec : {failed}.",
+    itemUpdateFailed:
+      "La modification n’a pas pu être enregistrée.",
+    itemDeleteFailed:
+      "La pièce n’a pas pu être supprimée.",
     itemAdded: "{count} pièce ajoutée — pensez à vérifier les catégories.",
     itemsAdded: "{count} pièces ajoutées — pensez à vérifier les catégories.",
   },

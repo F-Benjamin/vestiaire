@@ -18,14 +18,22 @@ export type WardrobeItem = {
   seasons: Season[];
   styles: WardrobeStyle[];
   patterns: Pattern[];
-  image: string;
+  imageKey: string | null;
+  imageUrl: string | null;
 };
 
-export type LegacyWardrobeItem = WardrobeItem & {
-  color?: string;
-  season?: Season;
-  style?: WardrobeStyle;
-};
+export type WardrobeItemPatch = Partial<
+  Pick<
+    WardrobeItem,
+    | "name"
+    | "category"
+    | "colors"
+    | "seasons"
+    | "styles"
+    | "patterns"
+    | "imageKey"
+  >
+>;
 
 export type WardrobeContextValue = {
   items: WardrobeItem[];
@@ -40,8 +48,9 @@ export type WardrobeContextValue = {
   outfit: WardrobeItem[];
   notice: string;
   setNotice: Dispatch<SetStateAction<string>>;
+  isUploading: boolean;
   importPhotos: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
-  updateItem: (id: string, patch: Partial<WardrobeItem>) => void;
+  updateItem: (id: string, patch: WardrobeItemPatch) => void;
   removeItem: (id: string) => void;
   toggleAttribute: <K extends AttributeKey>(
     id: string,
