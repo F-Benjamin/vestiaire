@@ -17,7 +17,8 @@ type ThemeContextValue = {
   setPreference: (preference: ThemePreference) => void;
 };
 
-const STORAGE_KEY = "vestiaire-theme";
+const STORAGE_KEY = "wearsona-theme";
+const LEGACY_STORAGE_KEY = "vestiaire-theme";
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 const isThemePreference = (value: string | null): value is ThemePreference =>
@@ -42,8 +43,13 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
+      const stored =
+        window.localStorage.getItem(STORAGE_KEY) ??
+        window.localStorage.getItem(LEGACY_STORAGE_KEY);
       const nextPreference = isThemePreference(stored) ? stored : "system";
+      if (isThemePreference(stored)) {
+        window.localStorage.setItem(STORAGE_KEY, stored);
+      }
       setPreferenceState(nextPreference);
       applyTheme(nextPreference);
     }, 0);

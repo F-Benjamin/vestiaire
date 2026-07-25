@@ -55,7 +55,7 @@ const ProfilePage = ({
         </div>
         <div className={styles.profileSummary}>
           <div className={styles.avatar} aria-hidden="true">
-            {initials || "V"}
+            {initials || "W"}
           </div>
           <div>
             <h2>{user.name}</h2>

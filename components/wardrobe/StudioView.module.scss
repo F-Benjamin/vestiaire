@@ -22,7 +22,7 @@
 
 .eyebrow {
   margin: 0 0 13px;
-  color: var(--sage-deep);
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -44,7 +44,7 @@
   grid-template-rows: minmax(0, 1fr) auto;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 5px;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   animation: card-in 440ms 70ms var(--ease-out) both;
@@ -69,7 +69,7 @@
     background: var(--paper);
 
     &:hover {
-      border-color: var(--sage-deep);
+      border-color: var(--accent);
     }
   }
 }
@@ -117,7 +117,7 @@
     font-size: 1.05rem;
 
     &:hover {
-      border-color: var(--sage-deep);
+      border-color: var(--accent);
     }
   }
 }
@@ -140,7 +140,7 @@
     background: var(--paper);
 
     &:hover {
-      border-color: var(--sage-deep);
+      border-color: var(--accent);
     }
   }
 }
@@ -166,7 +166,7 @@
       transform var(--duration-fast) var(--ease-out);
 
     &:hover {
-      border-color: var(--sage-deep);
+      border-color: var(--accent);
     }
 
     &:active {
@@ -174,9 +174,9 @@
     }
 
     &.active {
-      border-color: var(--sage-deep);
+      border-color: var(--accent);
       background: var(--surface-accent);
-      color: var(--sage-deep);
+      color: var(--accent);
     }
   }
 }
@@ -201,8 +201,8 @@
     box-shadow var(--duration-fast) var(--ease-standard);
 
   &:hover {
-    border-color: var(--sage-deep);
-    background: var(--sage-deep);
+    border-color: var(--accent);
+    background: var(--accent);
     transform: translateY(-1px);
   }
 
@@ -216,9 +216,10 @@
   padding: clamp(30px, 5vw, 68px);
   position: relative;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 8px;
   background:
-    linear-gradient(135deg, transparent 75%, rgb(174 188 157 / 18%)),
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--lilac) 46%, transparent), transparent 34%),
+    linear-gradient(135deg, transparent 76%, color-mix(in srgb, var(--coral) 12%, transparent)),
     var(--surface-soft);
   animation: card-in 480ms 120ms var(--ease-out) both;
   transition:
@@ -315,7 +316,7 @@
   border-top: 1px solid var(--line-strong);
 
   > b {
-    color: var(--sage-deep);
+    color: var(--accent);
     font-size: 1.5rem;
   }
 
@@ -343,7 +344,7 @@
   text-align: center;
 
   > span {
-    color: var(--sage-deep);
+    color: var(--accent);
     font-size: 2.5rem;
   }
 

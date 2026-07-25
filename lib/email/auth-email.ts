@@ -90,18 +90,18 @@ const sendAuthEmail = async ({
       messages.authEmail.signature,
     ].join("\n"),
     html: `
-      <div style="margin:0;background:#f5f3ed;padding:40px 16px;color:#18241f;font-family:Arial,sans-serif">
-        <div style="max-width:560px;margin:0 auto;padding:36px;border:1px solid #d8d8cf;border-radius:20px;background:#ffffff">
-          <p style="margin:0 0 28px;font-family:Georgia,serif;font-size:24px;font-weight:700">Vestiaire</p>
+      <div style="margin:0;background:#f3eee9;padding:40px 16px;color:#241d2b;font-family:Arial,sans-serif">
+        <div style="max-width:560px;margin:0 auto;padding:36px;border:1px solid #ded7df;border-radius:28px 28px 28px 8px;background:#fffdfb">
+          <p style="margin:0 0 28px;font-size:24px;font-weight:800;letter-spacing:-1px">wear<span style="color:#6c3ce9;font-family:Georgia,serif;font-style:italic">sona</span></p>
           <h1 style="margin:0 0 20px;font-family:Georgia,serif;font-size:32px;line-height:1.15">${escapeHtml(copy.heading)}</h1>
           <p style="margin:0 0 12px;line-height:1.6">${safeGreeting}</p>
           <p style="margin:0 0 26px;line-height:1.6">${escapeHtml(copy.introduction)}</p>
           <p style="margin:0 0 28px">
-            <a href="${safeUrl}" style="display:inline-block;padding:14px 20px;border-radius:10px;background:#18241f;color:#ffffff;font-weight:700;text-decoration:none">${escapeHtml(copy.action)}</a>
+            <a href="${safeUrl}" style="display:inline-block;padding:14px 20px;border-radius:12px;background:#6c3ce9;color:#ffffff;font-weight:700;text-decoration:none">${escapeHtml(copy.action)}</a>
           </p>
           <p style="margin:0 0 8px;color:#66706b;font-size:14px;line-height:1.5">${escapeHtml(copy.expiration)}</p>
-          <p style="margin:0;color:#66706b;font-size:14px;line-height:1.5">${escapeHtml(copy.ignore)}</p>
-          <p style="margin:28px 0 0;padding-top:20px;border-top:1px solid #e5e5df;color:#66706b;font-size:13px">${escapeHtml(messages.authEmail.signature)}</p>
+          <p style="margin:0;color:#716a76;font-size:14px;line-height:1.5">${escapeHtml(copy.ignore)}</p>
+          <p style="margin:28px 0 0;padding-top:20px;border-top:1px solid #ded7df;color:#716a76;font-size:13px">${escapeHtml(messages.authEmail.signature)}</p>
         </div>
       </div>
     `,

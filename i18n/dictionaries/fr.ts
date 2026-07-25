@@ -1,40 +1,40 @@
 export const fr = {
   metadata: {
-    rootTitle: "Vestiaire — Votre garde-robe intelligente",
+    rootTitle: "Wearsona — Portez qui vous voulez être aujourd’hui",
     rootDescription:
       "Cataloguez votre garde-robe et composez des tenues avec les pièces que vous possédez déjà.",
-    homeTitle: "Vestiaire — Révélez le potentiel de votre garde-robe",
+    homeTitle: "Wearsona — Votre style, au présent",
     homeDescription:
-      "Un assistant vestimentaire personnel pour organiser vos pièces, composer des tenues et mieux choisir ce qui complète votre garde-robe.",
-    wardrobeTitle: "Ma garde-robe — Vestiaire",
+      "Une garde-robe intelligente pour composer une tenue selon votre humeur, votre contexte et la personne que vous voulez être aujourd’hui.",
+    wardrobeTitle: "Ma garde-robe — Wearsona",
     wardrobeDescription: "Organisez les vêtements que vous possédez déjà.",
-    studioTitle: "Studio de style — Vestiaire",
+    studioTitle: "Studio d’identité — Wearsona",
     studioDescription:
       "Composez des tenues avec les pièces de votre garde-robe.",
-    signInTitle: "Connexion — Vestiaire",
-    signInDescription: "Connectez-vous à votre espace Vestiaire.",
-    signUpTitle: "Créer un compte — Vestiaire",
-    signUpDescription: "Créez votre espace personnel Vestiaire.",
-    forgotPasswordTitle: "Mot de passe oublié — Vestiaire",
+    signInTitle: "Connexion — Wearsona",
+    signInDescription: "Connectez-vous à votre espace Wearsona.",
+    signUpTitle: "Créer un compte — Wearsona",
+    signUpDescription: "Créez votre espace personnel Wearsona.",
+    forgotPasswordTitle: "Mot de passe oublié — Wearsona",
     forgotPasswordDescription:
       "Demandez un lien sécurisé pour réinitialiser votre mot de passe.",
-    resetPasswordTitle: "Nouveau mot de passe — Vestiaire",
+    resetPasswordTitle: "Nouveau mot de passe — Wearsona",
     resetPasswordDescription:
-      "Choisissez un nouveau mot de passe pour votre espace Vestiaire.",
-    profileTitle: "Mon profil — Vestiaire",
+      "Choisissez un nouveau mot de passe pour votre espace Wearsona.",
+    profileTitle: "Mon profil — Wearsona",
     profileDescription:
       "Gérez votre identité, vos préférences, votre sécurité et vos données.",
   },
   common: {
-    brand: "Vestiaire",
-    homeLabel: "Accueil Vestiaire",
+    brand: "Wearsona",
+    homeLabel: "Accueil Wearsona",
     skipToContent: "Aller au contenu principal",
     close: "Fermer",
     language: "Langue",
     publicNavigation: "Navigation publique",
     mainNavigation: "Navigation principale",
     wardrobe: "Ma garde-robe",
-    studio: "Studio de style",
+    studio: "Studio",
     profile: "Mon profil",
     signIn: "Se connecter",
     signOut: "Se déconnecter",
@@ -49,70 +49,70 @@ export const fr = {
   },
   landing: {
     navigation: {
-      concept: "Le concept",
-      vision: "La vision",
+      concept: "L’expérience",
+      vision: "Le futur",
     },
-    openPrototype: "Ouvrir le prototype",
-    heroEyebrow: "VOTRE GARDE-ROBE, AUGMENTÉE",
-    heroTitle: "Plus de style. Moins d’achats inutiles.",
+    openPrototype: "Ouvrir Wearsona",
+    heroEyebrow: "VOTRE STYLE, AU PRÉSENT",
+    heroTitle: "Portez qui vous voulez être aujourd’hui.",
     heroIntro:
-      "Vestiaire transforme les vêtements que vous possédez déjà en un terrain de possibilités. Organisez vos pièces, composez des tenues et découvrez ce qui manque vraiment.",
-    discoverPrototype: "Découvrir le prototype",
-    understandConcept: "Comprendre le concept",
+      "Wearsona transforme votre garde-robe en langage personnel. Partez de votre humeur, de votre journée ou d’une pièce — et composez la version de vous qui vous ressemble maintenant.",
+    discoverPrototype: "Entrer dans Wearsona",
+    understandConcept: "Découvrir l’expérience",
     localNote:
       "Espace personnel · Vos photographies sont privées et liées à votre compte",
-    dailySuggestion: "Suggestion du jour",
-    casual: "Décontracté",
+    dailySuggestion: "Votre Wearsona du jour",
+    casual: "assuré·e",
     shirt: "Chemise",
     jacket: "Veste",
     trousers: "Pantalon",
     threePieces: "3 pièces de votre garde-robe",
-    conceptEyebrow: "LE CONCEPT",
-    conceptTitle: "Votre garde-robe devient une matière créative.",
+    conceptEyebrow: "UNE IDENTITÉ EN MOUVEMENT",
+    conceptTitle: "Vos vêtements ne définissent pas qui vous êtes. Ils vous aident à le choisir.",
     pillars: [
       {
         number: "01",
-        title: "Comprendre",
+        title: "Connaître",
         description:
-          "Chaque pièce est classée par catégorie, couleurs, saisons, motifs et potentiel stylistique.",
+          "Wearsona structure les pièces que vous possédez pour révéler les possibilités déjà présentes dans votre garde-robe.",
       },
       {
         number: "02",
-        title: "Composer",
+        title: "Intentionner",
         description:
-          "Le studio révèle les associations possibles à partir de ce que vous possédez déjà.",
+          "Choisissez une allure, une humeur ou une pièce de départ. Le studio traduit cette intention en tenue.",
       },
       {
         number: "03",
-        title: "Compléter",
+        title: "Incarner",
         description:
-          "À terme, les recommandations identifieront les vrais manques sans encourager les achats inutiles.",
+          "Passez de « qu’est-ce que je mets ? » à « qui ai-je envie d’être ? », sans déguisement et sans surconsommer.",
       },
     ],
-    visionEyebrow: "PRODUIT EN CONSTRUCTION",
-    visionTitle: "Une expérimentation réelle, pensée pour aller plus loin.",
+    visionEyebrow: "LA VISION WEARSONA",
+    visionTitle: "Un miroir créatif, pas un algorithme qui décide à votre place.",
     visionDescription:
-      "Cette première version explore une conviction simple : mieux connaître ce que l’on possède permet de mieux s’habiller et de choisir plus justement ce que l’on achète.",
+      "L’intelligence de Wearsona doit comprendre vos vêtements, apprendre de vos corrections et expliquer ses propositions. L’objectif n’est pas de suivre chaque tendance, mais de rendre votre style plus libre, plus personnel et plus conscient.",
     visionListLabel: "Axes de développement",
     visionItems: [
-      "Analyse visuelle et détourage des vêtements",
-      "Conseils personnalisés et explicables",
-      "Essayage virtuel comme outil de projection",
+      "Analyse visuelle et catalogage sans friction",
+      "Tenues personnelles, contextuelles et explicables",
+      "Projection virtuelle respectueuse de votre image",
     ],
-    exploreCurrentVersion: "Explorer la version actuelle",
+    exploreCurrentVersion: "Composer ma première Wearsona",
     footerDescription:
-      "Un projet Next.js, TypeScript et intelligence visuelle.",
-    accessApplication: "Accéder à l’application",
+      "Un laboratoire de style personnel construit avec Next.js et l’intelligence visuelle.",
+    accessApplication: "Accéder à Wearsona",
   },
   auth: {
-    signInEyebrow: "HEUREUX DE VOUS REVOIR",
-    signInTitle: "Retrouvez votre vestiaire.",
+    signInEyebrow: "À VOUS DE CHOISIR",
+    signInTitle: "Qui voulez-vous être aujourd’hui ?",
     signInIntro:
-      "Connectez-vous pour accéder à votre garde-robe et à votre studio de style.",
-    signUpEyebrow: "VOTRE ESPACE PERSONNEL",
-    signUpTitle: "Créez votre vestiaire.",
+      "Retrouvez votre garde-robe et composez une tenue qui traduit votre intention du jour.",
+    signUpEyebrow: "VOTRE STYLE COMMENCE ICI",
+    signUpTitle: "Créez votre espace Wearsona.",
     signUpIntro:
-      "Créez votre espace pour retrouver votre garde-robe privée sur le web.",
+      "Rassemblez vos vêtements dans un espace privé et transformez-les en nouvelles façons d’être vous.",
     name: "Nom",
     namePlaceholder: "Votre nom",
     email: "Adresse e-mail",
@@ -144,7 +144,7 @@ export const fr = {
       "Une erreur est survenue. Réessayez dans quelques instants.",
     forgotPassword: "Mot de passe oublié ?",
     forgotPasswordEyebrow: "RÉCUPÉRATION DU COMPTE",
-    forgotPasswordTitle: "Retrouvez l’accès à votre vestiaire.",
+    forgotPasswordTitle: "Retrouvez l’accès à votre Wearsona.",
     forgotPasswordIntro:
       "Indiquez votre adresse e-mail. Si un compte lui est associé, nous vous enverrons un lien sécurisé.",
     sendResetLink: "Envoyer le lien",
@@ -172,7 +172,7 @@ export const fr = {
   },
   authEmail: {
     verification: {
-      subject: "Validez votre adresse e-mail — Vestiaire",
+      subject: "Validez votre adresse e-mail — Wearsona",
       heading: "Validez votre adresse e-mail",
       greeting: "Bonjour {name},",
       introduction:
@@ -180,10 +180,10 @@ export const fr = {
       action: "Valider mon adresse",
       expiration: "Ce lien est valable pendant une heure.",
       ignore:
-        "Si vous n’avez pas créé de compte Vestiaire, vous pouvez ignorer cet e-mail.",
+        "Si vous n’avez pas créé de compte Wearsona, vous pouvez ignorer cet e-mail.",
     },
     passwordReset: {
-      subject: "Réinitialisez votre mot de passe — Vestiaire",
+      subject: "Réinitialisez votre mot de passe — Wearsona",
       heading: "Réinitialisez votre mot de passe",
       greeting: "Bonjour {name},",
       introduction:
@@ -193,11 +193,11 @@ export const fr = {
       ignore:
         "Si vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet e-mail.",
     },
-    signature: "E-mail automatique envoyé par Vestiaire.",
+    signature: "E-mail automatique envoyé par Wearsona.",
   },
   profile: {
-    eyebrow: "VOTRE ESPACE",
-    title: "Un profil à votre mesure.",
+    eyebrow: "VOTRE IDENTITÉ",
+    title: "Votre espace, selon vos règles.",
     intro:
       "Gérez votre identité, vos préférences et la sécurité de votre compte depuis un seul endroit.",
     overviewNavigation: "Sommaire du profil",
@@ -304,16 +304,16 @@ export const fr = {
       "Le compte n’a pas pu être supprimé. Vérifiez votre mot de passe.",
   },
   wardrobe: {
-    heroEyebrow: "VOTRE DRESSING, EN MIEUX",
-    heroTitleFirst: "Redécouvrez ce que",
-    heroTitleSecond: "vous possédez déjà.",
+    heroEyebrow: "VOTRE MATIÈRE PREMIÈRE",
+    heroTitleFirst: "Tout ce que vous êtes",
+    heroTitleSecond: "déjà prêt·e à porter.",
     heroIntro:
-      "Rassemblez votre garde-robe, organisez chaque pièce et composez des tenues qui vous ressemblent. Vos données restent privées dans votre compte.",
+      "Chaque pièce est une possibilité. Organisez ce que vous possédez, puis laissez le studio l’associer à l’intention que vous choisissez aujourd’hui.",
     itemCountOne: "pièce répertoriée",
     itemCountMany: "pièces répertoriées",
     categoryCount: "catégories",
-    collection: "COLLECTION",
-    title: "Ma garde-robe",
+    collection: "VOTRE UNIVERS",
+    title: "La garde-robe",
     filterByCategory: "Filtrer par catégorie",
     composeAround: "Composer autour de cette pièce",
     removeItem: "Supprimer {name}",
@@ -325,10 +325,10 @@ export const fr = {
       "Importez une ou plusieurs photos. Le nom des fichiers nous aidera à faire un premier classement.",
   },
   studio: {
-    eyebrow: "STUDIO DE STYLE",
-    title: "Une pièce, plusieurs possibilités.",
+    eyebrow: "STUDIO WEARSONA",
+    title: "Donnez une forme à votre intention.",
     intro:
-      "Choisissez votre point de départ et l’allure recherchée. Le studio pioche les meilleures associations dans votre garde-robe.",
+      "Partez d’une pièce et choisissez l’énergie que vous voulez porter. Le studio cherche la combinaison qui l’exprime avec votre propre garde-robe.",
     emptyTitle: "Ajoutez d’abord quelques pièces",
     emptyDescription:
       "Le studio a besoin de votre garde-robe pour commencer.",
@@ -377,8 +377,8 @@ export const fr = {
     itemsAdded: "{count} pièces ajoutées — pensez à vérifier les catégories.",
   },
   routeState: {
-    loading: "Préparation de votre vestiaire…",
-    errorTitle: "Le vestiaire n’a pas pu s’afficher.",
+    loading: "Préparation de votre Wearsona…",
+    errorTitle: "Wearsona n’a pas pu s’afficher.",
     errorFallback: "Une erreur inattendue est survenue.",
     retry: "Réessayer",
     notFound: "Cette page n’existe pas.",

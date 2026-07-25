@@ -20,7 +20,7 @@ export const GET = async (request: Request) => {
     const garments = await listAllGarments(user.id);
     const exportedAt = new Date();
     const payload = {
-      format: "vestiaire-export",
+      format: "wearsona-export",
       version: 1,
       exportedAt: exportedAt.toISOString(),
       profile: {
@@ -60,7 +60,7 @@ export const GET = async (request: Request) => {
     return new Response(JSON.stringify(payload, null, 2), {
       headers: {
         "Cache-Control": "no-store",
-        "Content-Disposition": `attachment; filename="vestiaire-${date}.json"`,
+        "Content-Disposition": `attachment; filename="wearsona-${date}.json"`,
         "Content-Type": "application/json; charset=utf-8",
         "X-Content-Type-Options": "nosniff",
       },

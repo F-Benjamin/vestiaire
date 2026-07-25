@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import BrandMark from "@/components/brand/BrandMark";
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
@@ -46,14 +47,11 @@ const AppHeader = ({ user }: AppHeaderProps) => {
         {messages.common.skipToContent}
       </a>
       <header className={styles.topbar}>
-        <Link
-          className={styles.brand}
+        <BrandMark
+          homeLabel={messages.common.homeLabel}
           href={href()}
-          aria-label={messages.common.homeLabel}
-        >
-          <i aria-hidden="true">V</i>
-          <span>{messages.common.brand}</span>
-        </Link>
+          priority="quiet"
+        />
         <nav
           className={styles.navigation}
           aria-label={messages.common.mainNavigation}
