@@ -65,7 +65,7 @@ export const garmentNotFound = async (request: Request) => {
 
 export const internalError = async (request: Request, error: unknown) => {
   const errorName = error instanceof Error ? error.name : "UnknownError";
-  console.error(`Garment API failed: ${errorName}`);
+  console.error(`API request failed: ${errorName}`);
 
   const messages = await getApiMessages(request);
   return apiError(500, "INTERNAL_ERROR", messages.internalError);

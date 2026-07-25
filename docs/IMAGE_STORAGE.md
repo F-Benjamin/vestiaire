@@ -66,6 +66,9 @@ est supprimé s’il n’est plus référencé par une autre pièce. La suppress
 directe d’une photo encore utilisée reçoit un statut `409`. Une erreur de
 nettoyage est journalisée sans empêcher la suppression du vêtement.
 
+La suppression du compte parcourt le préfixe privé de l’utilisateur et efface
+les blobs par lots limités afin d’éviter une rafale de requêtes au fournisseur.
+
 ## Développement local
 
 Netlify Dev utilise un store local isolé de la production :

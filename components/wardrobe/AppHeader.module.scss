@@ -116,7 +116,7 @@
   align-items: center;
   gap: 7px;
 
-  > span {
+  > a {
     width: 38px;
     height: 38px;
     display: grid;
@@ -127,6 +127,18 @@
     color: var(--sage-deep);
     font-size: 0.78rem;
     font-weight: 850;
+    text-decoration: none;
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-out);
+
+    &:hover,
+    &.activeAccount {
+      border-color: var(--sage-deep);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sage) 24%, transparent);
+      transform: translateY(-1px);
+    }
   }
 
   button {

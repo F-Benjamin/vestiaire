@@ -185,3 +185,41 @@ export const deleteOwnedWardrobeImage = async (
   await assertWardrobeImageOwnership(ownerId, key);
   await getImageStore().delete(key);
 };
+
+export const countOwnedWardrobeImages = async (ownerId: string) => {
+  const { blobs } = await getImageStore().list({
+    prefix: getOwnerPrefix(ownerId),
+  });
+  return blobs.length;
+};
+
+export const deleteAllOwnedWardrobeImages = async (ownerId: string) => {
+  const store = getImageStore();
+  const keys: string[] = [];
+
+  for await (const page of store.list({
+    prefix: getOwnerPrefix(ownerId),
+    paginate: true,
+  })) {
+    for (const blob of page.blobs) {
+      keys.push(blob.key);
+    }
+  }
+
+  let failureCount = 0;
+
+  for (let index = 0; index < keys.length; index += 20) {
+    const results = await Promise.allSettled(
+      keys.slice(index, index + 20).map((key) => store.delete(key)),
+    );
+    failureCount += results.filter(
+      (result) => result.status === "rejected",
+    ).length;
+  }
+
+  if (failureCount) {
+    throw new Error(`${failureCount} wardrobe image(s) could not be deleted.`);
+  }
+
+  return keys.length;
+};

@@ -67,6 +67,17 @@ export const listGarments = async (
     .toArray();
 };
 
+export const listAllGarments = async (
+  ownerId: string,
+): Promise<WithId<GarmentDocument>[]> =>
+  getGarmentsCollection()
+    .find({ ownerId })
+    .sort({ createdAt: 1 })
+    .toArray();
+
+export const countGarments = async (ownerId: string) =>
+  getGarmentsCollection().countDocuments({ ownerId });
+
 export const getGarment = async (
   ownerId: string,
   id: string,
@@ -128,4 +139,9 @@ export const deleteGarment = async (
     _id: objectId,
     ownerId,
   });
+};
+
+export const deleteGarmentsByOwner = async (ownerId: string) => {
+  const result = await getGarmentsCollection().deleteMany({ ownerId });
+  return result.deletedCount;
 };

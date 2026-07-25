@@ -16,9 +16,10 @@ garde-robe à partir de photographies, propose des associations cohérentes et
 identifie les pièces qui augmenteraient réellement le nombre de tenues
 possibles.
 
-Le projet commence comme un outil personnel et un projet de portfolio. Sa
-trajectoire vise ensuite une application multi-utilisateur avec authentification,
-stockage sécurisé, intelligence visuelle et recommandations personnalisées.
+Le projet est un outil personnel et une étude de cas de portfolio. Il reste
+déployé sur le web pour être utilisé par son créateur et présenter son
+architecture, mais aucune ouverture publique du service n’est prévue à ce
+stade.
 
 ## 2. Problème
 
@@ -57,10 +58,10 @@ s’habiller et limiter les achats peu utiles.
 Le créateur du produit, qui utilise sa propre garde-robe pour valider les
 parcours, la qualité des analyses et la valeur réelle des recommandations.
 
-### Audience secondaire du MVP
+### Audience secondaire
 
-Les recruteurs, développeurs, designers et partenaires qui découvrent le projet
-comme étude de cas de portfolio.
+Les recruteurs, développeurs et designers qui découvrent la vitrine du projet
+comme étude de cas, sans accéder aux données personnelles de la garde-robe.
 
 ## 5. Jobs to be done
 
@@ -103,14 +104,14 @@ comme étude de cas de portfolio.
 6. **Tendances contextualisées** — les tendances complètent les préférences
    personnelles sans les remplacer.
 
-## 8. Périmètre du MVP public
+## 8. Périmètre du MVP personnel et portfolio
 
-### Expérience publique
+### Vitrine du portfolio
 
 - page d’accueil présentant la promesse et le concept ;
-- démonstration ou accès au prototype ;
+- présentation visuelle du prototype sans ouverture des données personnelles ;
 - présentation du projet comme étude de cas ;
-- pages légales et politique de confidentialité avant collecte de données.
+- explication des choix produit, techniques et UX.
 
 ### Expérience connectée
 
