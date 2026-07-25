@@ -25,7 +25,6 @@ const WardrobeLayout = async ({ children }: { children: ReactNode }) => {
           session
             ? {
                 name: session.user.name,
-                email: session.user.email,
               }
             : null
         }

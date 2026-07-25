@@ -15,7 +15,6 @@ import styles from "./AppHeader.module.scss";
 type AppHeaderProps = {
   user: {
     name: string;
-    email: string;
   } | null;
 };
 
@@ -27,6 +26,7 @@ const AppHeader = ({ user }: AppHeaderProps) => {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const wardrobeHref = href("/wardrobe");
   const studioHref = href("/studio");
+  const profileHref = href("/profile");
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -87,14 +87,23 @@ const AppHeader = ({ user }: AppHeaderProps) => {
           <UploadButton />
           {user && (
             <div className={styles.account}>
-              <span
-                title={user.email}
+              <Link
+                className={
+                  pathname.startsWith(profileHref)
+                    ? styles.activeAccount
+                    : undefined
+                }
+                href={profileHref}
+                title={messages.common.profile}
                 aria-label={formatMessage(messages.common.account, {
                   name: user.name,
                 })}
+                aria-current={
+                  pathname.startsWith(profileHref) ? "page" : undefined
+                }
               >
                 {user.name.slice(0, 1).toLocaleUpperCase()}
-              </span>
+              </Link>
               <button
                 type="button"
                 onClick={handleSignOut}

@@ -10,10 +10,14 @@ avec `next-auth@beta` puis d'organiser une migration.
 - connexion et déconnexion ;
 - validation de l’adresse e-mail avant la première connexion ;
 - récupération et réinitialisation du mot de passe ;
+- modification du nom et du mot de passe depuis le profil ;
+- consultation et révocation des sessions actives ;
+- suppression du compte avec confirmation du mot de passe ;
 - sessions persistantes pendant sept jours ;
 - mots de passe hachés avec `scrypt` par Better Auth ;
 - limitation des tentatives stockée dans MongoDB ;
-- protection serveur de `/[locale]/wardrobe` et `/[locale]/studio` ;
+- protection serveur de `/[locale]/wardrobe`, `/[locale]/studio` et
+  `/[locale]/profile` ;
 - retour à la page initialement demandée après la connexion ;
 - écrans français et anglais, accessibles en thème clair ou sombre.
 
@@ -110,3 +114,9 @@ font pas encore partie du MVP.
 Les vêtements et leurs photographies sont reliés à l’utilisateur connecté via
 les API privées. Aucune donnée de garde-robe n’est conservée dans
 `localStorage`.
+
+Le changement de mot de passe demande le mot de passe actuel et révoque les
+autres sessions. La suppression du compte demande également le mot de passe,
+puis supprime les données Better Auth, les vêtements MongoDB et les
+photographies Netlify Blobs. Le détail des parcours se trouve dans
+[`docs/PROFILE.md`](PROFILE.md).

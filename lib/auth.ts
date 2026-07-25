@@ -2,6 +2,7 @@ import "server-only";
 import { betterAuth } from "better-auth/minimal";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js";
+import { deleteApplicationData } from "@/lib/account-cleanup";
 import { queueAuthEmail } from "@/lib/email/auth-email";
 import { getAuthSecret } from "@/lib/environment/auth";
 import {
@@ -63,6 +64,14 @@ export const auth = betterAuth({
         expiresIn: 60 * 60,
       }
     : undefined,
+  user: {
+    deleteUser: {
+      enabled: true,
+      afterDelete: async (user) => {
+        await deleteApplicationData(user.id);
+      },
+    },
+  },
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
@@ -88,6 +97,14 @@ export const auth = betterAuth({
       "/send-verification-email": {
         window: 60,
         max: 5,
+      },
+      "/change-password": {
+        window: 60,
+        max: 5,
+      },
+      "/delete-user": {
+        window: 60 * 10,
+        max: 3,
       },
     },
   },

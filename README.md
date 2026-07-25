@@ -41,6 +41,7 @@ app/
 │   │   ├── layout.tsx              # Navigation de l'espace connecté
 │   │   ├── wardrobe/page.tsx       # /fr/wardrobe et /en/wardrobe
 │   │   ├── studio/page.tsx         # /fr/studio et /en/studio
+│   │   ├── profile/page.tsx        # Centre de profil et sécurité
 │   │   ├── loading.tsx             # État de chargement localisé
 │   │   └── error.tsx               # Limite d’erreur localisée
 │   ├── layout.tsx                  # Langue HTML et providers
@@ -49,6 +50,7 @@ app/
 ├── api/
 │   ├── analyze/route.ts            # API d’analyse des vêtements
 │   ├── auth/[...all]/route.ts       # API Better Auth
+│   ├── account/export/route.ts      # Export privé du catalogue
 │   ├── garments/
 │   │   ├── route.ts                 # Liste et création privées
 │   │   └── [id]/route.ts            # Modification et suppression privées
@@ -64,6 +66,7 @@ components/
 ├── auth/
 │   ├── AuthPage.tsx                # Connexion et inscription
 │   └── AuthPage.module.scss        # Styles des parcours de compte
+├── profile/                         # Identité, préférences, sécurité et données
 ├── i18n/
 │   ├── LocalizationProvider.tsx    # Dictionnaire actif
 │   └── LocaleSwitcher.tsx          # Sélecteur FR / EN
@@ -107,6 +110,7 @@ docs/
 ├── GARMENT_API.md                   # Contrat CRUD privé des vêtements
 ├── IMAGE_STORAGE.md                 # Upload et lecture des photographies
 ├── MONGODB.md                      # Création et sécurisation d'Atlas
+├── PROFILE.md                      # Parcours du centre de profil
 └── PRODUCT_BRIEF.md                # Vision, MVP, exigences et roadmap
 
 i18n/
@@ -140,11 +144,11 @@ sur une URL sans préfixe est redirigée vers `/fr` ou `/en` selon l’en-tête
 `Accept-Language` du navigateur. Tous les textes d’interface sont centralisés
 dans `i18n/dictionaries`.
 
-Le groupe `(marketing)` contient la surface publique et `(auth)` les parcours
-de connexion et d'inscription. Le groupe `(app)` contient la garde-robe et le
-studio. Chacune de ces pages vérifie sa session côté serveur avant de charger
-la vue. Le layout lit les vêtements de l’utilisateur dans MongoDB, puis
-installe le `WardrobeProvider` avec ces données initiales.
+Le groupe `(marketing)` contient la vitrine du projet et `(auth)` les parcours
+de connexion et d'inscription. Le groupe `(app)` contient la garde-robe, le
+studio et le centre de profil. Chacune de ces pages vérifie sa session côté
+serveur avant de charger la vue. Le layout lit les vêtements de l’utilisateur
+dans MongoDB, puis installe le `WardrobeProvider` avec ces données initiales.
 Les vues utilisent le hook `useWardrobe` pour accéder aux états et actions sans
 props drilling. Toutes les mutations passent par le client API typé, sans
 stockage local de la garde-robe. La navigation utilise `next/link`, avec
@@ -228,9 +232,10 @@ Le contrat des vêtements est documenté dans
 [`docs/GARMENT_API.md`](docs/GARMENT_API.md).
 Le stockage des photographies est détaillé dans
 [`docs/IMAGE_STORAGE.md`](docs/IMAGE_STORAGE.md).
+Le centre de profil est détaillé dans [`docs/PROFILE.md`](docs/PROFILE.md).
 
 La garde-robe utilise désormais MongoDB pour les attributs et Netlify Blobs
 pour les photographies. Les prochaines briques seront :
 
-- vérification des e-mails et récupération de mot de passe ;
+- analyse visuelle réelle des photographies ;
 - un worker pour les futurs traitements IA longs.
