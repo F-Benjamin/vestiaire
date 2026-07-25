@@ -303,7 +303,7 @@ préférences du navigateur.
 - profil ;
 - MongoDB Atlas ;
 - stockage objet ;
-- migration des données locales.
+- suppression définitive de l’ancien stockage local de la garde-robe.
 
 ### Phase 3 — Intelligence visuelle
 

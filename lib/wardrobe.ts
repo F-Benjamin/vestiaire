@@ -5,7 +5,6 @@ import {
 } from "@/components/wardrobe/wardrobe.constants";
 import type {
   Category,
-  LegacyWardrobeItem,
   WardrobeItem,
   WardrobeStyle,
 } from "@/components/wardrobe/wardrobe.types";
@@ -18,14 +17,6 @@ export const guessCategory = (filename: string): Category => {
     ) ?? "Hauts"
   );
 };
-
-export const normalizeItem = (item: LegacyWardrobeItem): WardrobeItem => ({
-  ...item,
-  colors: item.colors ?? [item.color ?? "Noir"],
-  seasons: item.seasons ?? [item.season ?? "Toute saison"],
-  styles: item.styles ?? [item.style ?? "Décontracté"],
-  patterns: item.patterns ?? ["Uni"],
-});
 
 export const scoreOutfitItem = (
   anchor: WardrobeItem,

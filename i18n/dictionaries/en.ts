@@ -51,7 +51,7 @@ export const en = {
     discoverPrototype: "Explore the prototype",
     understandConcept: "Understand the concept",
     localNote:
-      "Personal prototype · Your photographs currently stay on this device",
+      "Personal space · Your photographs are private and linked to your account",
     dailySuggestion: "Today’s suggestion",
     casual: "Casual",
     shirt: "Shirt",
@@ -103,7 +103,7 @@ export const en = {
     signUpEyebrow: "YOUR PERSONAL SPACE",
     signUpTitle: "Create your wardrobe.",
     signUpIntro:
-      "One account is all you need to prepare secure wardrobe synchronization.",
+      "Create your space to access your private wardrobe on the web.",
     name: "Name",
     namePlaceholder: "Your name",
     email: "Email address",
@@ -132,7 +132,7 @@ export const en = {
     heroTitleFirst: "Rediscover what",
     heroTitleSecond: "you already own.",
     heroIntro:
-      "Bring your wardrobe together, organize every piece and create outfits that feel like you. Everything stays on this device.",
+      "Bring your wardrobe together, organize every piece and create outfits that feel like you. Your data stays private in your account.",
     itemCountOne: "piece cataloged",
     itemCountMany: "pieces cataloged",
     categoryCount: "categories",
@@ -182,11 +182,20 @@ export const en = {
     ariaLabel: "Add photographs of clothing",
     choosePhotos: "Choose my photos",
     addItems: "Add pieces",
+    uploading: "Adding…",
   },
   notices: {
-    storageReadError: "Your saved wardrobe could not be loaded.",
-    storageFull:
-      "Local storage is full. Please use smaller photographs.",
+    wardrobeLoadError:
+      "Your wardrobe could not be loaded. Please try again in a moment.",
+    uploading: "Analyzing and adding your photographs…",
+    itemsUploadFailed:
+      "The photographs could not be added. Check their format and try again.",
+    itemsUploadPartial:
+      "Successful additions: {success}. Failed photographs: {failed}.",
+    itemUpdateFailed:
+      "The change could not be saved.",
+    itemDeleteFailed:
+      "The piece could not be removed.",
     itemAdded: "{count} piece added — remember to check its category.",
     itemsAdded: "{count} pieces added — remember to check their categories.",
   },

@@ -2,9 +2,8 @@
 
 Cette étape prépare le stockage persistant de Vestiaire sans exposer la base
 directement au navigateur. L’API privée des vêtements est maintenant reliée à
-MongoDB et rattache chaque requête à l’utilisateur connecté. Le code client
-continue temporairement à utiliser le stockage local jusqu’à l’ajout du
-stockage objet pour les photographies.
+MongoDB et rattache chaque requête à l’utilisateur connecté. L’interface charge
+les pièces depuis MongoDB et enregistre toutes les mutations via cette API.
 
 ## 1. Créer le projet Atlas
 

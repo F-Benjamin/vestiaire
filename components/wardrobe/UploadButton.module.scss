@@ -41,6 +41,18 @@
   padding-inline: 22px;
 }
 
+.disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
+
+  &:hover {
+    border-color: var(--ink);
+    background: var(--ink);
+    transform: none;
+  }
+}
+
 @media (max-width: 820px) {
   .root {
     justify-self: auto;

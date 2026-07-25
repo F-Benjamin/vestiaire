@@ -1,8 +1,5 @@
 "use client";
 
-/* Les images sont des fichiers locaux en Base64 : next/image ne peut pas les optimiser. */
-/* eslint-disable @next/next/no-img-element */
-
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import {
@@ -18,6 +15,7 @@ import {
   wardrobeStyles,
 } from "./wardrobe.constants";
 import { useWardrobe } from "./WardrobeContext";
+import WardrobeImage from "./WardrobeImage";
 import type { Category } from "./wardrobe.types";
 import MultiField from "./MultiField";
 import styles from "./StudioView.module.scss";
@@ -92,12 +90,20 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
 
               {selected && (
                 <div className={styles.editor}>
-                  <img src={selected.image} alt={selected.name} />
+                  <WardrobeImage
+                    src={selected.imageUrl}
+                    alt={selected.name}
+                    className={styles.editorImage}
+                  />
                   <input
-                    value={selected.name}
-                    onChange={(event) =>
-                      updateItem(selected.id, { name: event.target.value })
-                    }
+                    key={`${selected.id}:${selected.name}`}
+                    defaultValue={selected.name}
+                    onBlur={(event) => {
+                      const name = event.currentTarget.value.trim();
+                      if (name && name !== selected.name) {
+                        updateItem(selected.id, { name });
+                      }
+                    }}
                     aria-label={copy.itemNameLabel}
                   />
                   <label className={styles.categoryField}>
@@ -195,7 +201,11 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                 <div className={styles.outfitGrid}>
                   {outfit.map((item) => (
                     <article key={item.id}>
-                      <img src={item.image} alt={item.name} />
+                      <WardrobeImage
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className={styles.outfitImage}
+                      />
                       <p>{getCategoryLabel(messages, item.category)}</p>
                       <h3>{item.name}</h3>
                     </article>

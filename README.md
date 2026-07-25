@@ -81,6 +81,7 @@ components/
     ├── StudioView.tsx              # Édition et création de tenues
     ├── MultiField.tsx              # Sélection multiple réutilisable
     ├── UploadButton.tsx            # Import des photographies
+    ├── WardrobeImage.tsx           # Affichage des photographies privées
     ├── wardrobe.constants.ts       # Listes du domaine
     └── wardrobe.types.ts           # Types TypeScript
 
@@ -97,6 +98,7 @@ lib/
 ├── schemas/                        # Validation Zod des données métier
 ├── storage/                        # Stockage privé des photographies
 ├── runtime-environment.ts          # Local, Deploy Preview ou production
+├── wardrobe-api.ts                 # Client typé des API de garde-robe
 └── wardrobe.ts                     # Logique pure de composition
 
 docs/
@@ -141,10 +143,12 @@ dans `i18n/dictionaries`.
 Le groupe `(marketing)` contient la surface publique et `(auth)` les parcours
 de connexion et d'inscription. Le groupe `(app)` contient la garde-robe et le
 studio. Chacune de ces pages vérifie sa session côté serveur avant de charger
-la vue, puis le layout installe le `WardrobeProvider`.
+la vue. Le layout lit les vêtements de l’utilisateur dans MongoDB, puis
+installe le `WardrobeProvider` avec ces données initiales.
 Les vues utilisent le hook `useWardrobe` pour accéder aux états et actions sans
-props drilling. La navigation utilise `next/link`, avec `useRouter` uniquement
-pour les changements programmatiques du studio.
+props drilling. Toutes les mutations passent par le client API typé, sans
+stockage local de la garde-robe. La navigation utilise `next/link`, avec
+`useRouter` uniquement pour les changements programmatiques du studio.
 
 Les fichiers `app/api/**/route.ts` sont des points d’entrée backend. Par
 exemple :
@@ -225,10 +229,8 @@ Le contrat des vêtements est documenté dans
 Le stockage des photographies est détaillé dans
 [`docs/IMAGE_STORAGE.md`](docs/IMAGE_STORAGE.md).
 
-La première version garde encore les vêtements sur l'appareil. Les prochaines
-briques seront :
+La garde-robe utilise désormais MongoDB pour les attributs et Netlify Blobs
+pour les photographies. Les prochaines briques seront :
 
-- branchement du catalogue sur l’API privée ;
-- migration guidée des pièces présentes dans `localStorage` ;
 - vérification des e-mails et récupération de mot de passe ;
 - un worker pour les futurs traitements IA longs.

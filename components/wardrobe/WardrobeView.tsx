@@ -1,8 +1,5 @@
 "use client";
 
-/* Les images sont des fichiers locaux en Base64 : next/image ne peut pas les optimiser. */
-/* eslint-disable @next/next/no-img-element */
-
 import Link from "next/link";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import {
@@ -12,6 +9,7 @@ import {
 } from "@/i18n/format";
 import { categories } from "./wardrobe.constants";
 import { useWardrobe } from "./WardrobeContext";
+import WardrobeImage from "./WardrobeImage";
 import UploadButton from "./UploadButton";
 import styles from "./WardrobeView.module.scss";
 
@@ -94,7 +92,7 @@ const WardrobeView = () => {
                     setSelectedId(item.id);
                   }}
                 >
-                  <img src={item.image} alt={item.name} />
+                  <WardrobeImage src={item.imageUrl} alt={item.name} />
                   <span>{copy.composeAround}</span>
                 </Link>
                 <div className={styles.itemMeta}>

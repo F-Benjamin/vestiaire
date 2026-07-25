@@ -193,7 +193,7 @@
     transition: transform 360ms var(--ease-out);
   }
 
-  span {
+  > span {
     position: absolute;
     right: 12px;
     bottom: 12px;
@@ -222,8 +222,8 @@
     transform: scale(1.025);
   }
 
-  &:hover span,
-  &:focus-visible span {
+  &:hover > span,
+  &:focus-visible > span {
     opacity: 1;
     transform: translateY(0);
   }

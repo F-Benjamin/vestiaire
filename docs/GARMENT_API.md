@@ -57,8 +57,11 @@ catalogue sont rejetés avec un statut `400`.
 Cette réponse `404` uniforme évite de révéler si un vêtement appartient à un
 autre compte.
 
-## État de la migration
+## Utilisation par l’interface
 
-Le catalogue visible continue temporairement à utiliser `localStorage`. La
-prochaine étape est de brancher `WardrobeContext` sur les API des vêtements et
-des photographies, avec une migration explicite des données locales.
+`WardrobeContext` utilise exclusivement cette API pour les créations,
+modifications et suppressions. Le layout de l’espace connecté charge les
+pièces depuis MongoDB côté serveur avant d’hydrater l’interface.
+
+L’ancien stockage de garde-robe dans `localStorage` a été supprimé sans reprise
+des données historiques.
