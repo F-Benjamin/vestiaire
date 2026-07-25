@@ -1,10 +1,10 @@
 # MongoDB Atlas
 
 Cette étape prépare le stockage persistant de Vestiaire sans exposer la base
-directement au navigateur. Le code client continue temporairement à utiliser le
-stockage local ; la migration des vêtements vers MongoDB sera réalisée après
-la fondation d'authentification, afin que chaque requête soit rattachée à son
-propriétaire.
+directement au navigateur. L’API privée des vêtements est maintenant reliée à
+MongoDB et rattache chaque requête à l’utilisateur connecté. Le code client
+continue temporairement à utiliser le stockage local jusqu’à l’ajout du
+stockage objet pour les photographies.
 
 ## 1. Créer le projet Atlas
 
@@ -127,9 +127,10 @@ L'endpoint ne renvoie jamais l'URI, le nom du cluster ou les identifiants.
 - `lib/environment/mongodb.ts` valide la configuration serveur ;
 - `lib/schemas/garment.ts` valide les données métier avec Zod ;
 - `lib/repositories/garment-repository.ts` centralise l'accès aux vêtements ;
+- `app/api/garments/**` expose le CRUD uniquement aux utilisateurs connectés ;
 - `app/api/health/database/route.ts` vérifie la connexion sans exposer de
   secret.
 
-Les opérations de lecture et d'écriture ne sont volontairement pas publiques.
-La prochaine migration les exposera derrière les contrôles Better Auth et
-utilisera obligatoirement l'identifiant de l'utilisateur connecté.
+Les opérations de lecture et d'écriture ne sont pas publiques. Elles ignorent
+tout propriétaire envoyé par le client et utilisent obligatoirement
+l'identifiant issu de la session Better Auth.
