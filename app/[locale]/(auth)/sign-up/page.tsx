@@ -4,6 +4,7 @@ import AuthPage from "@/components/auth/AuthPage";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, localizePath } from "@/i18n/routing";
 import { getSession } from "@/lib/auth-session";
+import { isEmailAuthEnabled } from "@/lib/environment/email";
 
 type SignUpPageProps = {
   params: Promise<{ locale: string }>;
@@ -42,7 +43,13 @@ const SignUpPage = async ({ params, searchParams }: SignUpPageProps) => {
       ? requestedCallback
       : undefined;
 
-  return <AuthPage mode="sign-up" callbackUrl={callbackUrl} />;
+  return (
+    <AuthPage
+      mode="sign-up"
+      callbackUrl={callbackUrl}
+      emailAuthEnabled={isEmailAuthEnabled()}
+    />
+  );
 };
 
 export default SignUpPage;

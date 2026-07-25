@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -32,8 +31,6 @@ import type {
   WardrobeStyle,
 } from "./wardrobe.types";
 
-const LEGACY_STORAGE_KEY = "vestiaire-local";
-
 const WardrobeContext = createContext<WardrobeContextValue | null>(null);
 
 const getErrorMessage = (error: unknown, fallback: string) =>
@@ -60,14 +57,6 @@ export const WardrobeProvider = ({
   const [notice, setNotice] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const mutationQueues = useRef(new Map<string, Promise<void>>());
-
-  useEffect(() => {
-    try {
-      window.localStorage.removeItem(LEGACY_STORAGE_KEY);
-    } catch {
-      // L’ancien stockage est abandonné, même si le navigateur bloque son accès.
-    }
-  }, []);
 
   const refreshItems = useCallback(async () => {
     try {

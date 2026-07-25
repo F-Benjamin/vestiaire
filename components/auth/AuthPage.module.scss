@@ -220,6 +220,20 @@
   }
 }
 
+.signInOptions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  > a {
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 750;
+    text-underline-offset: 4px;
+  }
+}
+
 .submit {
   min-height: 54px;
   padding: 0 18px;
@@ -339,5 +353,11 @@
 
   .formPanel {
     padding: 24px 18px;
+  }
+
+  .signInOptions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
 }

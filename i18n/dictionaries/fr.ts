@@ -15,6 +15,12 @@ export const fr = {
     signInDescription: "Connectez-vous à votre espace Vestiaire.",
     signUpTitle: "Créer un compte — Vestiaire",
     signUpDescription: "Créez votre espace personnel Vestiaire.",
+    forgotPasswordTitle: "Mot de passe oublié — Vestiaire",
+    forgotPasswordDescription:
+      "Demandez un lien sécurisé pour réinitialiser votre mot de passe.",
+    resetPasswordTitle: "Nouveau mot de passe — Vestiaire",
+    resetPasswordDescription:
+      "Choisissez un nouveau mot de passe pour votre espace Vestiaire.",
   },
   common: {
     brand: "Vestiaire",
@@ -119,15 +125,71 @@ export const fr = {
     createAccount: "Créer un compte",
     goToSignIn: "Se connecter",
     registered:
+      "Votre compte a été créé. Consultez votre boîte e-mail pour valider votre adresse avant de vous connecter.",
+    registeredWithoutVerification:
       "Votre compte est prêt. Vous pouvez maintenant vous connecter.",
+    emailVerified:
+      "Votre adresse e-mail est validée. Vous pouvez maintenant vous connecter.",
+    emailNotVerified:
+      "Votre adresse n’est pas encore validée. Un nouvel e-mail de vérification vient de vous être envoyé.",
     invalidCredentials:
       "Adresse e-mail ou mot de passe incorrect.",
     signUpFailed:
       "Le compte n’a pas pu être créé. Vérifiez les informations saisies.",
     genericError:
       "Une erreur est survenue. Réessayez dans quelques instants.",
+    forgotPassword: "Mot de passe oublié ?",
+    forgotPasswordEyebrow: "RÉCUPÉRATION DU COMPTE",
+    forgotPasswordTitle: "Retrouvez l’accès à votre vestiaire.",
+    forgotPasswordIntro:
+      "Indiquez votre adresse e-mail. Si un compte lui est associé, nous vous enverrons un lien sécurisé.",
+    sendResetLink: "Envoyer le lien",
+    sendingResetLink: "Envoi du lien…",
+    resetRequestSent:
+      "Si un compte correspond à cette adresse, un e-mail vient d’être envoyé. Pensez à vérifier vos courriers indésirables.",
+    backToSignIn: "Retour à la connexion",
+    resetPasswordEyebrow: "SÉCURITÉ DU COMPTE",
+    resetPasswordTitle: "Choisissez un nouveau mot de passe.",
+    resetPasswordIntro:
+      "Utilisez un mot de passe unique que vous n’employez sur aucun autre service.",
+    newPassword: "Nouveau mot de passe",
+    confirmPassword: "Confirmer le mot de passe",
+    resetPassword: "Enregistrer le nouveau mot de passe",
+    resettingPassword: "Enregistrement…",
+    passwordsDoNotMatch: "Les deux mots de passe ne correspondent pas.",
+    invalidResetLink:
+      "Ce lien est invalide ou a expiré. Demandez un nouveau lien de réinitialisation.",
+    passwordReset:
+      "Votre mot de passe a été modifié. Vous pouvez maintenant vous connecter.",
+    emailFeatureUnavailable:
+      "L’envoi d’e-mails n’est pas encore activé sur cet environnement.",
     privacyNote:
       "Votre mot de passe est haché avant son enregistrement et n’est jamais stocké en clair.",
+  },
+  authEmail: {
+    verification: {
+      subject: "Validez votre adresse e-mail — Vestiaire",
+      heading: "Validez votre adresse e-mail",
+      greeting: "Bonjour {name},",
+      introduction:
+        "Confirmez que cette adresse vous appartient pour accéder à votre garde-robe.",
+      action: "Valider mon adresse",
+      expiration: "Ce lien est valable pendant une heure.",
+      ignore:
+        "Si vous n’avez pas créé de compte Vestiaire, vous pouvez ignorer cet e-mail.",
+    },
+    passwordReset: {
+      subject: "Réinitialisez votre mot de passe — Vestiaire",
+      heading: "Réinitialisez votre mot de passe",
+      greeting: "Bonjour {name},",
+      introduction:
+        "Une demande de nouveau mot de passe a été effectuée pour votre compte.",
+      action: "Choisir un nouveau mot de passe",
+      expiration: "Ce lien est valable pendant une heure.",
+      ignore:
+        "Si vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet e-mail.",
+    },
+    signature: "E-mail automatique envoyé par Vestiaire.",
   },
   wardrobe: {
     heroEyebrow: "VOTRE DRESSING, EN MIEUX",

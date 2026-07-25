@@ -43,10 +43,13 @@ Ajoutez les variables suivantes en choisissant des valeurs contextuelles :
 | `MONGODB_URI` | All scopes sur Free, Functions sur Pro+ | URI de production | URI de test | URI de test |
 | `MONGODB_DB_NAME` | All scopes | `vestiaire` | `vestiaire_preview` | `vestiaire_preview` |
 | `BETTER_AUTH_SECRET` | All scopes sur Free, Functions sur Pro+ | secret de production | secret de test | secret de test |
+| `EMAIL_AUTH_ENABLED` | All scopes | `true` après configuration | `true` après configuration | `true` après configuration |
+| `RESEND_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé Resend | clé Resend de test | clé Resend de test |
+| `EMAIL_FROM` | All scopes | expéditeur validé | expéditeur validé | expéditeur validé |
 | `OPENAI_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé de production | clé de test limitée | clé de test limitée |
 
-Pour `MONGODB_URI`, `BETTER_AUTH_SECRET` et `OPENAI_API_KEY`, activez l'option
-**Contains secret values**.
+Pour `MONGODB_URI`, `BETTER_AUTH_SECRET`, `RESEND_API_KEY` et
+`OPENAI_API_KEY`, activez l'option **Contains secret values**.
 
 Netlify réserve la sélection de scopes précis aux offres Pro et Enterprise. Sur
 l’offre Free, laissez **All scopes** : une variable serveur ne devient pas
@@ -57,6 +60,10 @@ intégrées au code envoyé au navigateur par Next.js.
 Générez des secrets d'au moins 32 caractères avec
 `openssl rand -base64 32`. `OPENAI_API_KEY` peut rester absente tant que
 l'analyse IA n'est pas encore branchée.
+
+Conservez `EMAIL_AUTH_ENABLED=false` jusqu’à ce que le domaine expéditeur soit
+validé dans Resend et que `RESEND_API_KEY` et `EMAIL_FROM` soient définies. La
+procédure complète se trouve dans [`docs/EMAILS.md`](EMAILS.md).
 
 ## Variables versionnées
 

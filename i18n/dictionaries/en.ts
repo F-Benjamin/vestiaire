@@ -16,6 +16,12 @@ export const en = {
     signInDescription: "Sign in to your Vestiaire space.",
     signUpTitle: "Create an account — Vestiaire",
     signUpDescription: "Create your personal Vestiaire space.",
+    forgotPasswordTitle: "Forgot password — Vestiaire",
+    forgotPasswordDescription:
+      "Request a secure link to reset your password.",
+    resetPasswordTitle: "New password — Vestiaire",
+    resetPasswordDescription:
+      "Choose a new password for your Vestiaire space.",
   },
   common: {
     brand: "Vestiaire",
@@ -119,13 +125,70 @@ export const en = {
     alreadyAccount: "Already have an account?",
     createAccount: "Create an account",
     goToSignIn: "Sign in",
-    registered: "Your account is ready. You can now sign in.",
+    registered:
+      "Your account has been created. Check your inbox and verify your email address before signing in.",
+    registeredWithoutVerification:
+      "Your account is ready. You can now sign in.",
+    emailVerified:
+      "Your email address has been verified. You can now sign in.",
+    emailNotVerified:
+      "Your email address has not been verified yet. We’ve just sent you a new verification email.",
     invalidCredentials: "Incorrect email address or password.",
     signUpFailed:
       "The account could not be created. Check the information you entered.",
     genericError: "Something went wrong. Please try again in a moment.",
+    forgotPassword: "Forgot password?",
+    forgotPasswordEyebrow: "ACCOUNT RECOVERY",
+    forgotPasswordTitle: "Regain access to your wardrobe.",
+    forgotPasswordIntro:
+      "Enter your email address. If an account matches it, we’ll send you a secure link.",
+    sendResetLink: "Send reset link",
+    sendingResetLink: "Sending link…",
+    resetRequestSent:
+      "If an account matches this address, an email has been sent. Remember to check your spam folder.",
+    backToSignIn: "Back to sign in",
+    resetPasswordEyebrow: "ACCOUNT SECURITY",
+    resetPasswordTitle: "Choose a new password.",
+    resetPasswordIntro:
+      "Use a unique password that you don’t use for any other service.",
+    newPassword: "New password",
+    confirmPassword: "Confirm password",
+    resetPassword: "Save new password",
+    resettingPassword: "Saving…",
+    passwordsDoNotMatch: "The two passwords do not match.",
+    invalidResetLink:
+      "This link is invalid or has expired. Request a new password reset link.",
+    passwordReset:
+      "Your password has been changed. You can now sign in.",
+    emailFeatureUnavailable:
+      "Email delivery is not enabled in this environment yet.",
     privacyNote:
       "Your password is hashed before storage and is never stored as plain text.",
+  },
+  authEmail: {
+    verification: {
+      subject: "Verify your email address — Vestiaire",
+      heading: "Verify your email address",
+      greeting: "Hello {name},",
+      introduction:
+        "Confirm that this address belongs to you to access your wardrobe.",
+      action: "Verify my address",
+      expiration: "This link is valid for one hour.",
+      ignore:
+        "If you didn’t create a Vestiaire account, you can safely ignore this email.",
+    },
+    passwordReset: {
+      subject: "Reset your password — Vestiaire",
+      heading: "Reset your password",
+      greeting: "Hello {name},",
+      introduction:
+        "A new password was requested for your account.",
+      action: "Choose a new password",
+      expiration: "This link is valid for one hour.",
+      ignore:
+        "If you didn’t make this request, you can safely ignore this email.",
+    },
+    signature: "Automated email sent by Vestiaire.",
   },
   wardrobe: {
     heroEyebrow: "YOUR WARDROBE, MADE BETTER",
