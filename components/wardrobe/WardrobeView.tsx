@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import {
@@ -104,60 +104,67 @@ const WardrobeView = () => {
           <div className={styles.itemGrid}>
             {visibleItems.map((item) => {
               const isDeleting = deletingId === item.id;
-              const fragmentStyle = item.imageUrl
-                ? ({ backgroundImage: `url("${item.imageUrl}")` } as CSSProperties)
-                : undefined;
 
               return (
-              <article
-                className={`${styles.itemCard} ${
-                  isDeleting ? styles.deleting : ""
-                }`}
-                key={item.id}
-                aria-busy={isDeleting}
-              >
-                <Link
-                  className={styles.photo}
-                  href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}`}
-                  onClick={() => {
-                    setSelectedId(item.id);
-                  }}
+                <article
+                  className={`${styles.itemCard} ${
+                    isDeleting ? styles.deleting : ""
+                  }`}
+                  key={item.id}
+                  aria-busy={isDeleting}
                 >
-                  <WardrobeImage src={item.imageUrl} alt={item.name} />
-                  <span className={styles.tearFragments} aria-hidden="true">
-                    <i
-                      className={`${styles.tearFragment} ${styles.tearFragmentStart}`}
-                      style={fragmentStyle}
-                    />
-                    <i
-                      className={`${styles.tearFragment} ${styles.tearFragmentEnd}`}
-                      style={fragmentStyle}
-                    />
-                  </span>
-                  <span>{copy.composeAround}</span>
-                </Link>
-                <div className={styles.itemMeta}>
-                  <div>
-                    <h3>{item.name}</h3>
-                    <p>
-                      {getCategoryLabel(messages, item.category)} ·{" "}
-                      {item.colors
-                        .map((color) => getColorLabel(messages, color))
-                        .join(", ")}
-                    </p>
-                  </div>
-                  <button
-                    className={styles.remove}
-                    onClick={() => handleRemoveItem(item.id)}
-                    aria-label={formatMessage(copy.removeItem, {
-                      name: item.name,
-                    })}
-                    disabled={Boolean(deletingId)}
+                  <Link
+                    className={styles.photo}
+                    href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}`}
+                    onClick={() => {
+                      setSelectedId(item.id);
+                    }}
                   >
-                    ×
-                  </button>
-                </div>
-              </article>
+                    <WardrobeImage src={item.imageUrl} alt={item.name} />
+                    {isDeleting && (
+                      <span className={styles.tearFragments} aria-hidden="true">
+                        <i
+                          className={`${styles.tearFragment} ${styles.tearFragmentStart}`}
+                          style={{
+                            backgroundImage: item.imageUrl
+                              ? `url("${item.imageUrl}")`
+                              : undefined,
+                          }}
+                        />
+                        <i
+                          className={`${styles.tearFragment} ${styles.tearFragmentEnd}`}
+                          style={{
+                            backgroundImage: item.imageUrl
+                              ? `url("${item.imageUrl}")`
+                              : undefined,
+                          }}
+                        />
+                      </span>
+                    )}
+                    <span>{copy.composeAround}</span>
+                  </Link>
+                  <div className={styles.itemMeta}>
+                    <div>
+                      <h3>{item.name}</h3>
+                      <p>
+                        {getCategoryLabel(messages, item.category)} ·{" "}
+                        {item.colors
+                          .map((color) => getColorLabel(messages, color))
+                          .join(", ")}
+                      </p>
+                    </div>
+                    <button
+                      className={styles.remove}
+                      onClick={() => handleRemoveItem(item.id)}
+                      aria-label={formatMessage(copy.removeItem, {
+                        name: item.name,
+                      })}
+                      disabled={Boolean(deletingId)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                </article>
               );
             })}
           </div>
