@@ -6,6 +6,29 @@ import { authClient } from "@/lib/auth-client";
 import ProfileSection from "./ProfileSection";
 import styles from "./ProfilePage.module.scss";
 
+type PasswordVisibilityButtonProps = {
+  isVisible: boolean;
+  onClick: () => void;
+  showLabel: string;
+  hideLabel: string;
+};
+
+const PasswordVisibilityButton = ({
+  isVisible,
+  onClick,
+  showLabel,
+  hideLabel,
+}: PasswordVisibilityButtonProps) => (
+  <button
+    className={styles.passwordVisibility}
+    type="button"
+    onClick={onClick}
+    aria-pressed={isVisible}
+  >
+    {isVisible ? hideLabel : showLabel}
+  </button>
+);
+
 const ProfileSecurity = () => {
   const { messages } = useI18n();
   const copy = messages.profile;
@@ -13,6 +36,7 @@ const ProfileSecurity = () => {
   const [hasError, setHasError] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [showPasswords, setShowPasswords] = useState(false);
+  const togglePasswordVisibility = () => setShowPasswords((value) => !value);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -68,56 +92,72 @@ const ProfileSecurity = () => {
       description={copy.passwordDescription}
     >
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.field}>
-          <span>{copy.currentPassword}</span>
-          <input
-            name="currentPassword"
-            type={showPasswords ? "text" : "password"}
-            autoComplete="current-password"
-            minLength={12}
-            maxLength={128}
-            required
-          />
-        </label>
-
-        <div className={styles.twoColumns}>
-          <label className={styles.field}>
-            <span>{copy.newPassword}</span>
+        <div className={styles.field}>
+          <label htmlFor="current-password">{copy.currentPassword}</label>
+          <div className={styles.passwordInput}>
             <input
-              name="newPassword"
+              id="current-password"
+              name="currentPassword"
               type={showPasswords ? "text" : "password"}
-              autoComplete="new-password"
-              minLength={12}
-              maxLength={128}
-              aria-describedby="profile-password-hint"
-              required
-            />
-            <small id="profile-password-hint">{copy.passwordHint}</small>
-          </label>
-
-          <label className={styles.field}>
-            <span>{copy.confirmPassword}</span>
-            <input
-              name="confirmation"
-              type={showPasswords ? "text" : "password"}
-              autoComplete="new-password"
+              autoComplete="current-password"
               minLength={12}
               maxLength={128}
               required
             />
-          </label>
+            <PasswordVisibilityButton
+              isVisible={showPasswords}
+              onClick={togglePasswordVisibility}
+              showLabel={copy.showPasswords}
+              hideLabel={copy.hidePasswords}
+            />
+          </div>
         </div>
 
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={showPasswords}
-            onChange={(event) => setShowPasswords(event.target.checked)}
-          />
-          <span>
-            {showPasswords ? copy.hidePasswords : copy.showPasswords}
-          </span>
-        </label>
+        <div className={styles.twoColumns}>
+          <div className={styles.field}>
+            <label htmlFor="new-password">{copy.newPassword}</label>
+            <div className={styles.passwordInput}>
+              <input
+                id="new-password"
+                name="newPassword"
+                type={showPasswords ? "text" : "password"}
+                autoComplete="new-password"
+                minLength={12}
+                maxLength={128}
+                aria-describedby="profile-password-hint"
+                required
+              />
+              <PasswordVisibilityButton
+                isVisible={showPasswords}
+                onClick={togglePasswordVisibility}
+                showLabel={copy.showPasswords}
+                hideLabel={copy.hidePasswords}
+              />
+            </div>
+            <small id="profile-password-hint">{copy.passwordHint}</small>
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="password-confirmation">{copy.confirmPassword}</label>
+            <div className={styles.passwordInput}>
+              <input
+                id="password-confirmation"
+                name="confirmation"
+                type={showPasswords ? "text" : "password"}
+                autoComplete="new-password"
+                minLength={12}
+                maxLength={128}
+                required
+              />
+              <PasswordVisibilityButton
+                isVisible={showPasswords}
+                onClick={togglePasswordVisibility}
+                showLabel={copy.showPasswords}
+                hideLabel={copy.hidePasswords}
+              />
+            </div>
+          </div>
+        </div>
 
         <p className={styles.securityNote}>
           {copy.revokeOtherSessionsAfterChange}

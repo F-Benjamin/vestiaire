@@ -231,6 +231,7 @@
   display: grid;
   gap: 8px;
 
+  > label,
   > span {
     font-size: 0.78rem;
     font-weight: 800;
@@ -267,6 +268,37 @@
       color: var(--muted);
       cursor: not-allowed;
     }
+  }
+}
+
+.passwordInput {
+  position: relative;
+
+  input {
+    padding-right: 94px;
+  }
+}
+
+.passwordVisibility {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  min-height: 36px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 820;
+  transform: translateY(-50%);
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+
+  &:hover {
+    background: var(--surface-accent);
+    color: var(--accent-strong);
   }
 }
 
