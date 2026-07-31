@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import {
@@ -25,6 +26,24 @@ const WardrobeView = () => {
   const { messages, href } = useI18n();
   const copy = messages.wardrobe;
   const categoryCount = new Set(items.map((item) => item.category)).size;
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const handleRemoveItem = (itemId: string) => {
+    if (deletingId) return;
+
+    setDeletingId(itemId);
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.setTimeout(
+      () => {
+        removeItem(itemId);
+        setDeletingId(null);
+      },
+      prefersReducedMotion ? 0 : 460,
+    );
+  };
 
   return (
     <>
@@ -83,8 +102,20 @@ const WardrobeView = () => {
 
         {visibleItems.length ? (
           <div className={styles.itemGrid}>
-            {visibleItems.map((item) => (
-              <article className={styles.itemCard} key={item.id}>
+            {visibleItems.map((item) => {
+              const isDeleting = deletingId === item.id;
+              const fragmentStyle = item.imageUrl
+                ? ({ backgroundImage: `url("${item.imageUrl}")` } as CSSProperties)
+                : undefined;
+
+              return (
+              <article
+                className={`${styles.itemCard} ${
+                  isDeleting ? styles.deleting : ""
+                }`}
+                key={item.id}
+                aria-busy={isDeleting}
+              >
                 <Link
                   className={styles.photo}
                   href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}`}
@@ -93,6 +124,16 @@ const WardrobeView = () => {
                   }}
                 >
                   <WardrobeImage src={item.imageUrl} alt={item.name} />
+                  <span className={styles.tearFragments} aria-hidden="true">
+                    <i
+                      className={`${styles.tearFragment} ${styles.tearFragmentStart}`}
+                      style={fragmentStyle}
+                    />
+                    <i
+                      className={`${styles.tearFragment} ${styles.tearFragmentEnd}`}
+                      style={fragmentStyle}
+                    />
+                  </span>
                   <span>{copy.composeAround}</span>
                 </Link>
                 <div className={styles.itemMeta}>
@@ -107,16 +148,18 @@ const WardrobeView = () => {
                   </div>
                   <button
                     className={styles.remove}
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => handleRemoveItem(item.id)}
                     aria-label={formatMessage(copy.removeItem, {
                       name: item.name,
                     })}
+                    disabled={Boolean(deletingId)}
                   >
                     ×
                   </button>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className={styles.empty}>
