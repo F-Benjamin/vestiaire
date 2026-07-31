@@ -24,10 +24,17 @@ const PasswordVisibilityButton = ({
     type="button"
     onClick={onClick}
     aria-pressed={isVisible}
+    aria-label={isVisible ? hideLabel : showLabel}
+    title={isVisible ? hideLabel : showLabel}
+    data-visible={isVisible}
   >
-    {isVisible ? hideLabel : showLabel}
+    <span className={styles.eyeIcon} aria-hidden="true">
+      <i />
+    </span>
   </button>
 );
+
+type PasswordField = "current" | "new" | "confirmation";
 
 const ProfileSecurity = () => {
   const { messages } = useI18n();
@@ -35,8 +42,17 @@ const ProfileSecurity = () => {
   const [feedback, setFeedback] = useState("");
   const [hasError, setHasError] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  const [showPasswords, setShowPasswords] = useState(false);
-  const togglePasswordVisibility = () => setShowPasswords((value) => !value);
+  const [visibleFields, setVisibleFields] = useState<Record<PasswordField, boolean>>({
+    current: false,
+    new: false,
+    confirmation: false,
+  });
+  const togglePasswordVisibility = (field: PasswordField) => {
+    setVisibleFields((current) => ({
+      ...current,
+      [field]: !current[field],
+    }));
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -98,15 +114,15 @@ const ProfileSecurity = () => {
             <input
               id="current-password"
               name="currentPassword"
-              type={showPasswords ? "text" : "password"}
+              type={visibleFields.current ? "text" : "password"}
               autoComplete="current-password"
               minLength={12}
               maxLength={128}
               required
             />
             <PasswordVisibilityButton
-              isVisible={showPasswords}
-              onClick={togglePasswordVisibility}
+              isVisible={visibleFields.current}
+              onClick={() => togglePasswordVisibility("current")}
               showLabel={copy.showPasswords}
               hideLabel={copy.hidePasswords}
             />
@@ -120,7 +136,7 @@ const ProfileSecurity = () => {
               <input
                 id="new-password"
                 name="newPassword"
-                type={showPasswords ? "text" : "password"}
+                type={visibleFields.new ? "text" : "password"}
                 autoComplete="new-password"
                 minLength={12}
                 maxLength={128}
@@ -128,8 +144,8 @@ const ProfileSecurity = () => {
                 required
               />
               <PasswordVisibilityButton
-                isVisible={showPasswords}
-                onClick={togglePasswordVisibility}
+                isVisible={visibleFields.new}
+                onClick={() => togglePasswordVisibility("new")}
                 showLabel={copy.showPasswords}
                 hideLabel={copy.hidePasswords}
               />
@@ -138,20 +154,22 @@ const ProfileSecurity = () => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="password-confirmation">{copy.confirmPassword}</label>
+            <label htmlFor="password-confirmation">
+              {copy.confirmPassword}
+            </label>
             <div className={styles.passwordInput}>
               <input
                 id="password-confirmation"
                 name="confirmation"
-                type={showPasswords ? "text" : "password"}
+                type={visibleFields.confirmation ? "text" : "password"}
                 autoComplete="new-password"
                 minLength={12}
                 maxLength={128}
                 required
               />
               <PasswordVisibilityButton
-                isVisible={showPasswords}
-                onClick={togglePasswordVisibility}
+                isVisible={visibleFields.confirmation}
+                onClick={() => togglePasswordVisibility("confirmation")}
                 showLabel={copy.showPasswords}
                 hideLabel={copy.hidePasswords}
               />

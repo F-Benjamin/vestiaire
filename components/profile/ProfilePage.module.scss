@@ -275,7 +275,7 @@
   position: relative;
 
   input {
-    padding-right: 94px;
+    padding-right: 56px;
   }
 }
 
@@ -283,14 +283,15 @@
   position: absolute;
   top: 50%;
   right: 7px;
-  min-height: 36px;
-  padding: 0 9px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: grid;
+  place-items: center;
   border: 0;
   border-radius: 8px;
   background: transparent;
   color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 820;
   transform: translateY(-50%);
   transition:
     background-color var(--duration-fast) var(--ease-standard),
@@ -300,6 +301,45 @@
     background: var(--surface-accent);
     color: var(--accent-strong);
   }
+}
+
+.eyeIcon {
+  position: relative;
+  width: 19px;
+  height: 13px;
+  display: block;
+  border: 1.75px solid currentColor;
+  border-radius: 100% / 82%;
+
+  i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -3px;
+    width: 23px;
+    height: 1.75px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 1;
+    transform: rotate(-36deg);
+    transform-origin: center;
+    transition: opacity var(--duration-fast) var(--ease-standard);
+  }
+}
+
+.passwordVisibility[data-visible="true"] .eyeIcon::after {
+  opacity: 0;
 }
 
 .twoColumns {
