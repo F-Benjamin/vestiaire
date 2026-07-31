@@ -210,6 +210,12 @@ et côté MongoDB : une correction humaine n’est donc jamais écrasée par une
 proposition historique. Sans `OPENAI_API_KEY`, ou si le service échoue,
 l’import continue avec l’analyse de nom de fichier existante.
 
+Le détourage est optionnel et asynchrone via Cloudinary. Ses variables serveur
+(`CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`) sont
+décrites dans [`docs/IMAGE_ANALYSIS.md`](docs/IMAGE_ANALYSIS.md). La version
+détourée doit être validée dans le Studio avant de devenir principale ;
+l’original reste privé puis est purgé automatiquement après 30 jours.
+
 ## Déploiement et environnements
 
 Netlify est l’hébergement de référence. `main` alimente la production et chaque

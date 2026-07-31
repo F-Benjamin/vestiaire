@@ -12,6 +12,8 @@ export const toGarmentResponse = ({
   patterns,
   analysis,
   imageKey,
+  originalImageKey,
+  cutout,
   createdAt,
   updatedAt,
 }: WithId<GarmentDocument>) => ({
@@ -30,6 +32,23 @@ export const toGarmentResponse = ({
     : undefined,
   imageKey: imageKey ?? null,
   imageUrl: imageKey ? `/api/wardrobe-images/${imageKey}` : null,
+  originalImageKey: originalImageKey ?? null,
+  originalImageUrl: originalImageKey
+    ? `/api/wardrobe-images/${originalImageKey}`
+    : null,
+  cutout: cutout
+    ? {
+        ...cutout,
+        createdAt: cutout.createdAt.toISOString(),
+        completedAt: cutout.completedAt?.toISOString(),
+        acceptedAt: cutout.acceptedAt?.toISOString(),
+        originalDeleteAfter: cutout.originalDeleteAfter?.toISOString(),
+        originalDeletedAt: cutout.originalDeletedAt?.toISOString(),
+      }
+    : undefined,
+  cutoutImageUrl: cutout?.imageKey
+    ? `/api/wardrobe-images/${cutout.imageKey}`
+    : null,
   createdAt: createdAt.toISOString(),
   updatedAt: updatedAt.toISOString(),
 });

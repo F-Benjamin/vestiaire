@@ -308,8 +308,9 @@ préférences du navigateur.
 ### Phase 3 — Intelligence visuelle
 
 - analyse d’image réelle ;
-- détourage ;
-- scores de confiance ;
+- détourage asynchrone et stockage privé de la version dérivée ;
+- scores de confiance affichés ;
+- validation utilisateur et purge différée de l’original après 30 jours ;
 - boucle de correction et évaluation.
 
 ### Phase 4 — Recommandations

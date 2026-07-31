@@ -57,6 +57,12 @@
   line-height: 1;
 }
 
+.confidence {
+  margin-left: 0.45rem;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
 @media (forced-colors: active) {
   .chips button.active {
     outline: 2px solid CanvasText;

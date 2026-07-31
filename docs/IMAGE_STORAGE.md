@@ -1,8 +1,8 @@
 # Stockage privé des photographies
 
-Les photographies sont stockées dans Netlify Blobs, dans le store
-`wardrobe-images`. MongoDB conserve uniquement une clé opaque associée à chaque
-vêtement.
+Les photographies originales et leurs versions détourées sont stockées dans
+Netlify Blobs, dans le store `wardrobe-images`. MongoDB conserve uniquement des
+clés opaques associées à chaque vêtement.
 
 ## Pourquoi Netlify Blobs
 
@@ -65,6 +65,12 @@ Lorsqu’une photo est remplacée ou qu’un vêtement est supprimé, l’ancien
 est supprimé s’il n’est plus référencé par une autre pièce. La suppression
 directe d’une photo encore utilisée reçoit un statut `409`. Une erreur de
 nettoyage est journalisée sans empêcher la suppression du vêtement.
+
+Lorsqu’une version détourée est validée, elle devient l’image principale et
+l’original reste privé pendant 30 jours. La fonction planifiée Netlify
+`purge-accepted-originals` efface ensuite l’original. Cette durée laisse le
+temps de vérifier la qualité du détourage tout en limitant la conservation.
+La fonction appelle une route interne protégée avec `WEARSONA_CRON_SECRET`.
 
 La suppression du compte parcourt le préfixe privé de l’utilisateur et efface
 les blobs par lots limités afin d’éviter une rafale de requêtes au fournisseur.

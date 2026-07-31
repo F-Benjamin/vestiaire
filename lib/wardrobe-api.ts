@@ -100,6 +100,20 @@ export const updateGarment = async (
     }),
   );
 
+export const requestGarmentCutout = async (id: string) =>
+  readData<WardrobeItem>(
+    await fetch(`/api/garments/${encodeURIComponent(id)}/cutout`, {
+      method: "POST",
+    }),
+  );
+
+export const acceptGarmentCutout = async (id: string) =>
+  readData<WardrobeItem>(
+    await fetch(`/api/garments/${encodeURIComponent(id)}/cutout/accept`, {
+      method: "POST",
+    }),
+  );
+
 export const deleteGarment = async (id: string) => {
   const response = await fetch(`/api/garments/${encodeURIComponent(id)}`, {
     method: "DELETE",

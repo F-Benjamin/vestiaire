@@ -48,9 +48,14 @@ Ajoutez les variables suivantes en choisissant des valeurs contextuelles :
 | `EMAIL_FROM` | All scopes | expéditeur validé | expéditeur validé | expéditeur validé |
 | `OPENAI_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé de production | clé de test limitée | clé de test limitée |
 | `OPENAI_VISION_MODEL` | All scopes | `gpt-5.6` | `gpt-5.6` | `gpt-5.6` |
+| `CLOUDINARY_CLOUD_NAME` | All scopes | identifiant Cloudinary | identifiant de test | identifiant de test |
+| `CLOUDINARY_API_KEY` | All scopes | clé Cloudinary | clé Cloudinary de test | clé Cloudinary de test |
+| `CLOUDINARY_API_SECRET` | All scopes sur Free, Functions sur Pro+ | secret Cloudinary | secret Cloudinary de test | secret Cloudinary de test |
+| `WEARSONA_CRON_SECRET` | All scopes sur Free, Functions sur Pro+ | secret aléatoire | secret de test | secret de test |
 
 Pour `MONGODB_URI`, `BETTER_AUTH_SECRET`, `RESEND_API_KEY` et
-`OPENAI_API_KEY`, activez l'option **Contains secret values**.
+`OPENAI_API_KEY`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` et
+`WEARSONA_CRON_SECRET`, activez l'option **Contains secret values**.
 
 Netlify réserve la sélection de scopes précis aux offres Pro et Enterprise. Sur
 l’offre Free, laissez **All scopes** : une variable serveur ne devient pas
@@ -62,6 +67,14 @@ Générez des secrets d'au moins 32 caractères avec
 `openssl rand -base64 32`. `OPENAI_API_KEY` peut rester absente : l’import
 utilise alors seulement l’analyse de nom de fichier. `OPENAI_VISION_MODEL`
 n’est pas un secret.
+
+Cloudinary reste facultatif : sans ses trois variables, l’import et l’analyse
+OpenAI fonctionnent normalement, mais aucun détourage n’est demandé. Les trois
+valeurs sont disponibles dans **Cloudinary Console → Settings → API Keys**.
+
+Générez `WEARSONA_CRON_SECRET` avec `openssl rand -base64 32`. Il autorise
+uniquement la fonction Netlify planifiée à lancer la purge quotidienne ; il ne
+doit jamais être utilisé dans le navigateur.
 
 Conservez `EMAIL_AUTH_ENABLED=false` jusqu’à ce que le domaine expéditeur soit
 validé dans Resend et que `RESEND_API_KEY` et `EMAIL_FROM` soient définies. La
