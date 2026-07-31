@@ -339,6 +339,7 @@ export const fr = {
     seasonsLabel: "Saisons",
     patternsLabel: "Motifs",
     potentialStylesLabel: "Styles potentiels",
+    analysisSuggestion: "Proposé par l’analyse",
     wantedStyleLabel: "2. Allure recherchée",
     composeOutfit: "Composer ma tenue",
     suggestion: "SUGGESTION",

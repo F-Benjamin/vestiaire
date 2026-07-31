@@ -17,6 +17,15 @@ Un vêtement accepté par l’API possède la forme suivante :
   "seasons": ["Automne", "Hiver"],
   "styles": ["Travail", "Chic"],
   "patterns": ["Uni"],
+  "analysis": {
+    "source": "openai",
+    "model": "gpt-5.6",
+    "analyzedAt": "2026-07-31T12:00:00.000Z",
+    "attributes": {
+      "category": { "value": "Vestes", "confidence": 0.96 },
+      "colors": { "values": ["Beige"], "confidence": 0.92 }
+    }
+  },
   "imageKey": null
 }
 ```
@@ -42,6 +51,13 @@ calculée par le serveur, mais jamais `ownerId`.
 Les modifications partielles acceptent un ou plusieurs attributs du contrat.
 Les attributs inconnus, les tableaux vides, les doublons et les valeurs hors
 catalogue sont rejetés avec un statut `400`.
+
+`analysis` est optionnel et n’est accepté qu’à la création : il documente une
+proposition produite pendant l’import. Lorsqu’une modification porte sur la
+catégorie, les couleurs, les saisons, les styles ou les motifs, le serveur
+retire automatiquement la proposition associée de `analysis.attributes`. Cette
+trace permet à l’interface de distinguer une suggestion de l’analyse d’une
+valeur confirmée par l’utilisateur.
 
 ## Sécurité
 

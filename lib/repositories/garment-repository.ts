@@ -112,6 +112,16 @@ export const updateGarment = async (
   }
 
   const update = garmentUpdateSchema.parse(input);
+  const suggestedFields = [
+    "category",
+    "colors",
+    "seasons",
+    "styles",
+    "patterns",
+  ].filter((field) => field in update);
+  const unsetSuggestions: Record<string, ""> = Object.fromEntries(
+    suggestedFields.map((field) => [`analysis.attributes.${field}`, ""]),
+  );
 
   return getGarmentsCollection().findOneAndUpdate(
     { _id: objectId, ownerId },
@@ -120,6 +130,7 @@ export const updateGarment = async (
         ...update,
         updatedAt: new Date(),
       },
+      ...(suggestedFields.length ? { $unset: unsetSuggestions } : {}),
     },
     { returnDocument: "after" },
   );

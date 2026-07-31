@@ -10,6 +10,27 @@ export type Pattern =
   (typeof import("./wardrobe.constants").patterns)[number];
 export type AttributeKey = "colors" | "seasons" | "styles" | "patterns";
 
+export type AnalysisAttribute<T> = {
+  values: T[];
+  confidence: number;
+};
+
+export type GarmentAnalysis = {
+  source: "openai" | "filename";
+  model: string | null;
+  analyzedAt: string;
+  attributes: {
+    category?: {
+      value: Category;
+      confidence: number;
+    };
+    colors?: AnalysisAttribute<string>;
+    seasons?: AnalysisAttribute<Season>;
+    styles?: AnalysisAttribute<WardrobeStyle>;
+    patterns?: AnalysisAttribute<Pattern>;
+  };
+};
+
 export type WardrobeItem = {
   id: string;
   name: string;
@@ -18,6 +39,7 @@ export type WardrobeItem = {
   seasons: Season[];
   styles: WardrobeStyle[];
   patterns: Pattern[];
+  analysis?: GarmentAnalysis;
   imageKey: string | null;
   imageUrl: string | null;
 };

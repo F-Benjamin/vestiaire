@@ -7,6 +7,8 @@ import type {
   WardrobeStyle,
 } from "@/components/wardrobe/wardrobe.types";
 
+type GarmentAnalysis = WardrobeItem["analysis"];
+
 type ApiErrorBody = {
   error?: {
     code?: string;
@@ -22,6 +24,16 @@ type GarmentInput = {
   styles: WardrobeStyle[];
   patterns: Pattern[];
   imageKey: string | null;
+  analysis?: GarmentAnalysis;
+};
+
+type GarmentSuggestion = {
+  category: Category;
+  colors: string[];
+  seasons: Season[];
+  styles: WardrobeStyle[];
+  patterns: Pattern[];
+  analysis: NonNullable<GarmentAnalysis>;
 };
 
 type ImageUpload = {
@@ -104,6 +116,19 @@ export const uploadWardrobeImage = async (file: File) => {
 
   return readData<ImageUpload>(
     await fetch("/api/wardrobe-images", {
+      method: "POST",
+      body: formData,
+    }),
+  );
+};
+
+export const analyzeWardrobeImage = async (file: File) => {
+  const formData = new FormData();
+  formData.set("filename", file.name);
+  formData.set("image", file);
+
+  return readData<GarmentSuggestion>(
+    await fetch("/api/analyze", {
       method: "POST",
       body: formData,
     }),

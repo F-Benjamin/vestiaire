@@ -107,7 +107,19 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                     aria-label={copy.itemNameLabel}
                   />
                   <label className={styles.categoryField}>
-                    {copy.categoryLabel}
+                    <span>
+                      {selected.analysis?.attributes.category?.value ===
+                      selected.category ? (
+                        <span
+                          className={styles.suggestion}
+                          aria-label={copy.analysisSuggestion}
+                          title={copy.analysisSuggestion}
+                        >
+                          ✦
+                        </span>
+                      ) : null}
+                      {copy.categoryLabel}
+                    </span>
                     <select
                       value={selected.category}
                       onChange={(event) =>
