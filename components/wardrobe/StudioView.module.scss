@@ -145,6 +145,13 @@
   }
 }
 
+.suggestion {
+  color: var(--accent);
+  display: inline-block;
+  font-size: 0.85em;
+  margin-right: 0.3rem;
+}
+
 .styleGrid {
   margin-bottom: 22px;
   display: grid;

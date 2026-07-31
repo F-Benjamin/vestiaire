@@ -27,23 +27,39 @@ const MultiField = <K extends AttributeKey,>({
     <fieldset className={styles.root}>
       <legend>{label}</legend>
       <div className={styles.chips}>
-        {values.map((value) => (
-          <button
-            type="button"
-            key={String(value)}
-            className={
-              (item[field] as WardrobeItem[K][number][]).includes(value)
-                ? styles.active
-                : undefined
-            }
-            aria-pressed={(item[field] as WardrobeItem[K][number][]).includes(
-              value,
-            )}
-            onClick={() => toggleAttribute(item.id, field, value)}
-          >
-            {getAttributeLabel(messages, field, String(value))}
-          </button>
-        ))}
+        {values.map((value) => {
+          const suggestedAttribute = item.analysis?.attributes[field] as
+            | { values: WardrobeItem[K][number][] }
+            | undefined;
+          const isSuggested = suggestedAttribute?.values.includes(value);
+
+          return (
+            <button
+              type="button"
+              key={String(value)}
+              className={
+                (item[field] as WardrobeItem[K][number][]).includes(value)
+                  ? styles.active
+                  : undefined
+              }
+              aria-pressed={(item[field] as WardrobeItem[K][number][]).includes(
+                value,
+              )}
+              onClick={() => toggleAttribute(item.id, field, value)}
+            >
+              {isSuggested ? (
+                <span
+                  className={styles.suggestion}
+                  aria-label={messages.studio.analysisSuggestion}
+                  title={messages.studio.analysisSuggestion}
+                >
+                  ✦
+                </span>
+              ) : null}
+              {getAttributeLabel(messages, field, String(value))}
+            </button>
+          );
+        })}
       </div>
     </fieldset>
   );

@@ -8,6 +8,36 @@ import {
 
 const uniqueValues = <T>(values: T[]) => new Set(values).size === values.length;
 
+const confidenceSchema = z.number().min(0).max(1);
+
+const suggestedValuesSchema = <T extends z.ZodType>(valueSchema: T) =>
+  z.object({
+    values: z.array(valueSchema).min(1),
+    confidence: confidenceSchema,
+  });
+
+const garmentAnalysisSchema = z
+  .object({
+    source: z.enum(["openai", "filename"]),
+    model: z.string().trim().min(1).max(120).nullable(),
+    analyzedAt: z.coerce.date(),
+    attributes: z
+      .object({
+        category: z
+          .object({
+            value: z.enum(categories),
+            confidence: confidenceSchema,
+          })
+          .optional(),
+        colors: suggestedValuesSchema(z.string().trim().min(1).max(40)).optional(),
+        seasons: suggestedValuesSchema(z.enum(seasons)).optional(),
+        styles: suggestedValuesSchema(z.enum(wardrobeStyles)).optional(),
+        patterns: suggestedValuesSchema(z.enum(patterns)).optional(),
+      })
+      .strict(),
+  })
+  .strict();
+
 export const wardrobeImageKeySchema = z
   .string()
   .regex(
@@ -44,6 +74,7 @@ const garmentFieldsSchema = z.object({
 export const garmentInputSchema = garmentFieldsSchema
   .extend({
     imageKey: wardrobeImageKeySchema.nullable().default(null),
+    analysis: garmentAnalysisSchema.optional(),
   })
   .strict();
 

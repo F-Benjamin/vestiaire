@@ -1,4 +1,4 @@
-# Environnements de Vestiaire
+# Environnements de Wearsona
 
 Vestiaire distingue trois environnements :
 
@@ -47,6 +47,7 @@ Ajoutez les variables suivantes en choisissant des valeurs contextuelles :
 | `RESEND_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé Resend | clé Resend de test | clé Resend de test |
 | `EMAIL_FROM` | All scopes | expéditeur validé | expéditeur validé | expéditeur validé |
 | `OPENAI_API_KEY` | All scopes sur Free, Functions sur Pro+ | clé de production | clé de test limitée | clé de test limitée |
+| `OPENAI_VISION_MODEL` | All scopes | `gpt-5.6` | `gpt-5.6` | `gpt-5.6` |
 
 Pour `MONGODB_URI`, `BETTER_AUTH_SECRET`, `RESEND_API_KEY` et
 `OPENAI_API_KEY`, activez l'option **Contains secret values**.
@@ -58,8 +59,9 @@ intégrées au code envoyé au navigateur par Next.js.
 
 `BETTER_AUTH_SECRET` est obligatoire avant de déployer l'authentification.
 Générez des secrets d'au moins 32 caractères avec
-`openssl rand -base64 32`. `OPENAI_API_KEY` peut rester absente tant que
-l'analyse IA n'est pas encore branchée.
+`openssl rand -base64 32`. `OPENAI_API_KEY` peut rester absente : l’import
+utilise alors seulement l’analyse de nom de fichier. `OPENAI_VISION_MODEL`
+n’est pas un secret.
 
 Conservez `EMAIL_AUTH_ENABLED=false` jusqu’à ce que le domaine expéditeur soit
 validé dans Resend et que `RESEND_API_KEY` et `EMAIL_FROM` soient définies. La

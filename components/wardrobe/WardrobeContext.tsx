@@ -15,6 +15,7 @@ import { formatMessage } from "@/i18n/format";
 import { buildOutfit, guessCategory } from "@/lib/wardrobe";
 import {
   createGarment as createGarmentRequest,
+  analyzeWardrobeImage,
   deleteGarment as deleteGarmentRequest,
   deleteWardrobeImage,
   listGarments,
@@ -115,20 +116,12 @@ export const WardrobeProvider = ({
       try {
         const results = await Promise.allSettled(
           files.map(async (file): Promise<WardrobeItem> => {
-            let analysis: { category?: Category; colors?: string[] } = {};
+            let analysis;
 
             try {
-              const response = await fetch("/api/analyze", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ filename: file.name }),
-              });
-
-              if (response.ok) {
-                analysis = await response.json();
-              }
+              analysis = await analyzeWardrobeImage(file);
             } catch {
-              // Le nom de fichier reste analysable localement sans stocker la photo.
+              // L'import reste disponible si le service d'analyse est indisponible.
             }
 
             const uploadedImage = await uploadWardrobeImage(file);
@@ -138,11 +131,12 @@ export const WardrobeProvider = ({
                 name: file.name
                   .replace(/\.[^.]+$/, "")
                   .replaceAll(/[-_]/g, " "),
-                category: analysis.category ?? guessCategory(file.name),
-                colors: analysis.colors?.length ? analysis.colors : ["Noir"],
-                seasons: ["Toute saison"],
-                styles: ["Décontracté"],
-                patterns: ["Uni"],
+                category: analysis?.category ?? guessCategory(file.name),
+                colors: analysis?.colors.length ? analysis.colors : ["Noir"],
+                seasons: analysis?.seasons ?? ["Toute saison"],
+                styles: analysis?.styles ?? ["Décontracté"],
+                patterns: analysis?.patterns ?? ["Uni"],
+                analysis: analysis?.analysis,
                 imageKey: uploadedImage.key,
               });
             } catch (error) {
@@ -206,7 +200,29 @@ export const WardrobeProvider = ({
   const updateItem = useCallback(
     (id: string, patch: WardrobeItemPatch) => {
       setItems((current) =>
-        current.map((item) => (item.id === id ? { ...item, ...patch } : item)),
+        current.map((item) => {
+          if (item.id !== id) return item;
+
+          const changedSuggestionFields = [
+            "category",
+            "colors",
+            "seasons",
+            "styles",
+            "patterns",
+          ].filter((field) => field in patch);
+          const analysis = item.analysis
+            ? {
+                ...item.analysis,
+                attributes: Object.fromEntries(
+                  Object.entries(item.analysis.attributes).filter(
+                    ([field]) => !changedSuggestionFields.includes(field),
+                  ),
+                ),
+              }
+            : undefined;
+
+          return { ...item, ...patch, analysis };
+        }),
       );
       setOutfit([]);
 

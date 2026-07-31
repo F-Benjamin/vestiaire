@@ -1,34 +1,55 @@
 import { NextResponse } from "next/server";
-import { getDictionary } from "@/i18n/dictionaries";
-import { detectLocale } from "@/i18n/routing";
-import { analyzeFilename } from "@/lib/analyze-filename";
+import { getAuthenticatedUser } from "@/lib/api/authenticated-user";
+import { internalError, invalidRequest, unauthorized } from "@/lib/api/json-response";
+import { ensureSameOrigin } from "@/lib/api/mutation-request";
+import { MAX_WARDROBE_IMAGE_SIZE } from "@/lib/storage/wardrobe-image-store";
+import { analyzeGarmentImage } from "@/lib/vision-analysis";
 
-type AnalyzeRequest = {
-  filename?: string;
-};
+const supportedImageTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
 
-/**
- * Point d'entrée prévu pour l'analyse des vêtements.
- *
- * Aujourd'hui, il analyse le nom du fichier. Plus tard, vous pourrez remplacer
- * ou compléter cette fonction par OpenAI Vision, Gemini, Claude ou un modèle
- * local, sans exposer la clé secrète dans le navigateur.
- */
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export const POST = async (request: Request) => {
-  const body = (await request.json()) as AnalyzeRequest;
+  const forbidden = await ensureSameOrigin(request);
 
-  if (!body.filename?.trim()) {
-    const locale = detectLocale(request.headers.get("accept-language"));
-    const messages = await getDictionary(locale);
-
-    return NextResponse.json(
-      { error: messages.api.filenameRequired },
-      { status: 400 },
-    );
+  if (forbidden) {
+    return forbidden;
   }
 
-  return NextResponse.json({
-    source: "filename",
-    ...analyzeFilename(body.filename),
-  });
+  try {
+    const user = await getAuthenticatedUser(request);
+
+    if (!user) {
+      return unauthorized(request);
+    }
+
+    const formData = await request.formData();
+    const filename = formData.get("filename");
+    const image = formData.get("image");
+
+    if (typeof filename !== "string" || !filename.trim()) {
+      return invalidRequest(request, new Error("filename is required"));
+    }
+
+    const usableImage =
+      image instanceof File &&
+      image.size > 0 &&
+      image.size <= MAX_WARDROBE_IMAGE_SIZE &&
+      supportedImageTypes.has(image.type)
+        ? image
+        : undefined;
+
+    try {
+      const suggestion = await analyzeGarmentImage(filename, usableImage);
+      return NextResponse.json({ data: suggestion });
+    } catch (error) {
+      const errorName = error instanceof Error ? error.name : "UnknownError";
+      console.warn(`Garment image analysis fell back to filename: ${errorName}`);
+      const suggestion = await analyzeGarmentImage(filename);
+      return NextResponse.json({ data: suggestion });
+    }
+  } catch (error) {
+    return internalError(request, error);
+  }
 };

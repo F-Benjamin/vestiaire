@@ -91,7 +91,8 @@ components/
 
 lib/
 ├── api/                             # Session et réponses des routes métier
-├── analyze-filename.ts             # Analyse réutilisable côté serveur
+├── analyze-filename.ts             # Solution de secours par nom de fichier
+├── vision-analysis.ts              # Analyse visuelle OpenAI côté serveur
 ├── auth.ts                         # Configuration Better Auth
 ├── auth-client.ts                  # Client React Better Auth
 ├── auth-session.ts                 # Session et protection des pages
@@ -172,14 +173,6 @@ La connexion à MongoDB peut être contrôlée séparément :
 curl http://localhost:3000/api/health/database
 ```
 
-Et pour tester l’analyse du nom d’un fichier :
-
-```bash
-curl -X POST http://localhost:3000/api/analyze \
-  -H "Content-Type: application/json" \
-  -d '{"filename":"blazer-beige-travail.jpg"}'
-```
-
 ## UX et accessibilité
 
 L’interface vise WCAG 2.2 AA :
@@ -197,15 +190,25 @@ Le thème est appliqué avant l’hydratation pour éviter un flash de couleur
 incorrect. Le choix `Jour`, `Nuit` ou `Système` est conservé dans
 `localStorage`, et les animations respectent `prefers-reduced-motion`.
 
-## Ajouter une API d’IA
+## Analyse visuelle des vêtements
 
 1. Copiez `.env.example` vers `.env.local`.
-2. Ajoutez la clé dans `OPENAI_API_KEY`.
-3. Utilisez cette variable uniquement dans `app/api/analyze/route.ts`.
+2. Ajoutez une clé de projet dans `OPENAI_API_KEY`.
+3. Conservez `OPENAI_VISION_MODEL=gpt-5.6`, ou choisissez explicitement un
+   autre modèle compatible avec les images.
 4. Ne préfixez jamais une clé secrète avec `NEXT_PUBLIC_`.
 
-La route actuelle analyse le nom du fichier. Elle constitue le bon emplacement
-pour brancher ensuite une API de vision, sans exposer la clé au navigateur.
+À chaque import, `/api/analyze` reçoit la photo authentifiée sous forme de
+`multipart/form-data`, l’envoie à l’API Responses d’OpenAI en données d’image,
+puis propose catégorie, couleurs, saisons, styles et motifs avec une confiance
+par attribut. `store: false` est demandé à l’API. La photo n’est jamais rendue
+publique pour cette analyse et n’est pas conservée en base64 dans MongoDB.
+
+La petite étoile du studio indique une valeur proposée. Une modification dans
+le studio retire immédiatement l’étoile de l’attribut concerné, côté interface
+et côté MongoDB : une correction humaine n’est donc jamais écrasée par une
+proposition historique. Sans `OPENAI_API_KEY`, ou si le service échoue,
+l’import continue avec l’analyse de nom de fichier existante.
 
 ## Déploiement et environnements
 
@@ -239,5 +242,5 @@ Le centre de profil est détaillé dans [`docs/PROFILE.md`](docs/PROFILE.md).
 La garde-robe utilise désormais MongoDB pour les attributs et Netlify Blobs
 pour les photographies. Les prochaines briques seront :
 
-- analyse visuelle réelle des photographies ;
+- détouré des photographies ;
 - un worker pour les futurs traitements IA longs.

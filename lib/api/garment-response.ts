@@ -10,6 +10,7 @@ export const toGarmentResponse = ({
   seasons,
   styles,
   patterns,
+  analysis,
   imageKey,
   createdAt,
   updatedAt,
@@ -21,6 +22,12 @@ export const toGarmentResponse = ({
   seasons,
   styles,
   patterns,
+  analysis: analysis
+    ? {
+        ...analysis,
+        analyzedAt: analysis.analyzedAt.toISOString(),
+      }
+    : undefined,
   imageKey: imageKey ?? null,
   imageUrl: imageKey ? `/api/wardrobe-images/${imageKey}` : null,
   createdAt: createdAt.toISOString(),
