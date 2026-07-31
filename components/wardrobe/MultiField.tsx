@@ -22,10 +22,18 @@ const MultiField = <K extends AttributeKey,>({
 }: MultiFieldProps<K>) => {
   const { toggleAttribute } = useWardrobe();
   const { messages } = useI18n();
+  const confidence = item.analysis?.attributes[field]?.confidence;
 
   return (
     <fieldset className={styles.root}>
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {confidence === undefined ? null : (
+          <span className={styles.confidence}>
+            {Math.round(confidence * 100)} %
+          </span>
+        )}
+      </legend>
       <div className={styles.chips}>
         {values.map((value) => {
           const suggestedAttribute = item.analysis?.attributes[field] as

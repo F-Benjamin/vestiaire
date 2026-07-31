@@ -134,6 +134,36 @@ export const storeWardrobeImage = async (ownerId: string, file: File) => {
   return { key, contentType: image.contentType, size: file.size };
 };
 
+export const storeDerivedWardrobeImage = async (
+  ownerId: string,
+  bytes: ArrayBuffer,
+) => {
+  if (!bytes.byteLength) {
+    throw new WardrobeImageError("invalid_file");
+  }
+
+  if (bytes.byteLength > MAX_WARDROBE_IMAGE_SIZE) {
+    throw new WardrobeImageError("too_large");
+  }
+
+  const image = detectImage(new Uint8Array(bytes));
+  if (!image) {
+    throw new WardrobeImageError("unsupported_type");
+  }
+
+  const store = getImageStore();
+  const key = `${getOwnerPrefix(ownerId)}${randomUUID()}.${image.extension}`;
+  const metadata: WardrobeImageMetadata = {
+    contentType: image.contentType,
+    createdAt: new Date().toISOString(),
+    ownerId,
+    size: bytes.byteLength,
+  };
+
+  await store.set(key, bytes, { metadata, onlyIfNew: true });
+  return { key, contentType: image.contentType, size: bytes.byteLength };
+};
+
 export const getOwnedWardrobeImage = async (
   ownerId: string,
   key: string,

@@ -7,8 +7,8 @@ couleurs, saisons, styles et motifs. Chaque groupe de valeurs est accompagné
 d’un score de confiance compris entre `0` et `1`.
 
 Cette phase ne détoure pas encore les vêtements et ne produit pas de rendu 3D.
-Elle est synchrone et conçue pour les imports personnels actuels ; un worker
-sera préférable avant des traitements volumineux ou ouverts au public.
+L’analyse visuelle est synchrone ; le détourage est asynchrone et conçu pour
+les imports personnels actuels.
 
 ## Flux privé
 
@@ -18,6 +18,19 @@ sera préférable avant des traitements volumineux ou ouverts au public.
 3. OpenAI renvoie un JSON contraint au catalogue Wearsona.
 4. La photo est ensuite stockée de façon privée dans Netlify Blobs et les
    métadonnées dans MongoDB.
+
+## Détourage Cloudinary
+
+Après la création d’une pièce, Wearsona envoie une copie temporaire de
+l’original privé à Cloudinary avec le type de livraison `authenticated` et une
+demande de détourage. Cloudinary appelle ensuite un webhook signé lorsque le
+PNG transparent est disponible. Wearsona vérifie la signature, rapatrie le PNG
+dans Netlify Blobs, puis efface l’actif temporaire Cloudinary.
+
+L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
+L’utilisateur peut alors valider la version détourée. Cette validation la rend
+principale et programme la suppression de l’original privé après 30 jours. Une
+tâche planifiée Netlify s’exécute chaque jour pour effectuer cette purge.
 
 La requête OpenAI utilise `store: false`. Wearsona ne crée pas d’URL publique
 pour analyser une photographie et ne stocke jamais une image en base64 dans
@@ -37,14 +50,20 @@ Ajoutez ces variables uniquement côté serveur :
 ```bash
 OPENAI_API_KEY=...
 OPENAI_VISION_MODEL=gpt-5.6
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+WEARSONA_CRON_SECRET=...
 ```
 
 `OPENAI_VISION_MODEL` est facultative. Sans `OPENAI_API_KEY`, ou si OpenAI ne
 répond pas, l’import reste fonctionnel grâce à l’analyse de nom de fichier.
+Sans les trois variables Cloudinary, le détourage est simplement ignoré.
 
 ## Limites actuelles
 
 - une seule pièce doit être visible par photographie pour une analyse fiable ;
 - les propositions doivent être vérifiées par l’utilisateur ;
 - la confiance est une estimation du modèle, pas une mesure de vérité ;
-- l’analyse ne garde pas les corrections comme données d’entraînement.
+- l’analyse ne garde pas les corrections comme données d’entraînement ;
+- le détourage ne remplace jamais l’original avant validation utilisateur.

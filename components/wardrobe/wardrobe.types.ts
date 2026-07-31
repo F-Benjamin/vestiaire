@@ -31,6 +31,17 @@ export type GarmentAnalysis = {
   };
 };
 
+export type GarmentCutout = {
+  status: "pending" | "ready" | "failed" | "accepted";
+  imageKey?: string;
+  confidence?: number;
+  createdAt: string;
+  completedAt?: string;
+  acceptedAt?: string;
+  originalDeleteAfter?: string;
+  originalDeletedAt?: string;
+};
+
 export type WardrobeItem = {
   id: string;
   name: string;
@@ -41,7 +52,11 @@ export type WardrobeItem = {
   patterns: Pattern[];
   analysis?: GarmentAnalysis;
   imageKey: string | null;
+  originalImageKey?: string | null;
+  cutout?: GarmentCutout;
   imageUrl: string | null;
+  originalImageUrl?: string | null;
+  cutoutImageUrl?: string | null;
 };
 
 export type WardrobeItemPatch = Partial<
@@ -74,6 +89,7 @@ export type WardrobeContextValue = {
   importPhotos: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
   updateItem: (id: string, patch: WardrobeItemPatch) => void;
   removeItem: (id: string) => void;
+  acceptCutout: (id: string) => void;
   toggleAttribute: <K extends AttributeKey>(
     id: string,
     key: K,

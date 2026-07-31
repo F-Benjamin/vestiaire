@@ -32,6 +32,7 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
     wantedStyle,
     setWantedStyle,
     outfit,
+    acceptCutout,
     updateItem,
     createOutfit,
   } = useWardrobe();
@@ -95,6 +96,40 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                     alt={selected.name}
                     className={styles.editorImage}
                   />
+                  {selected.cutout?.status === "pending" ? (
+                    <p className={styles.cutoutStatus}>{copy.cutoutPending}</p>
+                  ) : null}
+                  {selected.cutout?.status === "ready" &&
+                  selected.cutoutImageUrl ? (
+                    <section className={styles.cutoutReview}>
+                      <div>
+                        <p>{copy.cutoutReady}</p>
+                        <span>
+                          {selected.cutout.confidence === undefined
+                            ? copy.cutoutConfidenceUnavailable
+                            : formatMessage(copy.cutoutConfidence, {
+                                score: Math.round(selected.cutout.confidence * 100),
+                              })}
+                        </span>
+                      </div>
+                      <WardrobeImage
+                        src={selected.cutoutImageUrl}
+                        alt={selected.name}
+                        className={styles.cutoutImage}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => acceptCutout(selected.id)}
+                      >
+                        {copy.acceptCutout}
+                      </button>
+                    </section>
+                  ) : null}
+                  {selected.cutout?.status === "accepted" ? (
+                    <p className={styles.cutoutStatus}>
+                      {copy.cutoutAccepted}
+                    </p>
+                  ) : null}
                   <input
                     key={`${selected.id}:${selected.name}`}
                     defaultValue={selected.name}
@@ -119,6 +154,13 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                         </span>
                       ) : null}
                       {copy.categoryLabel}
+                      {selected.analysis?.attributes.category ? (
+                        <span className={styles.confidence}>
+                          {Math.round(
+                            selected.analysis.attributes.category.confidence * 100,
+                          )} %
+                        </span>
+                      ) : null}
                     </span>
                     <select
                       value={selected.category}

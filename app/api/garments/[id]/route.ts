@@ -132,9 +132,18 @@ export const DELETE = async (
       return garmentNotFound(request);
     }
 
-    if (garment.imageKey) {
-      await deleteImageWithoutBlocking(user.id, garment.imageKey);
-    }
+    const imageKeys = new Set(
+      [
+        garment.imageKey,
+        garment.originalImageKey,
+        garment.cutout?.imageKey,
+      ].filter((key): key is string => Boolean(key)),
+    );
+    await Promise.all(
+      [...imageKeys].map((imageKey) =>
+        deleteImageWithoutBlocking(user.id, imageKey),
+      ),
+    );
 
     return new Response(null, { status: 204 });
   } catch (error) {

@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -15,10 +16,12 @@ import { formatMessage } from "@/i18n/format";
 import { buildOutfit, guessCategory } from "@/lib/wardrobe";
 import {
   createGarment as createGarmentRequest,
+  acceptGarmentCutout as acceptGarmentCutoutRequest,
   analyzeWardrobeImage,
   deleteGarment as deleteGarmentRequest,
   deleteWardrobeImage,
   listGarments,
+  requestGarmentCutout,
   updateGarment as updateGarmentRequest,
   uploadWardrobeImage,
   WardrobeApiError,
@@ -102,6 +105,18 @@ export const WardrobeProvider = ({
   const selected =
     items.find((item) => item.id === selectedId) ?? items[0];
 
+  useEffect(() => {
+    if (!items.some((item) => item.cutout?.status === "pending")) {
+      return undefined;
+    }
+
+    const interval = window.setInterval(() => {
+      void refreshItems();
+    }, 8_000);
+
+    return () => window.clearInterval(interval);
+  }, [items, refreshItems]);
+
   const importPhotos = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const input = event.currentTarget;
@@ -127,7 +142,7 @@ export const WardrobeProvider = ({
             const uploadedImage = await uploadWardrobeImage(file);
 
             try {
-              return await createGarmentRequest({
+              const garment = await createGarmentRequest({
                 name: file.name
                   .replace(/\.[^.]+$/, "")
                   .replaceAll(/[-_]/g, " "),
@@ -139,6 +154,12 @@ export const WardrobeProvider = ({
                 analysis: analysis?.analysis,
                 imageKey: uploadedImage.key,
               });
+
+              try {
+                return await requestGarmentCutout(garment.id);
+              } catch {
+                return garment;
+              }
             } catch (error) {
               await deleteWardrobeImage(uploadedImage.key).catch(() => undefined);
               throw error;
@@ -251,6 +272,21 @@ export const WardrobeProvider = ({
     [enqueueMutation, noticeMessages.itemDeleteFailed, refreshItems],
   );
 
+  const acceptCutout = useCallback(
+    (id: string) => {
+      void enqueueMutation(id, async () => {
+        const garment = await acceptGarmentCutoutRequest(id);
+        setItems((current) =>
+          current.map((item) => (item.id === id ? garment : item)),
+        );
+      }).catch(async (error) => {
+        setNotice(getErrorMessage(error, noticeMessages.itemUpdateFailed));
+        await refreshItems();
+      });
+    },
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+  );
+
   const toggleAttribute = useCallback(
     <K extends AttributeKey,>(
       id: string,
@@ -311,11 +347,13 @@ export const WardrobeProvider = ({
       importPhotos,
       updateItem,
       removeItem,
+      acceptCutout,
       toggleAttribute,
       createOutfit,
     }),
     [
       category,
+      acceptCutout,
       createOutfit,
       importPhotos,
       isUploading,

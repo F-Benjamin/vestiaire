@@ -45,6 +45,21 @@ export const wardrobeImageKeySchema = z
     "Invalid wardrobe image key.",
   );
 
+export const garmentCutoutSchema = z
+  .object({
+    status: z.enum(["pending", "ready", "failed", "accepted"]),
+    imageKey: wardrobeImageKeySchema.optional(),
+    providerAssetId: z.string().trim().min(1).max(120).optional(),
+    providerPublicId: z.string().trim().min(1).max(240).optional(),
+    confidence: confidenceSchema.optional(),
+    createdAt: z.coerce.date(),
+    completedAt: z.coerce.date().optional(),
+    acceptedAt: z.coerce.date().optional(),
+    originalDeleteAfter: z.coerce.date().optional(),
+    originalDeletedAt: z.coerce.date().optional(),
+  })
+  .strict();
+
 const garmentFieldsSchema = z.object({
   name: z.string().trim().min(1).max(120),
   category: z.enum(categories),
@@ -90,6 +105,10 @@ export type GarmentUpdate = z.infer<typeof garmentUpdateSchema>;
 
 export type GarmentDocument = GarmentInput & {
   ownerId: string;
+  originalImageKey?: string | null;
+  cutout?: z.infer<typeof garmentCutoutSchema>;
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type GarmentCutout = z.infer<typeof garmentCutoutSchema>;

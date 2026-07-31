@@ -4,6 +4,7 @@ import {
   garmentInputSchema,
   garmentUpdateSchema,
   type GarmentDocument,
+  type GarmentCutout,
   type GarmentInput,
   type GarmentUpdate,
 } from "@/lib/schemas/garment";
@@ -23,11 +24,31 @@ const toObjectId = (id: string) =>
 
 export const ensureGarmentIndexes = async () => {
   garmentRepositoryGlobal.vestiaireGarmentIndexesPromise ??=
-    getGarmentsCollection()
-      .createIndex(
+    Promise.all([
+      getGarmentsCollection().createIndex(
         { ownerId: 1, updatedAt: -1 },
         { name: "garments_by_owner_and_update" },
-      )
+      ),
+      getGarmentsCollection().createIndex(
+        { "cutout.providerAssetId": 1 },
+        {
+          name: "garments_by_cutout_asset",
+          partialFilterExpression: {
+            "cutout.providerAssetId": { $type: "string" },
+          },
+        },
+      ),
+      getGarmentsCollection().createIndex(
+        { "cutout.originalDeleteAfter": 1 },
+        {
+          name: "garments_by_original_expiry",
+          partialFilterExpression: {
+            "cutout.status": "accepted",
+            originalImageKey: { $type: "string" },
+          },
+        },
+      ),
+    ])
       .then(() => undefined)
       .catch((error: unknown) => {
         garmentRepositoryGlobal.vestiaireGarmentIndexesPromise = undefined;
@@ -46,6 +67,7 @@ export const createGarment = async (
   const document: GarmentDocument = {
     ...garment,
     ownerId,
+    originalImageKey: garment.imageKey,
     createdAt: now,
     updatedAt: now,
   };
@@ -96,7 +118,14 @@ export const isGarmentImageReferenced = async (
   imageKey: string,
 ) =>
   (await getGarmentsCollection().countDocuments(
-    { ownerId, imageKey },
+    {
+      ownerId,
+      $or: [
+        { imageKey },
+        { originalImageKey: imageKey },
+        { "cutout.imageKey": imageKey },
+      ],
+    },
     { limit: 1 },
   )) > 0;
 
@@ -135,6 +164,121 @@ export const updateGarment = async (
     { returnDocument: "after" },
   );
 };
+
+type PendingCutout = Pick<
+  GarmentCutout,
+  "providerAssetId" | "providerPublicId" | "createdAt"
+>;
+
+export const queueGarmentCutout = async (
+  ownerId: string,
+  id: string,
+  cutout: PendingCutout,
+) => {
+  const objectId = toObjectId(id);
+  if (!objectId) return null;
+
+  return getGarmentsCollection().findOneAndUpdate(
+    { _id: objectId, ownerId },
+    {
+      $set: {
+        cutout: { ...cutout, status: "pending" },
+        updatedAt: new Date(),
+      },
+    },
+    { returnDocument: "after" },
+  );
+};
+
+export const getGarmentByCutoutAssetId = async (assetId: string) =>
+  getGarmentsCollection().findOne({ "cutout.providerAssetId": assetId });
+
+export const completeGarmentCutout = async (
+  id: string,
+  imageKey: string,
+  confidence: number | undefined,
+) =>
+  getGarmentsCollection().findOneAndUpdate(
+    { _id: new ObjectId(id), "cutout.status": "pending" },
+    {
+      $set: {
+        "cutout.status": "ready",
+        "cutout.imageKey": imageKey,
+        ...(confidence === undefined ? {} : { "cutout.confidence": confidence }),
+        "cutout.completedAt": new Date(),
+        updatedAt: new Date(),
+      },
+    },
+    { returnDocument: "after" },
+  );
+
+export const failGarmentCutout = async (id: string) =>
+  getGarmentsCollection().findOneAndUpdate(
+    { _id: new ObjectId(id), "cutout.status": "pending" },
+    {
+      $set: {
+        "cutout.status": "failed",
+        "cutout.completedAt": new Date(),
+        updatedAt: new Date(),
+      },
+    },
+    { returnDocument: "after" },
+  );
+
+export const acceptGarmentCutout = async (ownerId: string, id: string) => {
+  const objectId = toObjectId(id);
+  if (!objectId) return null;
+
+  const garment = await getGarmentsCollection().findOne({
+    _id: objectId,
+    ownerId,
+    "cutout.status": "ready",
+    "cutout.imageKey": { $exists: true },
+  });
+
+  if (!garment?.cutout?.imageKey) return null;
+
+  const now = new Date();
+  const deleteAfter = new Date(now);
+  deleteAfter.setUTCDate(deleteAfter.getUTCDate() + 30);
+
+  return getGarmentsCollection().findOneAndUpdate(
+    { _id: objectId, ownerId, "cutout.status": "ready" },
+    {
+      $set: {
+        imageKey: garment.cutout.imageKey,
+        "cutout.status": "accepted",
+        "cutout.acceptedAt": now,
+        "cutout.originalDeleteAfter": deleteAfter,
+        updatedAt: now,
+      },
+    },
+    { returnDocument: "after" },
+  );
+};
+
+export const listExpiredOriginals = async (now: Date) =>
+  getGarmentsCollection()
+    .find({
+      originalImageKey: { $type: "string" },
+      "cutout.status": "accepted",
+      "cutout.originalDeleteAfter": { $lte: now },
+      "cutout.originalDeletedAt": { $exists: false },
+    })
+    .limit(40)
+    .toArray();
+
+export const markOriginalDeleted = async (id: string) =>
+  getGarmentsCollection().updateOne(
+    { _id: new ObjectId(id) },
+    {
+      $set: {
+        originalImageKey: null,
+        "cutout.originalDeletedAt": new Date(),
+        updatedAt: new Date(),
+      },
+    },
+  );
 
 export const deleteGarment = async (
   ownerId: string,
