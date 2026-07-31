@@ -56,8 +56,8 @@ export const fr = {
     heroEyebrow: "VOTRE STYLE, AU PRÉSENT",
     heroTitle: "Portez qui vous voulez être aujourd’hui.",
     heroIntro:
-      "Wearsona transforme votre garde-robe en langage personnel. Partez de votre humeur, de votre journée ou d’une pièce — et composez la version de vous qui vous ressemble maintenant.",
-    discoverPrototype: "Entrer dans Wearsona",
+      "Wearsona transforme votre garde-robe en langage personnel. Partez de votre humeur, de votre journée ou d’une pièce et composez la version de vous qui vous ressemble maintenant.",
+    discoverPrototype: "Accéder à Wearsona",
     understandConcept: "Découvrir l’expérience",
     localNote:
       "Espace personnel · Vos photographies sont privées et liées à votre compte",
@@ -68,7 +68,8 @@ export const fr = {
     trousers: "Pantalon",
     threePieces: "3 pièces de votre garde-robe",
     conceptEyebrow: "UNE IDENTITÉ EN MOUVEMENT",
-    conceptTitle: "Vos vêtements ne définissent pas qui vous êtes. Ils vous aident à le choisir.",
+    conceptTitle:
+      "Vos vêtements ne définissent pas qui vous êtes. Ils vous aident à le choisir.",
     pillars: [
       {
         number: "01",
@@ -78,7 +79,7 @@ export const fr = {
       },
       {
         number: "02",
-        title: "Intentionner",
+        title: "Projeter",
         description:
           "Choisissez une allure, une humeur ou une pièce de départ. Le studio traduit cette intention en tenue.",
       },
@@ -90,18 +91,19 @@ export const fr = {
       },
     ],
     visionEyebrow: "LA VISION WEARSONA",
-    visionTitle: "Un miroir créatif, pas un algorithme qui décide à votre place.",
+    visionTitle:
+      "Un miroir créatif, pas un algorithme qui décide à votre place.",
     visionDescription:
       "L’intelligence de Wearsona doit comprendre vos vêtements, apprendre de vos corrections et expliquer ses propositions. L’objectif n’est pas de suivre chaque tendance, mais de rendre votre style plus libre, plus personnel et plus conscient.",
     visionListLabel: "Axes de développement",
     visionItems: [
-      "Analyse visuelle et catalogage sans friction",
+      "Analyse visuelle et catalogage qui vous ressemble",
       "Tenues personnelles, contextuelles et explicables",
       "Projection virtuelle respectueuse de votre image",
     ],
     exploreCurrentVersion: "Composer ma première Wearsona",
     footerDescription:
-      "Un laboratoire de style personnel construit avec Next.js et l’intelligence visuelle.",
+      "Un laboratoire de style personnel saupoudrer d’intelligence visuelle.",
     accessApplication: "Accéder à Wearsona",
   },
   auth: {
@@ -136,12 +138,10 @@ export const fr = {
       "Votre adresse e-mail est validée. Vous pouvez maintenant vous connecter.",
     emailNotVerified:
       "Votre adresse n’est pas encore validée. Un nouvel e-mail de vérification vient de vous être envoyé.",
-    invalidCredentials:
-      "Adresse e-mail ou mot de passe incorrect.",
+    invalidCredentials: "Adresse e-mail ou mot de passe incorrect.",
     signUpFailed:
       "Le compte n’a pas pu être créé. Vérifiez les informations saisies.",
-    genericError:
-      "Une erreur est survenue. Réessayez dans quelques instants.",
+    genericError: "Une erreur est survenue. Réessayez dans quelques instants.",
     forgotPassword: "Mot de passe oublié ?",
     forgotPasswordEyebrow: "RÉCUPÉRATION DU COMPTE",
     forgotPasswordTitle: "Retrouvez l’accès à votre Wearsona.",
@@ -308,7 +308,7 @@ export const fr = {
     heroTitleFirst: "Tout ce que vous êtes",
     heroTitleSecond: "déjà prêt·e à porter.",
     heroIntro:
-      "Chaque pièce est une possibilité. Organisez ce que vous possédez, puis laissez le studio l’associer à l’intention que vous choisissez aujourd’hui.",
+      "Chaque pièce est une possibilité. Organisez ce que vous possédez, puis laissez le studio l’associer à la personne que vous voulez être aujourd’hui.",
     itemCountOne: "pièce répertoriée",
     itemCountMany: "pièces répertoriées",
     categoryCount: "catégories",
@@ -330,8 +330,7 @@ export const fr = {
     intro:
       "Partez d’une pièce et choisissez l’énergie que vous voulez porter. Le studio cherche la combinaison qui l’exprime avec votre propre garde-robe.",
     emptyTitle: "Ajoutez d’abord quelques pièces",
-    emptyDescription:
-      "Le studio a besoin de votre garde-robe pour commencer.",
+    emptyDescription: "Le studio a besoin de votre garde-robe pour commencer.",
     backToWardrobe: "Retourner à ma garde-robe",
     anchorLabel: "1. Pièce de départ",
     itemNameLabel: "Nom de la pièce",
@@ -369,10 +368,8 @@ export const fr = {
       "Les photos n’ont pas pu être ajoutées. Vérifiez leur format et réessayez.",
     itemsUploadPartial:
       "Ajouts réussis : {success}. Photos en échec : {failed}.",
-    itemUpdateFailed:
-      "La modification n’a pas pu être enregistrée.",
-    itemDeleteFailed:
-      "La pièce n’a pas pu être supprimée.",
+    itemUpdateFailed: "La modification n’a pas pu être enregistrée.",
+    itemDeleteFailed: "La pièce n’a pas pu être supprimée.",
     itemAdded: "{count} pièce ajoutée — pensez à vérifier les catégories.",
     itemsAdded: "{count} pièces ajoutées — pensez à vérifier les catégories.",
   },
@@ -393,13 +390,11 @@ export const fr = {
     garmentNotFound: "Cette pièce est introuvable.",
     imageRequired: "Une photo est obligatoire.",
     imageTooLarge: "La photo ne doit pas dépasser 4 Mo.",
-    imageTypeUnsupported:
-      "Seules les images JPEG, PNG et WebP sont acceptées.",
+    imageTypeUnsupported: "Seules les images JPEG, PNG et WebP sont acceptées.",
     imageNotFound: "Cette photo est introuvable.",
     imageInUse:
       "Cette photo est encore utilisée par une pièce de la garde-robe.",
-    imageQuotaExceeded:
-      "La limite de 500 photos par compte est atteinte.",
+    imageQuotaExceeded: "La limite de 500 photos par compte est atteinte.",
     internalError: "Une erreur inattendue est survenue.",
   },
   attributes: {

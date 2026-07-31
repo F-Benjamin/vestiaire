@@ -17,14 +17,11 @@ export const en = {
     signUpTitle: "Create an account — Wearsona",
     signUpDescription: "Create your personal Wearsona space.",
     forgotPasswordTitle: "Forgot password — Wearsona",
-    forgotPasswordDescription:
-      "Request a secure link to reset your password.",
+    forgotPasswordDescription: "Request a secure link to reset your password.",
     resetPasswordTitle: "New password — Wearsona",
-    resetPasswordDescription:
-      "Choose a new password for your Wearsona space.",
+    resetPasswordDescription: "Choose a new password for your Wearsona space.",
     profileTitle: "My profile — Wearsona",
-    profileDescription:
-      "Manage your identity, preferences, security and data.",
+    profileDescription: "Manage your identity, preferences, security and data.",
   },
   common: {
     brand: "Wearsona",
@@ -69,7 +66,8 @@ export const en = {
     trousers: "Trousers",
     threePieces: "3 pieces from your wardrobe",
     conceptEyebrow: "AN IDENTITY IN MOTION",
-    conceptTitle: "Your clothes do not define who you are. They help you choose.",
+    conceptTitle:
+      "Your clothes do not define who you are. They help you choose.",
     pillars: [
       {
         number: "01",
@@ -102,7 +100,7 @@ export const en = {
     ],
     exploreCurrentVersion: "Create my first Wearsona",
     footerDescription:
-      "A personal style lab built with Next.js and visual intelligence.",
+      "A personal style lab built with sprinkle visual intelligence.",
     accessApplication: "Open Wearsona",
   },
   auth: {
@@ -133,8 +131,7 @@ export const en = {
       "Your account has been created. Check your inbox and verify your email address before signing in.",
     registeredWithoutVerification:
       "Your account is ready. You can now sign in.",
-    emailVerified:
-      "Your email address has been verified. You can now sign in.",
+    emailVerified: "Your email address has been verified. You can now sign in.",
     emailNotVerified:
       "Your email address has not been verified yet. We’ve just sent you a new verification email.",
     invalidCredentials: "Incorrect email address or password.",
@@ -162,8 +159,7 @@ export const en = {
     passwordsDoNotMatch: "The two passwords do not match.",
     invalidResetLink:
       "This link is invalid or has expired. Request a new password reset link.",
-    passwordReset:
-      "Your password has been changed. You can now sign in.",
+    passwordReset: "Your password has been changed. You can now sign in.",
     emailFeatureUnavailable:
       "Email delivery is not enabled in this environment yet.",
     privacyNote:
@@ -185,8 +181,7 @@ export const en = {
       subject: "Reset your password — Wearsona",
       heading: "Reset your password",
       greeting: "Hello {name},",
-      introduction:
-        "A new password was requested for your account.",
+      introduction: "A new password was requested for your account.",
       action: "Choose a new password",
       expiration: "This link is valid for one hour.",
       ignore:
@@ -218,8 +213,7 @@ export const en = {
       "The name displayed in your personal space and your sign-in address.",
     name: "Display name",
     email: "Email address",
-    emailManaged:
-      "Your address is used for sign-in and security emails.",
+    emailManaged: "Your address is used for sign-in and security emails.",
     saveIdentity: "Save name",
     savingIdentity: "Saving…",
     identitySaved: "Your name has been updated.",
@@ -246,8 +240,7 @@ export const en = {
     passwordHint: "At least 12 characters",
     showPasswords: "Show passwords",
     hidePasswords: "Hide passwords",
-    revokeOtherSessionsAfterChange:
-      "Automatically sign out other devices",
+    revokeOtherSessionsAfterChange: "Automatically sign out other devices",
     changePassword: "Change password",
     changingPassword: "Changing…",
     passwordChanged:
@@ -279,8 +272,7 @@ export const en = {
     sessionRevoked: "The session has been closed.",
     noOtherSessions: "No other device is signed in.",
     dataTitle: "Your data",
-    dataDescription:
-      "Stay in control of your catalog and your account.",
+    dataDescription: "Stay in control of your catalog and your account.",
     exportTitle: "Export catalog",
     exportDescription:
       "Download a JSON file containing your profile and every garment’s attributes. Photographs are not included.",
@@ -299,8 +291,7 @@ export const en = {
     cancel: "Cancel",
     confirmDelete: "Delete permanently",
     deletingAccount: "Deleting…",
-    deleteError:
-      "The account could not be deleted. Check your password.",
+    deleteError: "The account could not be deleted. Check your password.",
   },
   wardrobe: {
     heroEyebrow: "YOUR RAW MATERIAL",
@@ -318,8 +309,7 @@ export const en = {
     removeItem: "Remove {name}",
     emptyFilteredTitle: "No pieces in “{category}”",
     emptyTitle: "Your wardrobe starts here",
-    emptyFilteredDescription:
-      "Choose another category or add new photographs.",
+    emptyFilteredDescription: "Choose another category or add new photographs.",
     emptyDescription:
       "Import one or more photographs. File names will help us create an initial classification.",
   },
@@ -367,10 +357,8 @@ export const en = {
       "The photographs could not be added. Check their format and try again.",
     itemsUploadPartial:
       "Successful additions: {success}. Failed photographs: {failed}.",
-    itemUpdateFailed:
-      "The change could not be saved.",
-    itemDeleteFailed:
-      "The piece could not be removed.",
+    itemUpdateFailed: "The change could not be saved.",
+    itemDeleteFailed: "The piece could not be removed.",
     itemAdded: "{count} piece added — remember to check its category.",
     itemsAdded: "{count} pieces added — remember to check their categories.",
   },
