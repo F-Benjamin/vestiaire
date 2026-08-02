@@ -115,7 +115,9 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                   />
                   {selected.cutout?.status === "pending" ? (
                     <>
-                      <p className={styles.cutoutStatus}>{copy.cutoutPending}</p>
+                      <p className={`${styles.cutoutStatus} ${styles.cutoutProgress}`}>
+                        {copy.cutoutPending}
+                      </p>
                       {isCutoutDelayed ? (
                         <p className={styles.cutoutWarning} role="alert">
                           {copy.cutoutDelayed}

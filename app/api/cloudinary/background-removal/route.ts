@@ -32,12 +32,30 @@ export const POST = async (request: Request) => {
   const timestamp = request.headers.get("x-cld-timestamp");
 
   if (!verifyCloudinaryNotification(body, signature, timestamp)) {
+    console.warn(
+      "cloudinary.cutout.webhook.rejected",
+      JSON.stringify({
+        event: "cloudinary.cutout.webhook.rejected",
+        hasSignature: Boolean(signature),
+        hasTimestamp: Boolean(timestamp),
+        reason: "invalid_signature",
+      }),
+    );
     return new Response(null, { status: 401 });
   }
 
   try {
     const notification = notificationSchema.parse(JSON.parse(body));
     const garment = await getGarmentByCutoutAssetId(notification.asset_id);
+
+    console.info(
+      "cloudinary.cutout.webhook.received",
+      JSON.stringify({
+        event: "cloudinary.cutout.webhook.received",
+        hasPendingGarment: Boolean(garment?.cutout?.status === "pending"),
+        infoStatus: notification.info_status ?? "missing",
+      }),
+    );
 
     if (!garment || garment.cutout?.status !== "pending") {
       return new Response(null, { status: 200 });
