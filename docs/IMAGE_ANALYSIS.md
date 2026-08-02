@@ -42,7 +42,7 @@ transparence tout en respectant la limite de stockage.
 
 L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
 La version détourée devient automatiquement principale dès qu’elle est prête,
-tandis que l’original privé reste disponible pendant 30 jours. La section
+tandis que l’original privé reste disponible pendant 10 jours. La section
 « Détourages récents » centralise les résultats pour une vérification visuelle.
 Une tâche planifiée Netlify s’exécute chaque jour pour effectuer la purge des
 originaux arrivés à échéance.

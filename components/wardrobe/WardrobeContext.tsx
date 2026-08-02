@@ -61,11 +61,38 @@ export const WardrobeProvider = ({
   const [selectedId, setSelectedId] = useState("");
   const [wantedStyle, setWantedStyle] = useState<WardrobeStyle>("Décontracté");
   const [outfit, setOutfit] = useState<WardrobeItem[]>([]);
-  const [notice, setNotice] = useState("");
+  const [notice, setNoticeState] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null);
   const mutationQueues = useRef(new Map<string, Promise<void>>());
   const observedCutoutStates = useRef(new Map<string, string>());
+  const noticeTimeout = useRef<number | undefined>(undefined);
+
+  const setNotice = useCallback((nextNotice: string) => {
+    if (noticeTimeout.current) {
+      window.clearTimeout(noticeTimeout.current);
+    }
+
+    setNoticeState(nextNotice);
+
+    if (!nextNotice) return;
+
+    noticeTimeout.current = window.setTimeout(() => {
+      setNoticeState((currentNotice) =>
+        currentNotice === nextNotice ? "" : currentNotice,
+      );
+      noticeTimeout.current = undefined;
+    }, 5_000);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (noticeTimeout.current) {
+        window.clearTimeout(noticeTimeout.current);
+      }
+    },
+    [],
+  );
 
   const refreshItems = useCallback(async () => {
     try {
@@ -88,7 +115,7 @@ export const WardrobeProvider = ({
     } catch (error) {
       setNotice(getErrorMessage(error, noticeMessages.wardrobeLoadError));
     }
-  }, [noticeMessages.wardrobeLoadError]);
+  }, [noticeMessages.wardrobeLoadError, setNotice]);
 
   const enqueueMutation = useCallback(
     (id: string, mutation: () => Promise<void>) => {
@@ -255,6 +282,7 @@ export const WardrobeProvider = ({
       noticeMessages.itemsUploadFailed,
       noticeMessages.itemsUploadPartial,
       noticeMessages.uploading,
+      setNotice,
     ],
   );
 
@@ -294,7 +322,7 @@ export const WardrobeProvider = ({
         await refreshItems();
       });
     },
-    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems, setNotice],
   );
 
   const removeItem = useCallback(
@@ -309,7 +337,7 @@ export const WardrobeProvider = ({
         await refreshItems();
       });
     },
-    [enqueueMutation, noticeMessages.itemDeleteFailed, refreshItems],
+    [enqueueMutation, noticeMessages.itemDeleteFailed, refreshItems, setNotice],
   );
 
   const acceptCutout = useCallback(
@@ -324,7 +352,7 @@ export const WardrobeProvider = ({
         await refreshItems();
       });
     },
-    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems, setNotice],
   );
 
   const requestCutout = useCallback(
@@ -339,7 +367,7 @@ export const WardrobeProvider = ({
         await refreshItems();
       });
     },
-    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems, setNotice],
   );
 
   const restoreOriginal = useCallback(
@@ -354,7 +382,7 @@ export const WardrobeProvider = ({
         await refreshItems();
       });
     },
-    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems, setNotice],
   );
 
   const toggleAttribute = useCallback(
@@ -432,6 +460,7 @@ export const WardrobeProvider = ({
       isUploading,
       items,
       notice,
+      setNotice,
       outfit,
       removeItem,
       requestCutout,

@@ -180,6 +180,7 @@ const StudioView = ({ requestedItemId, requestedOriginal = false }: StudioViewPr
                         <div>
                           <button
                             type="button"
+                            className={styles.previewOriginal}
                             onClick={() => setOriginalPreviewOverride(!isShowingOriginal)}
                           >
                             {isShowingOriginal ? copy.showCutout : copy.viewOriginal}

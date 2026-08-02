@@ -181,7 +181,37 @@ const WardrobeView = () => {
                         />
                       </span>
                     )}
-                    <span>{copy.composeAround}</span>
+                    <svg
+                      className={styles.hoverFrame}
+                      viewBox="0 0 100 125"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <defs>
+                        <linearGradient
+                          id={`photo-frame-${item.id}`}
+                          x1="0%"
+                          x2="100%"
+                          y1="0%"
+                          y2="0%"
+                        >
+                          <stop offset="0%" stopColor="var(--lilac)" />
+                          <stop offset="48%" stopColor="var(--coral)" />
+                          <stop offset="100%" stopColor="var(--accent)" />
+                        </linearGradient>
+                      </defs>
+                      <rect
+                        x="1"
+                        y="1"
+                        width="98"
+                        height="123"
+                        rx="4"
+                        fill="none"
+                        pathLength="100"
+                        stroke={`url(#photo-frame-${item.id})`}
+                      />
+                    </svg>
+                    <span className={styles.composeLabel}>{copy.composeAround}</span>
                   </Link>
                   <div className={styles.itemMeta}>
                     <div>

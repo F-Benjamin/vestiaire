@@ -98,7 +98,7 @@ export type WardrobeContextValue = {
   setWantedStyle: Dispatch<SetStateAction<WardrobeStyle>>;
   outfit: WardrobeItem[];
   notice: string;
-  setNotice: Dispatch<SetStateAction<string>>;
+  setNotice: (notice: string) => void;
   isUploading: boolean;
   uploadProgress: UploadProgress | null;
   importPhotos: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;

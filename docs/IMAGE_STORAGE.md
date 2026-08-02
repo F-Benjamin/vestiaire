@@ -66,8 +66,8 @@ est supprimé s’il n’est plus référencé par une autre pièce. La suppress
 directe d’une photo encore utilisée reçoit un statut `409`. Une erreur de
 nettoyage est journalisée sans empêcher la suppression du vêtement.
 
-Lorsqu’une version détourée est validée, elle devient l’image principale et
-l’original reste privé pendant 30 jours. La fonction planifiée Netlify
+Lorsqu’une version détourée est prête, elle devient automatiquement l’image
+principale et l’original reste privé pendant 10 jours. La fonction planifiée Netlify
 `purge-accepted-originals` efface ensuite l’original. Cette durée laisse le
 temps de vérifier la qualité du détourage tout en limitant la conservation.
 La fonction appelle une route interne protégée avec `WEARSONA_CRON_SECRET`.

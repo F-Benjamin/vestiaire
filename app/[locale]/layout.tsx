@@ -85,7 +85,11 @@ const RootLayout = async ({ children, params }: LocaleLayoutProps) => {
   const messages = await getDictionary(locale);
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body>
         <Script
           id="wearsona-theme"

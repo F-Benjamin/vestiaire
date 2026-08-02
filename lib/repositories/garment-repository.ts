@@ -200,7 +200,7 @@ export const completeGarmentCutout = async (
 ) => {
   const now = new Date();
   const deleteAfter = new Date(now);
-  deleteAfter.setUTCDate(deleteAfter.getUTCDate() + 30);
+  deleteAfter.setUTCDate(deleteAfter.getUTCDate() + 10);
 
   return getGarmentsCollection().findOneAndUpdate(
     { _id: new ObjectId(id), "cutout.status": "pending" },
@@ -315,7 +315,7 @@ export const acceptGarmentCutout = async (ownerId: string, id: string) => {
 
   const now = new Date();
   const deleteAfter = new Date(now);
-  deleteAfter.setUTCDate(deleteAfter.getUTCDate() + 30);
+  deleteAfter.setUTCDate(deleteAfter.getUTCDate() + 10);
 
   return getGarmentsCollection().findOneAndUpdate(
     { _id: objectId, ownerId, "cutout.status": "ready" },

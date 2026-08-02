@@ -305,7 +305,7 @@ export const en = {
     recentCutoutsEyebrow: "RECENT CUTOUTS",
     recentCutoutsTitle: "Keep an eye on these",
     recentCutoutsDescription:
-      "Cutouts are applied automatically. The original stays available for 30 days.",
+      "Cutouts are applied automatically. The original stays available for 10 days.",
     collection: "YOUR UNIVERSE",
     title: "The wardrobe",
     filterByCategory: "Filter by category",
@@ -342,7 +342,7 @@ export const en = {
     cutoutConfidence: "Estimated quality: {score}%",
     cutoutConfidenceUnavailable: "Quality unavailable",
     acceptCutout: "Use the cutout version",
-    cutoutAccepted: "Cutout version in use. The private original will be deleted in 30 days.",
+    cutoutAccepted: "Cutout version in use. The private original will be deleted in 10 days.",
     viewOriginal: "View original",
     showCutout: "View cutout",
     restoreOriginal: "Restore original",

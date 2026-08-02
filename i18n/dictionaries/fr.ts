@@ -315,7 +315,7 @@ export const fr = {
     recentCutoutsEyebrow: "DÉTOURAGES RÉCENTS",
     recentCutoutsTitle: "À garder à l’œil",
     recentCutoutsDescription:
-      "Les versions détourées sont appliquées automatiquement. L’original reste disponible pendant 30 jours.",
+      "Les versions détourées sont appliquées automatiquement. L’original reste disponible pendant 10 jours.",
     collection: "VOTRE UNIVERS",
     title: "La garde-robe",
     filterByCategory: "Filtrer par catégorie",
@@ -353,7 +353,7 @@ export const fr = {
     cutoutConfidence: "Qualité estimée : {score} %",
     cutoutConfidenceUnavailable: "Qualité non disponible",
     acceptCutout: "Utiliser la version détourée",
-    cutoutAccepted: "Version détourée utilisée. L’original privé sera supprimé dans 30 jours.",
+    cutoutAccepted: "Version détourée utilisée. L’original privé sera supprimé dans 10 jours.",
     viewOriginal: "Voir l’original",
     showCutout: "Voir le détourage",
     restoreOriginal: "Restaurer l’original",
