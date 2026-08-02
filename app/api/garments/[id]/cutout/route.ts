@@ -11,6 +11,7 @@ import {
   isCloudinaryConfigured,
   requestBackgroundRemoval,
 } from "@/lib/cloudinary/background-removal";
+import { logCloudinaryCutoutFailure } from "@/lib/cloudinary/diagnostics";
 import {
   getGarment,
   failGarmentCutoutRequest,
@@ -86,9 +87,7 @@ export const POST = async (
       return NextResponse.json({ data: toGarmentResponse(queued ?? garment) });
     } catch (error) {
       const failed = await failGarmentCutoutRequest(user.id, id, "request_failed");
-      console.error(
-        `Cloudinary cutout request failed: ${error instanceof Error ? error.name : "UnknownError"}`,
-      );
+      logCloudinaryCutoutFailure({ error, garmentId: id, stage: "request" });
       return NextResponse.json({ data: toGarmentResponse(failed ?? garment) });
     }
   } catch (error) {

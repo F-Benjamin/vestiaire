@@ -4,6 +4,7 @@ import {
   downloadBackgroundRemovedImage,
   verifyCloudinaryNotification,
 } from "@/lib/cloudinary/background-removal";
+import { logCloudinaryCutoutFailure } from "@/lib/cloudinary/diagnostics";
 import {
   completeGarmentCutout,
   failGarmentCutout,
@@ -59,20 +60,16 @@ export const POST = async (request: Request) => {
       await deleteCloudinaryAsset(notification.public_id);
     } catch (error) {
       await failGarmentCutout(garment._id.toHexString(), "download_failed");
-      console.error(
-        `Cloudinary cutout completion failed: ${
-          error instanceof Error ? error.name : "UnknownError"
-        }`,
-      );
+      logCloudinaryCutoutFailure({
+        error,
+        garmentId: garment._id.toHexString(),
+        stage: "download",
+      });
     }
 
     return new Response(null, { status: 200 });
   } catch (error) {
-    console.error(
-      `Cloudinary webhook failed: ${
-        error instanceof Error ? error.name : "UnknownError"
-      }`,
-    );
+    logCloudinaryCutoutFailure({ error, garmentId: "unknown", stage: "webhook" });
     return new Response(null, { status: 400 });
   }
 };
