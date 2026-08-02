@@ -23,10 +23,12 @@ les imports personnels actuels.
 
 Après la création d’une pièce, Wearsona envoie une copie temporaire de
 l’original privé à Cloudinary avec le type de livraison `authenticated`.
-Wearsona demande ensuite la transformation moderne de détourage à la demande
-et vérifie périodiquement si le PNG transparent est prêt. Lorsqu’il l’est,
-Wearsona le rapatrie dans Netlify Blobs puis efface l’actif temporaire
-Cloudinary. Aucun webhook public n’est nécessaire.
+Wearsona demande ensuite une transformation moderne pré-générée (`eager`) de
+détourage et vérifie périodiquement si le PNG transparent est prêt. Cette
+stratégie est nécessaire pour conserver la protection `authenticated` des
+assets temporaires. Lorsqu’il l’est, Wearsona le rapatrie dans Netlify Blobs
+puis efface l’actif temporaire Cloudinary. Aucun webhook public n’est
+nécessaire.
 
 L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
 L’utilisateur peut alors valider la version détourée. Cette validation la rend
