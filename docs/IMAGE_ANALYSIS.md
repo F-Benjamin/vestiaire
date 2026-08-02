@@ -30,6 +30,10 @@ assets temporaires. Lorsqu’il l’est, Wearsona le rapatrie dans Netlify Blobs
 puis efface l’actif temporaire Cloudinary. Aucun webhook public n’est
 nécessaire.
 
+Si l’original dépasse 9 Mo, Wearsona crée uniquement pour Cloudinary une copie
+JPEG optimisée et redimensionnée si besoin. L’original privé stocké dans
+Netlify Blobs reste inchangé.
+
 L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
 L’utilisateur peut alors valider la version détourée. Cette validation la rend
 principale et programme la suppression de l’original privé après 30 jours. Une

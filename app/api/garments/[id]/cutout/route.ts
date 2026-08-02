@@ -15,6 +15,7 @@ import {
   uploadOriginalForBackgroundRemoval,
 } from "@/lib/cloudinary/background-removal";
 import { logCloudinaryCutoutFailure } from "@/lib/cloudinary/diagnostics";
+import { optimizeCutoutSource } from "@/lib/cloudinary/cutout-source";
 import {
   getGarment,
   completeGarmentCutout,
@@ -108,10 +109,14 @@ export const POST = async (
 
     try {
       const original = await getOwnedWardrobeImage(user.id, garment.originalImageKey);
-      const job = await uploadOriginalForBackgroundRemoval({
-        garmentId: id,
+      const cutoutSource = await optimizeCutoutSource({
         contentType: original.metadata.contentType,
         image: original.data as ArrayBuffer,
+      });
+      const job = await uploadOriginalForBackgroundRemoval({
+        garmentId: id,
+        contentType: cutoutSource.contentType,
+        image: cutoutSource.image,
         ownerId: user.id,
       });
       const queued = await queueGarmentCutout(user.id, id, {
