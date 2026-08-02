@@ -11,7 +11,9 @@ const localDevelopmentSecret =
 export const getAuthSecret = () => {
   const configuredSecret = process.env.BETTER_AUTH_SECRET;
 
-  if (!configuredSecret && !process.env.NETLIFY) {
+  // Netlify Dev sets NETLIFY=true even though it is a local environment.
+  // CONTEXT is Netlify's deploy-context discriminator.
+  if (!configuredSecret && (!process.env.NETLIFY || process.env.CONTEXT === "dev")) {
     return localDevelopmentSecret;
   }
 

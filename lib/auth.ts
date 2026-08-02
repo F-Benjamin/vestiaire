@@ -22,6 +22,8 @@ export const auth = betterAuth({
   baseURL: {
     allowedHosts: [
       "localhost:3000",
+      "localhost:3001",
+      "localhost:3002",
       "todaywardrobe.netlify.app",
       "*--todaywardrobe.netlify.app",
     ],

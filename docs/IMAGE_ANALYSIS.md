@@ -35,6 +35,11 @@ Si l’original dépasse 9 Mo, Wearsona crée uniquement pour Cloudinary une cop
 JPEG optimisée et redimensionnée si besoin. L’original privé stocké dans
 Netlify Blobs reste inchangé.
 
+Un PNG transparent peut être bien plus lourd que la photo JPEG reçue. Avant de
+stocker un détourage de plus de 4 Mo, Wearsona le convertit localement en WebP
+transparent, avec redimensionnement progressif si nécessaire. Cela préserve la
+transparence tout en respectant la limite de stockage.
+
 L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
 L’utilisateur peut alors valider la version détourée. Cette validation la rend
 principale et programme la suppression de l’original privé après 30 jours. Une
