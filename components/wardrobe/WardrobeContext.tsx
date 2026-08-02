@@ -127,7 +127,7 @@ export const WardrobeProvider = ({
     for (const item of items) {
       if (!item.cutout) continue;
 
-      const state = `${item.cutout.status}:${item.cutout.failureReason ?? ""}:${item.cutout.failureCode ?? ""}`;
+      const state = `${item.cutout.status}:${item.cutout.failureReason ?? ""}:${item.cutout.failureCode ?? ""}:${item.cutout.failureDetail ?? ""}`;
       if (observedCutoutStates.current.get(item.id) === state) continue;
 
       observedCutoutStates.current.set(item.id, state);
@@ -136,6 +136,7 @@ export const WardrobeProvider = ({
         status: item.cutout.status,
         failureReason: item.cutout.failureReason,
         failureCode: item.cutout.failureCode,
+        failureDetail: item.cutout.failureDetail,
       });
     }
   }, [items]);
