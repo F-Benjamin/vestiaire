@@ -13,6 +13,8 @@ import {
 } from "@/lib/cloudinary/background-removal";
 import {
   getGarment,
+  failGarmentCutoutRequest,
+  markGarmentCutoutUnavailable,
   queueGarmentCutout,
 } from "@/lib/repositories/garment-repository";
 import { getOwnedWardrobeImage } from "@/lib/storage/wardrobe-image-store";
@@ -54,28 +56,41 @@ export const POST = async (
       return NextResponse.json({ data: toGarmentResponse(garment) });
     }
 
-    if (!garment.originalImageKey || !isCloudinaryConfigured()) {
+    if (!garment.originalImageKey) {
       return NextResponse.json({ data: toGarmentResponse(garment) });
     }
 
-    const original = await getOwnedWardrobeImage(user.id, garment.originalImageKey);
-    const notificationUrl = `${getRequestOrigin(request)}/api/cloudinary/background-removal`;
-    const job = await requestBackgroundRemoval({
-      garmentId: id,
-      contentType: original.metadata.contentType,
-      image: original.data as ArrayBuffer,
-      notificationUrl,
-      ownerId: user.id,
-    });
-    const queued = await queueGarmentCutout(user.id, id, {
-      createdAt: new Date(),
-      providerAssetId: job.assetId,
-      providerPublicId: job.publicId,
-    });
+    if (!isCloudinaryConfigured()) {
+      const unavailable = await markGarmentCutoutUnavailable(user.id, id);
+      return NextResponse.json({
+        data: toGarmentResponse(unavailable ?? garment),
+      });
+    }
 
-    return NextResponse.json({
-      data: toGarmentResponse(queued ?? garment),
-    });
+    try {
+      const original = await getOwnedWardrobeImage(user.id, garment.originalImageKey);
+      const notificationUrl = `${getRequestOrigin(request)}/api/cloudinary/background-removal`;
+      const job = await requestBackgroundRemoval({
+        garmentId: id,
+        contentType: original.metadata.contentType,
+        image: original.data as ArrayBuffer,
+        notificationUrl,
+        ownerId: user.id,
+      });
+      const queued = await queueGarmentCutout(user.id, id, {
+        createdAt: new Date(),
+        providerAssetId: job.assetId,
+        providerPublicId: job.publicId,
+      });
+
+      return NextResponse.json({ data: toGarmentResponse(queued ?? garment) });
+    } catch (error) {
+      const failed = await failGarmentCutoutRequest(user.id, id, "request_failed");
+      console.error(
+        `Cloudinary cutout request failed: ${error instanceof Error ? error.name : "UnknownError"}`,
+      );
+      return NextResponse.json({ data: toGarmentResponse(failed ?? garment) });
+    }
   } catch (error) {
     return internalError(request, error);
   }

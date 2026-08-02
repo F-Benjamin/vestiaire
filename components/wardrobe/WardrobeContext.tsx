@@ -33,6 +33,7 @@ import type {
   WardrobeItem,
   WardrobeItemPatch,
   WardrobeStyle,
+  UploadProgress,
 } from "./wardrobe.types";
 
 const WardrobeContext = createContext<WardrobeContextValue | null>(null);
@@ -60,6 +61,7 @@ export const WardrobeProvider = ({
   const [outfit, setOutfit] = useState<WardrobeItem[]>([]);
   const [notice, setNotice] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null);
   const mutationQueues = useRef(new Map<string, Promise<void>>());
 
   const refreshItems = useCallback(async () => {
@@ -129,8 +131,14 @@ export const WardrobeProvider = ({
       setNotice(noticeMessages.uploading);
 
       try {
-        const results = await Promise.allSettled(
-          files.map(async (file): Promise<WardrobeItem> => {
+        const additions: WardrobeItem[] = [];
+        const failures: unknown[] = [];
+
+        for (const [index, file] of files.entries()) {
+          const current = index + 1;
+
+          try {
+            setUploadProgress({ current, total: files.length, step: "analyzing" });
             let analysis;
 
             try {
@@ -139,9 +147,11 @@ export const WardrobeProvider = ({
               // L'import reste disponible si le service d'analyse est indisponible.
             }
 
+            setUploadProgress({ current, total: files.length, step: "uploading" });
             const uploadedImage = await uploadWardrobeImage(file);
 
             try {
+              setUploadProgress({ current, total: files.length, step: "saving" });
               const garment = await createGarmentRequest({
                 name: file.name
                   .replace(/\.[^.]+$/, "")
@@ -155,25 +165,16 @@ export const WardrobeProvider = ({
                 imageKey: uploadedImage.key,
               });
 
-              try {
-                return await requestGarmentCutout(garment.id);
-              } catch {
-                return garment;
-              }
+              setUploadProgress({ current, total: files.length, step: "cutout" });
+              additions.push(await requestGarmentCutout(garment.id));
             } catch (error) {
               await deleteWardrobeImage(uploadedImage.key).catch(() => undefined);
               throw error;
             }
-          }),
-        );
-
-        const additions = results.flatMap((result) =>
-          result.status === "fulfilled" ? [result.value] : [],
-        );
-        const failures = results.filter(
-          (result): result is PromiseRejectedResult =>
-            result.status === "rejected",
-        );
+          } catch (error) {
+            failures.push(error);
+          }
+        }
 
         if (additions.length) {
           setItems((current) => [...additions, ...current]);
@@ -190,7 +191,7 @@ export const WardrobeProvider = ({
         } else if (failures.length) {
           setNotice(
             getErrorMessage(
-              failures[0].reason,
+              failures[0],
               noticeMessages.itemsUploadFailed,
             ),
           );
@@ -206,6 +207,7 @@ export const WardrobeProvider = ({
         }
       } finally {
         setIsUploading(false);
+        setUploadProgress(null);
       }
     },
     [
@@ -287,6 +289,21 @@ export const WardrobeProvider = ({
     [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
   );
 
+  const requestCutout = useCallback(
+    (id: string) => {
+      void enqueueMutation(id, async () => {
+        const garment = await requestGarmentCutout(id);
+        setItems((current) =>
+          current.map((item) => (item.id === id ? garment : item)),
+        );
+      }).catch(async (error) => {
+        setNotice(getErrorMessage(error, noticeMessages.itemUpdateFailed));
+        await refreshItems();
+      });
+    },
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+  );
+
   const toggleAttribute = useCallback(
     <K extends AttributeKey,>(
       id: string,
@@ -344,10 +361,12 @@ export const WardrobeProvider = ({
       notice,
       setNotice,
       isUploading,
+      uploadProgress,
       importPhotos,
       updateItem,
       removeItem,
       acceptCutout,
+      requestCutout,
       toggleAttribute,
       createOutfit,
     }),
@@ -361,10 +380,12 @@ export const WardrobeProvider = ({
       notice,
       outfit,
       removeItem,
+      requestCutout,
       selected,
       selectedId,
       toggleAttribute,
       updateItem,
+      uploadProgress,
       visibleItems,
       wantedStyle,
     ],

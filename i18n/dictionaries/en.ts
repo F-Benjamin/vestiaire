@@ -330,6 +330,10 @@ export const en = {
     potentialStylesLabel: "Potential styles",
     analysisSuggestion: "Suggested by analysis",
     cutoutPending: "Background removal in progress…",
+    cutoutDelayed: "Background removal is taking longer than expected. The original stays in use; check Cloudinary if this persists.",
+    cutoutUnavailable: "Background removal did not start: Cloudinary is not configured for this environment.",
+    cutoutFailed: "Background removal did not complete. The original stays in use and your data is preserved.",
+    requestCutout: "Remove this image background",
     cutoutReady: "Cutout version ready",
     cutoutConfidence: "Estimated quality: {score}%",
     cutoutConfidenceUnavailable: "Quality unavailable",
@@ -355,6 +359,10 @@ export const en = {
     choosePhotos: "Choose my photos",
     addItems: "Add pieces",
     uploading: "Adding…",
+    analyzingStep: "Analyzing photo {current}/{total}…",
+    uploadingStep: "Securely uploading photo {current}/{total}…",
+    savingStep: "Creating item {current}/{total}…",
+    cutoutStep: "Requesting background removal {current}/{total}…",
   },
   notices: {
     wardrobeLoadError:

@@ -212,18 +212,81 @@ export const completeGarmentCutout = async (
     { returnDocument: "after" },
   );
 
-export const failGarmentCutout = async (id: string) =>
+export const failGarmentCutout = async (
+  id: string,
+  failureReason: Extract<CutoutFailureReason, "provider_failed" | "download_failed"> = "provider_failed",
+) =>
   getGarmentsCollection().findOneAndUpdate(
     { _id: new ObjectId(id), "cutout.status": "pending" },
     {
       $set: {
         "cutout.status": "failed",
+        "cutout.failureReason": failureReason,
+        "cutout.failureAt": new Date(),
         "cutout.completedAt": new Date(),
         updatedAt: new Date(),
       },
     },
     { returnDocument: "after" },
   );
+
+type CutoutFailureReason = NonNullable<GarmentCutout["failureReason"]>;
+
+export const markGarmentCutoutUnavailable = async (ownerId: string, id: string) => {
+  const objectId = toObjectId(id);
+  if (!objectId) return null;
+
+  const now = new Date();
+  return getGarmentsCollection().findOneAndUpdate(
+    {
+      _id: objectId,
+      ownerId,
+      "cutout.status": { $nin: ["pending", "ready", "accepted"] },
+    },
+    {
+      $set: {
+        cutout: {
+          status: "unavailable",
+          failureReason: "not_configured",
+          createdAt: now,
+          failureAt: now,
+        },
+        updatedAt: now,
+      },
+    },
+    { returnDocument: "after" },
+  );
+};
+
+export const failGarmentCutoutRequest = async (
+  ownerId: string,
+  id: string,
+  failureReason: Exclude<CutoutFailureReason, "not_configured" | "provider_failed">,
+) => {
+  const objectId = toObjectId(id);
+  if (!objectId) return null;
+
+  const now = new Date();
+  return getGarmentsCollection().findOneAndUpdate(
+    {
+      _id: objectId,
+      ownerId,
+      "cutout.status": { $nin: ["pending", "ready", "accepted"] },
+    },
+    {
+      $set: {
+        cutout: {
+          status: "failed",
+          failureReason,
+          createdAt: now,
+          failureAt: now,
+        },
+        updatedAt: now,
+      },
+    },
+    { returnDocument: "after" },
+  );
+};
 
 export const acceptGarmentCutout = async (ownerId: string, id: string) => {
   const objectId = toObjectId(id);

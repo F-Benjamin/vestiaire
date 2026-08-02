@@ -341,6 +341,10 @@ export const fr = {
     potentialStylesLabel: "Styles potentiels",
     analysisSuggestion: "Proposé par l’analyse",
     cutoutPending: "Détourage en cours…",
+    cutoutDelayed: "Le détourage prend plus de temps que prévu. L’original reste utilisé ; vérifiez Cloudinary si cela persiste.",
+    cutoutUnavailable: "Le détourage n’a pas été lancé : Cloudinary n’est pas configuré pour cet environnement.",
+    cutoutFailed: "Le détourage n’a pas abouti. L’original reste utilisé et vos données sont conservées.",
+    requestCutout: "Détourer cette image",
     cutoutReady: "Version détourée prête",
     cutoutConfidence: "Qualité estimée : {score} %",
     cutoutConfidenceUnavailable: "Qualité non disponible",
@@ -366,6 +370,10 @@ export const fr = {
     choosePhotos: "Choisir mes photos",
     addItems: "Ajouter des pièces",
     uploading: "Ajout en cours…",
+    analyzingStep: "Analyse de la photo {current}/{total}…",
+    uploadingStep: "Envoi sécurisé de la photo {current}/{total}…",
+    savingStep: "Création de la pièce {current}/{total}…",
+    cutoutStep: "Demande de détourage {current}/{total}…",
   },
   notices: {
     wardrobeLoadError:

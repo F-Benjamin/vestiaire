@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import {
   formatMessage,
@@ -33,6 +34,7 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
     setWantedStyle,
     outfit,
     acceptCutout,
+    requestCutout,
     updateItem,
     createOutfit,
   } = useWardrobe();
@@ -43,6 +45,21 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
     items.find((item) => item.id === requestedItemId) ??
     items.find((item) => item.id === selectedId) ??
     items[0];
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useEffect(() => {
+    if (selected?.cutout?.status !== "pending") return undefined;
+
+    const updateCurrentTime = () => setCurrentTime(Date.now());
+    updateCurrentTime();
+    const interval = window.setInterval(updateCurrentTime, 8_000);
+
+    return () => window.clearInterval(interval);
+  }, [selected?.cutout?.status]);
+
+  const isCutoutDelayed =
+    selected?.cutout?.status === "pending" &&
+    currentTime - new Date(selected.cutout.createdAt).getTime() > 90_000;
 
   const selectItem = (itemId: string) => {
     setSelectedId(itemId);
@@ -97,7 +114,24 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                     className={styles.editorImage}
                   />
                   {selected.cutout?.status === "pending" ? (
-                    <p className={styles.cutoutStatus}>{copy.cutoutPending}</p>
+                    <>
+                      <p className={styles.cutoutStatus}>{copy.cutoutPending}</p>
+                      {isCutoutDelayed ? (
+                        <p className={styles.cutoutWarning} role="alert">
+                          {copy.cutoutDelayed}
+                        </p>
+                      ) : null}
+                    </>
+                  ) : null}
+                  {selected.cutout?.status === "unavailable" ? (
+                    <p className={styles.cutoutWarning} role="alert">
+                      {copy.cutoutUnavailable}
+                    </p>
+                  ) : null}
+                  {selected.cutout?.status === "failed" ? (
+                    <p className={styles.cutoutWarning} role="alert">
+                      {copy.cutoutFailed}
+                    </p>
                   ) : null}
                   {selected.cutout?.status === "ready" &&
                   selected.cutoutImageUrl ? (
@@ -129,6 +163,18 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                     <p className={styles.cutoutStatus}>
                       {copy.cutoutAccepted}
                     </p>
+                  ) : null}
+                  {(!selected.cutout ||
+                    selected.cutout.status === "unavailable" ||
+                    selected.cutout.status === "failed") &&
+                  selected.originalImageKey ? (
+                    <button
+                      type="button"
+                      className={styles.requestCutout}
+                      onClick={() => requestCutout(selected.id)}
+                    >
+                      {copy.requestCutout}
+                    </button>
                   ) : null}
                   <input
                     key={`${selected.id}:${selected.name}`}
