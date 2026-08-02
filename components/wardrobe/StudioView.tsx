@@ -112,6 +112,7 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                     src={selected.imageUrl}
                     alt={selected.name}
                     className={styles.editorImage}
+                    isPending={selected.cutout?.status === "pending"}
                   />
                   {selected.cutout?.status === "pending" ? (
                     <>
@@ -307,6 +308,7 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                         src={item.imageUrl}
                         alt={item.name}
                         className={styles.outfitImage}
+                        isPending={item.cutout?.status === "pending"}
                       />
                       <p>{getCategoryLabel(messages, item.category)}</p>
                       <h3>{item.name}</h3>

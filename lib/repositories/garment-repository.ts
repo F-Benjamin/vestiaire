@@ -197,20 +197,28 @@ export const completeGarmentCutout = async (
   id: string,
   imageKey: string,
   confidence: number | undefined,
-) =>
-  getGarmentsCollection().findOneAndUpdate(
+) => {
+  const now = new Date();
+  const deleteAfter = new Date(now);
+  deleteAfter.setUTCDate(deleteAfter.getUTCDate() + 30);
+
+  return getGarmentsCollection().findOneAndUpdate(
     { _id: new ObjectId(id), "cutout.status": "pending" },
     {
       $set: {
-        "cutout.status": "ready",
+        imageKey,
+        "cutout.status": "accepted",
         "cutout.imageKey": imageKey,
         ...(confidence === undefined ? {} : { "cutout.confidence": confidence }),
-        "cutout.completedAt": new Date(),
-        updatedAt: new Date(),
+        "cutout.completedAt": now,
+        "cutout.acceptedAt": now,
+        "cutout.originalDeleteAfter": deleteAfter,
+        updatedAt: now,
       },
     },
     { returnDocument: "after" },
   );
+};
 
 export const failGarmentCutout = async (
   id: string,

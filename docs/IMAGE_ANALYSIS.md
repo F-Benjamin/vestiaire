@@ -41,9 +41,11 @@ transparent, avec redimensionnement progressif si nécessaire. Cela préserve la
 transparence tout en respectant la limite de stockage.
 
 L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
-L’utilisateur peut alors valider la version détourée. Cette validation la rend
-principale et programme la suppression de l’original privé après 30 jours. Une
-tâche planifiée Netlify s’exécute chaque jour pour effectuer cette purge.
+La version détourée devient automatiquement principale dès qu’elle est prête,
+tandis que l’original privé reste disponible pendant 30 jours. La section
+« Détourages récents » centralise les résultats pour une vérification visuelle.
+Une tâche planifiée Netlify s’exécute chaque jour pour effectuer la purge des
+originaux arrivés à échéance.
 
 La requête OpenAI utilise `store: false`. Wearsona ne crée pas d’URL publique
 pour analyser une photographie et ne stocke jamais une image en base64 dans

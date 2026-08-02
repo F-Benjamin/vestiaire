@@ -26,6 +26,19 @@ const WardrobeView = () => {
   const { messages, href } = useI18n();
   const copy = messages.wardrobe;
   const categoryCount = new Set(items.map((item) => item.category)).size;
+  const recentCutouts = items
+    .filter(
+      (item) =>
+        item.cutout?.status === "accepted" &&
+        item.originalImageUrl &&
+        item.cutout.acceptedAt,
+    )
+    .sort(
+      (first, second) =>
+        new Date(second.cutout?.acceptedAt ?? 0).getTime() -
+        new Date(first.cutout?.acceptedAt ?? 0).getTime(),
+    )
+    .slice(0, 4);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleRemoveItem = (itemId: string) => {
@@ -68,6 +81,29 @@ const WardrobeView = () => {
           </div>
         </div>
       </section>
+
+      {recentCutouts.length ? (
+        <section className={styles.recentCutouts} aria-labelledby="recent-cutouts">
+          <div>
+            <p className={styles.eyebrow}>{copy.recentCutoutsEyebrow}</p>
+            <h2 id="recent-cutouts">{copy.recentCutoutsTitle}</h2>
+            <p>{copy.recentCutoutsDescription}</p>
+          </div>
+          <div className={styles.recentCutoutGrid}>
+            {recentCutouts.map((item) => (
+              <Link
+                key={item.id}
+                className={styles.recentCutout}
+                href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}`}
+                onClick={() => setSelectedId(item.id)}
+              >
+                <WardrobeImage src={item.imageUrl} alt={item.name} />
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className={styles.wardrobe}>
         <div className={styles.sectionTitle}>
@@ -120,7 +156,11 @@ const WardrobeView = () => {
                       setSelectedId(item.id);
                     }}
                   >
-                    <WardrobeImage src={item.imageUrl} alt={item.name} />
+                    <WardrobeImage
+                      src={item.imageUrl}
+                      alt={item.name}
+                      isPending={item.cutout?.status === "pending"}
+                    />
                     {isDeleting && (
                       <span className={styles.tearFragments} aria-hidden="true">
                         <i
