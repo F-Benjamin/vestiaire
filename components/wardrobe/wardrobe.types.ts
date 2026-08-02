@@ -40,6 +40,7 @@ export type GarmentCutout = {
     | "request_failed"
     | "provider_failed"
     | "download_failed";
+  failureCode?: string;
   createdAt: string;
   completedAt?: string;
   failureAt?: string;

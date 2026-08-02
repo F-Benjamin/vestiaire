@@ -215,6 +215,7 @@ export const completeGarmentCutout = async (
 export const failGarmentCutout = async (
   id: string,
   failureReason: Extract<CutoutFailureReason, "provider_failed" | "download_failed"> = "provider_failed",
+  failureCode?: string,
 ) =>
   getGarmentsCollection().findOneAndUpdate(
     { _id: new ObjectId(id), "cutout.status": "pending" },
@@ -222,6 +223,7 @@ export const failGarmentCutout = async (
       $set: {
         "cutout.status": "failed",
         "cutout.failureReason": failureReason,
+        ...(failureCode ? { "cutout.failureCode": failureCode } : {}),
         "cutout.failureAt": new Date(),
         "cutout.completedAt": new Date(),
         updatedAt: new Date(),

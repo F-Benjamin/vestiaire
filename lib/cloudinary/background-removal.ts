@@ -14,6 +14,13 @@ type CloudinaryBackgroundRemoval = {
   publicId: string;
 };
 
+export class CloudinaryCutoutDeliveryError extends Error {
+  constructor(public readonly httpCode: number) {
+    super(`Cloudinary cutout download failed with status ${httpCode}.`);
+    this.name = "CloudinaryCutoutDeliveryError";
+  }
+}
+
 let isConfigured = false;
 
 const configureCloudinary = () => {
@@ -79,12 +86,12 @@ export const downloadBackgroundRemovedImage = async (publicId: string) => {
   });
   const response = await fetch(url);
 
-  if (response.status === 404 || response.status === 423) {
+  if ([404, 420, 423].includes(response.status)) {
     return { status: "pending" as const };
   }
 
   if (!response.ok) {
-    throw new Error(`Cloudinary cutout download failed with status ${response.status}.`);
+    throw new CloudinaryCutoutDeliveryError(response.status);
   }
 
   return { status: "ready" as const, image: await response.arrayBuffer() };
