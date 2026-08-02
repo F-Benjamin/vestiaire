@@ -55,6 +55,7 @@ export const garmentCutoutSchema = z
     failureReason: z
       .enum(["not_configured", "request_failed", "provider_failed", "download_failed"])
       .optional(),
+    failureCode: z.string().trim().min(1).max(32).optional(),
     createdAt: z.coerce.date(),
     completedAt: z.coerce.date().optional(),
     failureAt: z.coerce.date().optional(),

@@ -9,6 +9,7 @@ import {
 import { ensureSameOrigin } from "@/lib/api/mutation-request";
 import {
   deleteCloudinaryAsset,
+  CloudinaryCutoutDeliveryError,
   downloadBackgroundRemovedImage,
   isCloudinaryConfigured,
   uploadOriginalForBackgroundRemoval,
@@ -53,7 +54,13 @@ const processPendingCutout = async (
 
     return completed ?? garment;
   } catch (error) {
-    const failed = await failGarmentCutout(garment._id.toHexString(), "download_failed");
+    const failed = await failGarmentCutout(
+      garment._id.toHexString(),
+      "download_failed",
+      error instanceof CloudinaryCutoutDeliveryError
+        ? `HTTP_${error.httpCode}`
+        : undefined,
+    );
     logCloudinaryCutoutFailure({
       error,
       garmentId: garment._id.toHexString(),
