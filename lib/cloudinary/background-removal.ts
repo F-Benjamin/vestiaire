@@ -52,6 +52,8 @@ export const uploadOriginalForBackgroundRemoval = async ({
   const result = await cloudinary.uploader.upload(
     `data:${contentType};base64,${base64}`,
     {
+      eager: [{ effect: "background_removal", format: "png" }],
+      eager_async: true,
       overwrite: true,
       public_id: `wearsona/${ownerHash}/${garmentId}`,
       resource_type: "image",
@@ -77,7 +79,7 @@ export const downloadBackgroundRemovedImage = async (publicId: string) => {
   });
   const response = await fetch(url);
 
-  if (response.status === 423) {
+  if (response.status === 404 || response.status === 423) {
     return { status: "pending" as const };
   }
 
