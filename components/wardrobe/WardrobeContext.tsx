@@ -13,6 +13,7 @@ import {
 } from "react";
 import { useI18n } from "@/components/i18n/LocalizationProvider";
 import { formatMessage } from "@/i18n/format";
+import { optimizeUploadImage } from "@/lib/client/optimize-upload-image";
 import { buildOutfit, guessCategory } from "@/lib/wardrobe";
 import {
   createGarment as createGarmentRequest,
@@ -172,17 +173,19 @@ export const WardrobeProvider = ({
           const current = index + 1;
 
           try {
+            setUploadProgress({ current, total: files.length, step: "optimizing" });
+            const optimizedFile = await optimizeUploadImage(file);
             setUploadProgress({ current, total: files.length, step: "analyzing" });
             let analysis;
 
             try {
-              analysis = await analyzeWardrobeImage(file);
+              analysis = await analyzeWardrobeImage(optimizedFile);
             } catch {
               // L'import reste disponible si le service d'analyse est indisponible.
             }
 
             setUploadProgress({ current, total: files.length, step: "uploading" });
-            const uploadedImage = await uploadWardrobeImage(file);
+            const uploadedImage = await uploadWardrobeImage(optimizedFile);
 
             try {
               setUploadProgress({ current, total: files.length, step: "saving" });

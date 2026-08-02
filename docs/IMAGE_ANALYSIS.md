@@ -12,11 +12,12 @@ les imports personnels actuels.
 
 ## Flux privé
 
-1. Le navigateur envoie la photo à `POST /api/analyze` avec la session active.
-2. La route vérifie l’origine et la session, puis transmet l’image en data URL
+1. Le navigateur convertit chaque photo en JPEG optimisé de 2 Mo maximum.
+2. Le navigateur envoie la photo à `POST /api/analyze` avec la session active.
+3. La route vérifie l’origine et la session, puis transmet l’image en data URL
    à l’API Responses d’OpenAI.
-3. OpenAI renvoie un JSON contraint au catalogue Wearsona.
-4. La photo est ensuite stockée de façon privée dans Netlify Blobs et les
+4. OpenAI renvoie un JSON contraint au catalogue Wearsona.
+5. La photo optimisée est ensuite stockée de façon privée dans Netlify Blobs et les
    métadonnées dans MongoDB.
 
 ## Détourage Cloudinary

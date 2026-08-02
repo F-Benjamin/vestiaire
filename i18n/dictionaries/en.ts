@@ -359,6 +359,7 @@ export const en = {
     choosePhotos: "Choose my photos",
     addItems: "Add pieces",
     uploading: "Adding…",
+    optimizingStep: "Optimizing photo {current}/{total}…",
     analyzingStep: "Analyzing photo {current}/{total}…",
     uploadingStep: "Securely uploading photo {current}/{total}…",
     savingStep: "Creating item {current}/{total}…",
