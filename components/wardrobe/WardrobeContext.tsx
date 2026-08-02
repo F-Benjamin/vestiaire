@@ -23,6 +23,7 @@ import {
   deleteWardrobeImage,
   listGarments,
   requestGarmentCutout,
+  restoreGarmentOriginal,
   updateGarment as updateGarmentRequest,
   uploadWardrobeImage,
   WardrobeApiError,
@@ -341,6 +342,21 @@ export const WardrobeProvider = ({
     [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
   );
 
+  const restoreOriginal = useCallback(
+    (id: string) => {
+      void enqueueMutation(id, async () => {
+        const garment = await restoreGarmentOriginal(id);
+        setItems((current) =>
+          current.map((item) => (item.id === id ? garment : item)),
+        );
+      }).catch(async (error) => {
+        setNotice(getErrorMessage(error, noticeMessages.itemUpdateFailed));
+        await refreshItems();
+      });
+    },
+    [enqueueMutation, noticeMessages.itemUpdateFailed, refreshItems],
+  );
+
   const toggleAttribute = useCallback(
     <K extends AttributeKey,>(
       id: string,
@@ -403,6 +419,7 @@ export const WardrobeProvider = ({
       updateItem,
       removeItem,
       acceptCutout,
+      restoreOriginal,
       requestCutout,
       toggleAttribute,
       createOutfit,
@@ -418,6 +435,7 @@ export const WardrobeProvider = ({
       outfit,
       removeItem,
       requestCutout,
+      restoreOriginal,
       selected,
       selectedId,
       toggleAttribute,

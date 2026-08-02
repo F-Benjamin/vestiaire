@@ -94,7 +94,7 @@ const WardrobeView = () => {
               <Link
                 key={item.id}
                 className={styles.recentCutout}
-                href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}`}
+                href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}&original=1`}
                 onClick={() => setSelectedId(item.id)}
               >
                 <WardrobeImage src={item.imageUrl} alt={item.name} />

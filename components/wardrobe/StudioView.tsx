@@ -23,9 +23,10 @@ import styles from "./StudioView.module.scss";
 
 type StudioViewProps = {
   requestedItemId?: string;
+  requestedOriginal?: boolean;
 };
 
-const StudioView = ({ requestedItemId }: StudioViewProps) => {
+const StudioView = ({ requestedItemId, requestedOriginal = false }: StudioViewProps) => {
   const {
     items,
     selectedId,
@@ -34,6 +35,7 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
     setWantedStyle,
     outfit,
     acceptCutout,
+    restoreOriginal,
     requestCutout,
     updateItem,
     createOutfit,
@@ -46,6 +48,10 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
     items.find((item) => item.id === selectedId) ??
     items[0];
   const [currentTime, setCurrentTime] = useState(0);
+  const [originalPreviewOverride, setOriginalPreviewOverride] = useState<
+    boolean | null
+  >(null);
+  const isShowingOriginal = originalPreviewOverride ?? requestedOriginal;
 
   useEffect(() => {
     if (selected?.cutout?.status !== "pending") return undefined;
@@ -62,6 +68,7 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
     currentTime - new Date(selected.cutout.createdAt).getTime() > 90_000;
 
   const selectItem = (itemId: string) => {
+    setOriginalPreviewOverride(false);
     setSelectedId(itemId);
     router.replace(`${href("/studio")}?piece=${encodeURIComponent(itemId)}`, {
       scroll: false,
@@ -109,7 +116,11 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
               {selected && (
                 <div className={styles.editor}>
                   <WardrobeImage
-                    src={selected.imageUrl}
+                    src={
+                      isShowingOriginal
+                        ? selected.originalImageUrl ?? selected.imageUrl
+                        : selected.imageUrl
+                    }
                     alt={selected.name}
                     className={styles.editorImage}
                     isPending={selected.cutout?.status === "pending"}
@@ -163,9 +174,28 @@ const StudioView = ({ requestedItemId }: StudioViewProps) => {
                     </section>
                   ) : null}
                   {selected.cutout?.status === "accepted" ? (
-                    <p className={styles.cutoutStatus}>
-                      {copy.cutoutAccepted}
-                    </p>
+                    <div className={styles.cutoutAccepted}>
+                      <p className={styles.cutoutStatus}>{copy.cutoutAccepted}</p>
+                      {selected.originalImageUrl ? (
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => setOriginalPreviewOverride(!isShowingOriginal)}
+                          >
+                            {isShowingOriginal ? copy.showCutout : copy.viewOriginal}
+                          </button>
+                          {isShowingOriginal ? (
+                            <button
+                              type="button"
+                              className={styles.restoreOriginal}
+                              onClick={() => restoreOriginal(selected.id)}
+                            >
+                              {copy.restoreOriginal}
+                            </button>
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </div>
                   ) : null}
                   {(!selected.cutout ||
                     selected.cutout.status === "unavailable" ||

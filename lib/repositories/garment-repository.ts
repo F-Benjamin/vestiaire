@@ -332,6 +332,36 @@ export const acceptGarmentCutout = async (ownerId: string, id: string) => {
   );
 };
 
+export const restoreGarmentOriginal = async (ownerId: string, id: string) => {
+  const objectId = toObjectId(id);
+  if (!objectId) return null;
+
+  const garment = await getGarmentsCollection().findOne({
+    _id: objectId,
+    ownerId,
+    "cutout.status": "accepted",
+    originalImageKey: { $type: "string" },
+  });
+
+  if (!garment?.originalImageKey) return null;
+
+  return getGarmentsCollection().findOneAndUpdate(
+    { _id: objectId, ownerId, "cutout.status": "accepted" },
+    {
+      $set: {
+        imageKey: garment.originalImageKey,
+        "cutout.status": "ready",
+        updatedAt: new Date(),
+      },
+      $unset: {
+        "cutout.acceptedAt": "",
+        "cutout.originalDeleteAfter": "",
+      },
+    },
+    { returnDocument: "after" },
+  );
+};
+
 export const listExpiredOriginals = async (now: Date) =>
   getGarmentsCollection()
     .find({

@@ -105,6 +105,7 @@ export type WardrobeContextValue = {
   updateItem: (id: string, patch: WardrobeItemPatch) => void;
   removeItem: (id: string) => void;
   acceptCutout: (id: string) => void;
+  restoreOriginal: (id: string) => void;
   requestCutout: (id: string) => void;
   toggleAttribute: <K extends AttributeKey>(
     id: string,
