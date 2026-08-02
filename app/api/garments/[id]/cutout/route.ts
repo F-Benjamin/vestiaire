@@ -8,17 +8,24 @@ import {
 } from "@/lib/api/json-response";
 import { ensureSameOrigin } from "@/lib/api/mutation-request";
 import {
+  deleteCloudinaryAsset,
+  downloadBackgroundRemovedImage,
   isCloudinaryConfigured,
-  requestBackgroundRemoval,
+  uploadOriginalForBackgroundRemoval,
 } from "@/lib/cloudinary/background-removal";
 import { logCloudinaryCutoutFailure } from "@/lib/cloudinary/diagnostics";
 import {
   getGarment,
+  completeGarmentCutout,
+  failGarmentCutout,
   failGarmentCutoutRequest,
   markGarmentCutoutUnavailable,
   queueGarmentCutout,
 } from "@/lib/repositories/garment-repository";
-import { getOwnedWardrobeImage } from "@/lib/storage/wardrobe-image-store";
+import {
+  getOwnedWardrobeImage,
+  storeDerivedWardrobeImage,
+} from "@/lib/storage/wardrobe-image-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,15 +34,33 @@ type CutoutRouteContext = {
   params: Promise<{ id: string }>;
 };
 
-const getRequestOrigin = (request: Request) => {
-  const forwardedHost = request.headers.get("x-forwarded-host");
-  const forwardedProtocol = request.headers.get("x-forwarded-proto");
+const processPendingCutout = async (
+  garment: NonNullable<Awaited<ReturnType<typeof getGarment>>>,
+) => {
+  if (!garment.cutout?.providerPublicId) return garment;
 
-  if (forwardedHost && forwardedProtocol) {
-    return `${forwardedProtocol}://${forwardedHost}`;
+  try {
+    const result = await downloadBackgroundRemovedImage(garment.cutout.providerPublicId);
+    if (result.status === "pending") return garment;
+
+    const stored = await storeDerivedWardrobeImage(garment.ownerId, result.image);
+    const completed = await completeGarmentCutout(
+      garment._id.toHexString(),
+      stored.key,
+      undefined,
+    );
+    await deleteCloudinaryAsset(garment.cutout.providerPublicId);
+
+    return completed ?? garment;
+  } catch (error) {
+    const failed = await failGarmentCutout(garment._id.toHexString(), "download_failed");
+    logCloudinaryCutoutFailure({
+      error,
+      garmentId: garment._id.toHexString(),
+      stage: "download",
+    });
+    return failed ?? garment;
   }
-
-  return new URL(request.url).origin;
 };
 
 export const POST = async (
@@ -53,7 +78,12 @@ export const POST = async (
     const garment = await getGarment(user.id, id);
     if (!garment) return garmentNotFound(request);
 
-    if (garment.cutout?.status === "pending" || garment.cutout?.status === "ready" || garment.cutout?.status === "accepted") {
+    if (garment.cutout?.status === "pending") {
+      const processed = await processPendingCutout(garment);
+      return NextResponse.json({ data: toGarmentResponse(processed) });
+    }
+
+    if (garment.cutout?.status === "ready" || garment.cutout?.status === "accepted") {
       return NextResponse.json({ data: toGarmentResponse(garment) });
     }
 
@@ -70,12 +100,10 @@ export const POST = async (
 
     try {
       const original = await getOwnedWardrobeImage(user.id, garment.originalImageKey);
-      const notificationUrl = `${getRequestOrigin(request)}/api/cloudinary/background-removal`;
-      const job = await requestBackgroundRemoval({
+      const job = await uploadOriginalForBackgroundRemoval({
         garmentId: id,
         contentType: original.metadata.contentType,
         image: original.data as ArrayBuffer,
-        notificationUrl,
         ownerId: user.id,
       });
       const queued = await queueGarmentCutout(user.id, id, {
