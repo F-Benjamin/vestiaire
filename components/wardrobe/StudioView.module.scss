@@ -165,6 +165,44 @@
   line-height: 1.45;
 }
 
+.cutoutProgress {
+  width: fit-content;
+  background: linear-gradient(
+    105deg,
+    var(--muted) 0%,
+    var(--muted) 38%,
+    var(--lilac) 45%,
+    var(--accent) 50%,
+    var(--lilac) 55%,
+    var(--muted) 62%,
+    var(--muted) 100%
+  );
+  background-size: 240% 100%;
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  animation: cutout-text-wave 2.4s var(--ease-standard) infinite;
+}
+
+@keyframes cutout-text-wave {
+  from {
+    background-position: 100% 50%;
+  }
+
+  to {
+    background-position: -140% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cutoutProgress {
+    animation: none;
+    background: none;
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+  }
+}
+
 .cutoutWarning {
   margin: -3px 0 12px;
   padding: 9px 10px;
