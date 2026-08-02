@@ -22,10 +22,11 @@ les imports personnels actuels.
 ## Détourage Cloudinary
 
 Après la création d’une pièce, Wearsona envoie une copie temporaire de
-l’original privé à Cloudinary avec le type de livraison `authenticated` et une
-demande de détourage. Cloudinary appelle ensuite un webhook signé lorsque le
-PNG transparent est disponible. Wearsona vérifie la signature, rapatrie le PNG
-dans Netlify Blobs, puis efface l’actif temporaire Cloudinary.
+l’original privé à Cloudinary avec le type de livraison `authenticated`.
+Wearsona demande ensuite la transformation moderne de détourage à la demande
+et vérifie périodiquement si le PNG transparent est prêt. Lorsqu’il l’est,
+Wearsona le rapatrie dans Netlify Blobs puis efface l’actif temporaire
+Cloudinary. Aucun webhook public n’est nécessaire.
 
 L’interface affiche l’état du traitement et la qualité estimée par Cloudinary.
 L’utilisateur peut alors valider la version détourée. Cette validation la rend
@@ -58,7 +59,8 @@ WEARSONA_CRON_SECRET=...
 
 `OPENAI_VISION_MODEL` est facultative. Sans `OPENAI_API_KEY`, ou si OpenAI ne
 répond pas, l’import reste fonctionnel grâce à l’analyse de nom de fichier.
-Sans les trois variables Cloudinary, le détourage est simplement ignoré.
+Sans les trois variables Cloudinary, le détourage est signalé comme indisponible
+et l’original reste utilisé.
 
 ## Limites actuelles
 

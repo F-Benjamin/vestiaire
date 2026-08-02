@@ -63,10 +63,26 @@ export const WardrobeProvider = ({
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null);
   const mutationQueues = useRef(new Map<string, Promise<void>>());
+  const observedCutoutStates = useRef(new Map<string, string>());
 
   const refreshItems = useCallback(async () => {
     try {
-      setItems(await listGarments());
+      const currentItems = await listGarments();
+      const pendingItems = currentItems.filter(
+        (item) => item.cutout?.status === "pending",
+      );
+      const results = await Promise.allSettled(
+        pendingItems.map((item) => requestGarmentCutout(item.id)),
+      );
+      const processedItems = new Map(
+        results.flatMap((result) =>
+          result.status === "fulfilled" ? [[result.value.id, result.value]] : [],
+        ),
+      );
+
+      setItems(
+        currentItems.map((item) => processedItems.get(item.id) ?? item),
+      );
     } catch (error) {
       setNotice(getErrorMessage(error, noticeMessages.wardrobeLoadError));
     }
@@ -106,6 +122,22 @@ export const WardrobeProvider = ({
 
   const selected =
     items.find((item) => item.id === selectedId) ?? items[0];
+
+  useEffect(() => {
+    for (const item of items) {
+      if (!item.cutout) continue;
+
+      const state = `${item.cutout.status}:${item.cutout.failureReason ?? ""}`;
+      if (observedCutoutStates.current.get(item.id) === state) continue;
+
+      observedCutoutStates.current.set(item.id, state);
+      console.info("[Wearsona] Background-removal status", {
+        garmentId: item.id,
+        status: item.cutout.status,
+        failureReason: item.cutout.failureReason,
+      });
+    }
+  }, [items]);
 
   useEffect(() => {
     if (!items.some((item) => item.cutout?.status === "pending")) {

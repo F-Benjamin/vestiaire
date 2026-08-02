@@ -35,17 +35,15 @@ const configureCloudinary = () => {
 export const isCloudinaryConfigured = () =>
   cloudinaryEnvironmentSchema.safeParse(process.env).success;
 
-export const requestBackgroundRemoval = async ({
+export const uploadOriginalForBackgroundRemoval = async ({
   garmentId,
   contentType,
   image,
-  notificationUrl,
   ownerId,
 }: {
   garmentId: string;
   contentType: "image/jpeg" | "image/png" | "image/webp";
   image: ArrayBuffer;
-  notificationUrl: string;
   ownerId: string;
 }): Promise<CloudinaryBackgroundRemoval> => {
   configureCloudinary();
@@ -54,8 +52,6 @@ export const requestBackgroundRemoval = async ({
   const result = await cloudinary.uploader.upload(
     `data:${contentType};base64,${base64}`,
     {
-      background_removal: "cloudinary_ai",
-      notification_url: notificationUrl,
       overwrite: true,
       public_id: `wearsona/${ownerHash}/${garmentId}`,
       resource_type: "image",
@@ -69,27 +65,10 @@ export const requestBackgroundRemoval = async ({
   };
 };
 
-export const verifyCloudinaryNotification = (
-  body: string,
-  signature: string | null,
-  timestamp: string | null,
-) => {
-  if (!signature || !timestamp || !Number.isFinite(Number(timestamp))) {
-    return false;
-  }
-
-  configureCloudinary();
-  return cloudinary.utils.verifyNotificationSignature(
-    body,
-    Number(timestamp),
-    signature,
-    15 * 60,
-  );
-};
-
 export const downloadBackgroundRemovedImage = async (publicId: string) => {
   configureCloudinary();
   const url = cloudinary.url(publicId, {
+    effect: "background_removal",
     format: "png",
     resource_type: "image",
     secure: true,
@@ -98,11 +77,15 @@ export const downloadBackgroundRemovedImage = async (publicId: string) => {
   });
   const response = await fetch(url);
 
+  if (response.status === 423) {
+    return { status: "pending" as const };
+  }
+
   if (!response.ok) {
     throw new Error(`Cloudinary cutout download failed with status ${response.status}.`);
   }
 
-  return response.arrayBuffer();
+  return { status: "ready" as const, image: await response.arrayBuffer() };
 };
 
 export const deleteCloudinaryAsset = async (publicId: string) => {
