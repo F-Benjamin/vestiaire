@@ -41,6 +41,7 @@ export const toGarmentResponse = ({
         ...cutout,
         createdAt: cutout.createdAt.toISOString(),
         completedAt: cutout.completedAt?.toISOString(),
+        failureAt: cutout.failureAt?.toISOString(),
         acceptedAt: cutout.acceptedAt?.toISOString(),
         originalDeleteAfter: cutout.originalDeleteAfter?.toISOString(),
         originalDeletedAt: cutout.originalDeletedAt?.toISOString(),

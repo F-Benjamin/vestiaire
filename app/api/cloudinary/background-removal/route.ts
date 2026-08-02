@@ -43,7 +43,7 @@ export const POST = async (request: Request) => {
     }
 
     if (notification.info_status !== "complete") {
-      await failGarmentCutout(garment._id.toHexString());
+      await failGarmentCutout(garment._id.toHexString(), "provider_failed");
       await deleteCloudinaryAsset(notification.public_id);
       return new Response(null, { status: 200 });
     }
@@ -58,7 +58,7 @@ export const POST = async (request: Request) => {
       );
       await deleteCloudinaryAsset(notification.public_id);
     } catch (error) {
-      await failGarmentCutout(garment._id.toHexString());
+      await failGarmentCutout(garment._id.toHexString(), "download_failed");
       console.error(
         `Cloudinary cutout completion failed: ${
           error instanceof Error ? error.name : "UnknownError"

@@ -32,14 +32,26 @@ export type GarmentAnalysis = {
 };
 
 export type GarmentCutout = {
-  status: "pending" | "ready" | "failed" | "accepted";
+  status: "pending" | "ready" | "failed" | "unavailable" | "accepted";
   imageKey?: string;
   confidence?: number;
+  failureReason?:
+    | "not_configured"
+    | "request_failed"
+    | "provider_failed"
+    | "download_failed";
   createdAt: string;
   completedAt?: string;
+  failureAt?: string;
   acceptedAt?: string;
   originalDeleteAfter?: string;
   originalDeletedAt?: string;
+};
+
+export type UploadProgress = {
+  current: number;
+  total: number;
+  step: "analyzing" | "uploading" | "saving" | "cutout";
 };
 
 export type WardrobeItem = {
@@ -86,10 +98,12 @@ export type WardrobeContextValue = {
   notice: string;
   setNotice: Dispatch<SetStateAction<string>>;
   isUploading: boolean;
+  uploadProgress: UploadProgress | null;
   importPhotos: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
   updateItem: (id: string, patch: WardrobeItemPatch) => void;
   removeItem: (id: string) => void;
   acceptCutout: (id: string) => void;
+  requestCutout: (id: string) => void;
   toggleAttribute: <K extends AttributeKey>(
     id: string,
     key: K,

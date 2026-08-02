@@ -1,4 +1,5 @@
 import { useI18n } from "@/components/i18n/LocalizationProvider";
+import { formatMessage } from "@/i18n/format";
 import { useWardrobe } from "./WardrobeContext";
 import styles from "./UploadButton.module.scss";
 
@@ -7,16 +8,26 @@ type UploadButtonProps = {
 };
 
 const UploadButton = ({ large = false }: UploadButtonProps) => {
-  const { importPhotos, isUploading } = useWardrobe();
+  const { importPhotos, isUploading, uploadProgress } = useWardrobe();
   const { messages } = useI18n();
 
+  const progressMessage = uploadProgress
+    ? formatMessage(
+        messages.upload[
+          `${uploadProgress.step}Step` as keyof typeof messages.upload
+        ] as string,
+        uploadProgress,
+      )
+    : null;
+
   return (
-    <label
-      className={`${styles.root} ${large ? styles.large : ""} ${
-        isUploading ? styles.disabled : ""
-      }`}
-      aria-busy={isUploading}
-    >
+    <div className={styles.container}>
+      <label
+        className={`${styles.root} ${large ? styles.large : ""} ${
+          isUploading ? styles.disabled : ""
+        }`}
+        aria-busy={isUploading}
+      >
       <input
         className="visually-hidden"
         type="file"
@@ -34,7 +45,13 @@ const UploadButton = ({ large = false }: UploadButtonProps) => {
             ? messages.upload.choosePhotos
             : messages.upload.addItems}
       </span>
-    </label>
+      </label>
+      {progressMessage ? (
+        <span className={styles.progress} role="status" aria-live="polite">
+          {progressMessage}
+        </span>
+      ) : null}
+    </div>
   );
 };
 

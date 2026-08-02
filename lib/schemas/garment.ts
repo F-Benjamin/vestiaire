@@ -47,13 +47,17 @@ export const wardrobeImageKeySchema = z
 
 export const garmentCutoutSchema = z
   .object({
-    status: z.enum(["pending", "ready", "failed", "accepted"]),
+    status: z.enum(["pending", "ready", "failed", "unavailable", "accepted"]),
     imageKey: wardrobeImageKeySchema.optional(),
     providerAssetId: z.string().trim().min(1).max(120).optional(),
     providerPublicId: z.string().trim().min(1).max(240).optional(),
     confidence: confidenceSchema.optional(),
+    failureReason: z
+      .enum(["not_configured", "request_failed", "provider_failed", "download_failed"])
+      .optional(),
     createdAt: z.coerce.date(),
     completedAt: z.coerce.date().optional(),
+    failureAt: z.coerce.date().optional(),
     acceptedAt: z.coerce.date().optional(),
     originalDeleteAfter: z.coerce.date().optional(),
     originalDeletedAt: z.coerce.date().optional(),
