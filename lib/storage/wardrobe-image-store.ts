@@ -1,10 +1,14 @@
 import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 import { getStore } from "@netlify/blobs";
+import {
+  MAX_DERIVED_WARDROBE_IMAGE_SIZE,
+  optimizeDerivedWardrobeImage,
+} from "@/lib/images/optimize-derived-wardrobe-image";
 import { wardrobeImageKeySchema } from "@/lib/schemas/garment";
 
 const STORE_NAME = "wardrobe-images";
-export const MAX_WARDROBE_IMAGE_SIZE = 4 * 1024 * 1024;
+export const MAX_WARDROBE_IMAGE_SIZE = MAX_DERIVED_WARDROBE_IMAGE_SIZE;
 export const MAX_WARDROBE_IMAGES_PER_USER = 500;
 
 type SupportedImage = {
@@ -138,15 +142,17 @@ export const storeDerivedWardrobeImage = async (
   ownerId: string,
   bytes: ArrayBuffer,
 ) => {
-  if (!bytes.byteLength) {
+  const optimizedBytes = await optimizeDerivedWardrobeImage(bytes);
+
+  if (!optimizedBytes.byteLength) {
     throw new WardrobeImageError("invalid_file");
   }
 
-  if (bytes.byteLength > MAX_WARDROBE_IMAGE_SIZE) {
+  if (optimizedBytes.byteLength > MAX_WARDROBE_IMAGE_SIZE) {
     throw new WardrobeImageError("too_large");
   }
 
-  const image = detectImage(new Uint8Array(bytes));
+  const image = detectImage(new Uint8Array(optimizedBytes));
   if (!image) {
     throw new WardrobeImageError("unsupported_type");
   }
@@ -157,11 +163,11 @@ export const storeDerivedWardrobeImage = async (
     contentType: image.contentType,
     createdAt: new Date().toISOString(),
     ownerId,
-    size: bytes.byteLength,
+    size: optimizedBytes.byteLength,
   };
 
-  await store.set(key, bytes, { metadata, onlyIfNew: true });
-  return { key, contentType: image.contentType, size: bytes.byteLength };
+  await store.set(key, optimizedBytes, { metadata, onlyIfNew: true });
+  return { key, contentType: image.contentType, size: optimizedBytes.byteLength };
 };
 
 export const getOwnedWardrobeImage = async (

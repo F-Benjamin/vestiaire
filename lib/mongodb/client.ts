@@ -4,6 +4,7 @@ import {
   ServerApiVersion,
   type Db,
 } from "mongodb";
+import { isLocalDevelopment } from "@/lib/environment/local-development";
 import { getMongoEnvironment } from "@/lib/environment/mongodb";
 
 type MongoGlobal = typeof globalThis & {
@@ -37,8 +38,11 @@ export const getMongoClient = (): MongoClient => {
 export const getDatabase = (): Db => {
   const client = getMongoClient();
   const { MONGODB_DB_NAME } = getMongoEnvironment();
+  const databaseName = isLocalDevelopment()
+    ? `${MONGODB_DB_NAME}_local`.slice(0, 64)
+    : MONGODB_DB_NAME;
 
-  return client.db(MONGODB_DB_NAME);
+  return client.db(databaseName);
 };
 
 export const pingDatabase = async () => {

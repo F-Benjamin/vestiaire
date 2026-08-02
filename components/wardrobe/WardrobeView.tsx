@@ -26,6 +26,19 @@ const WardrobeView = () => {
   const { messages, href } = useI18n();
   const copy = messages.wardrobe;
   const categoryCount = new Set(items.map((item) => item.category)).size;
+  const recentCutouts = items
+    .filter(
+      (item) =>
+        item.cutout?.status === "accepted" &&
+        item.originalImageUrl &&
+        item.cutout.acceptedAt,
+    )
+    .sort(
+      (first, second) =>
+        new Date(second.cutout?.acceptedAt ?? 0).getTime() -
+        new Date(first.cutout?.acceptedAt ?? 0).getTime(),
+    )
+    .slice(0, 4);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleRemoveItem = (itemId: string) => {
@@ -68,6 +81,29 @@ const WardrobeView = () => {
           </div>
         </div>
       </section>
+
+      {recentCutouts.length ? (
+        <section className={styles.recentCutouts} aria-labelledby="recent-cutouts">
+          <div>
+            <p className={styles.eyebrow}>{copy.recentCutoutsEyebrow}</p>
+            <h2 id="recent-cutouts">{copy.recentCutoutsTitle}</h2>
+            <p>{copy.recentCutoutsDescription}</p>
+          </div>
+          <div className={styles.recentCutoutGrid}>
+            {recentCutouts.map((item) => (
+              <Link
+                key={item.id}
+                className={styles.recentCutout}
+                href={`${href("/studio")}?piece=${encodeURIComponent(item.id)}&original=1`}
+                onClick={() => setSelectedId(item.id)}
+              >
+                <WardrobeImage src={item.imageUrl} alt={item.name} />
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className={styles.wardrobe}>
         <div className={styles.sectionTitle}>
@@ -120,7 +156,11 @@ const WardrobeView = () => {
                       setSelectedId(item.id);
                     }}
                   >
-                    <WardrobeImage src={item.imageUrl} alt={item.name} />
+                    <WardrobeImage
+                      src={item.imageUrl}
+                      alt={item.name}
+                      isPending={item.cutout?.status === "pending"}
+                    />
                     {isDeleting && (
                       <span className={styles.tearFragments} aria-hidden="true">
                         <i
@@ -141,7 +181,37 @@ const WardrobeView = () => {
                         />
                       </span>
                     )}
-                    <span>{copy.composeAround}</span>
+                    <svg
+                      className={styles.hoverFrame}
+                      viewBox="0 0 100 125"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <defs>
+                        <linearGradient
+                          id={`photo-frame-${item.id}`}
+                          x1="0%"
+                          x2="100%"
+                          y1="0%"
+                          y2="0%"
+                        >
+                          <stop offset="0%" stopColor="var(--lilac)" />
+                          <stop offset="48%" stopColor="var(--coral)" />
+                          <stop offset="100%" stopColor="var(--accent)" />
+                        </linearGradient>
+                      </defs>
+                      <rect
+                        x="1"
+                        y="1"
+                        width="98"
+                        height="123"
+                        rx="4"
+                        fill="none"
+                        pathLength="100"
+                        stroke={`url(#photo-frame-${item.id})`}
+                      />
+                    </svg>
+                    <span className={styles.composeLabel}>{copy.composeAround}</span>
                   </Link>
                   <div className={styles.itemMeta}>
                     <div>

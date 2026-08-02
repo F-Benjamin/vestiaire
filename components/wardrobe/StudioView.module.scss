@@ -103,7 +103,7 @@
     display: block;
     border-radius: var(--radius-sm);
     background: var(--surface-soft);
-    object-fit: cover;
+    object-fit: contain;
   }
 
   > input {
@@ -214,6 +214,69 @@
   line-height: 1.45;
 }
 
+.cutoutAccepted {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  button {
+    min-height: 30px;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-out);
+
+    &:hover,
+    &:focus-visible {
+      border-color: color-mix(in srgb, var(--lilac) 55%, var(--line));
+      background: color-mix(in srgb, var(--lilac) 14%, var(--surface));
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.previewOriginal {
+  min-height: 38px !important;
+  padding-inline: 14px !important;
+  border-color: var(--ink) !important;
+  background: var(--ink) !important;
+  color: var(--surface) !important;
+  box-shadow: var(--shadow-sm);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--sage-deep) !important;
+    background: var(--sage-deep) !important;
+    color: var(--surface) !important;
+  }
+}
+
+.restoreOriginal {
+  color: color-mix(in srgb, var(--coral) 78%, var(--ink)) !important;
+
+  &:hover,
+  &:focus-visible {
+    border-color: color-mix(in srgb, var(--coral) 60%, var(--line)) !important;
+    background: color-mix(in srgb, var(--coral) 12%, var(--surface)) !important;
+  }
+}
+
 .requestCutout {
   width: 100%;
   min-height: 38px;
@@ -273,7 +336,12 @@
   height: 180px;
   display: block;
   border-radius: calc(var(--radius-sm) - 2px);
-  background-image: conic-gradient(#d8d6cf 25%, #f5f4ef 0 50%, #d8d6cf 0 75%, #f5f4ef 0);
+  background-image: conic-gradient(
+    #d8d6cf 25%,
+    #f5f4ef 0 50%,
+    #d8d6cf 0 75%,
+    #f5f4ef 0
+  );
   background-size: 18px 18px;
   object-fit: contain;
 }
@@ -351,8 +419,16 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 8px;
   background:
-    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--lilac) 46%, transparent), transparent 34%),
-    linear-gradient(135deg, transparent 76%, color-mix(in srgb, var(--coral) 12%, transparent)),
+    radial-gradient(
+      circle at 100% 0,
+      color-mix(in srgb, var(--lilac) 46%, transparent),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      transparent 76%,
+      color-mix(in srgb, var(--coral) 12%, transparent)
+    ),
     var(--surface-soft);
   animation: card-in 480ms 120ms var(--ease-out) both;
   transition:
@@ -422,7 +498,7 @@
     border-radius: var(--radius-sm);
     aspect-ratio: 4 / 5;
     background: var(--surface);
-    object-fit: cover;
+    object-fit: contain;
     box-shadow: var(--shadow-sm);
   }
 

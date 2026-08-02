@@ -7,7 +7,7 @@ import { requireUser } from "@/lib/auth-session";
 
 type StudioPageProps = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ piece?: string | string[] }>;
+  searchParams: Promise<{ piece?: string | string[]; original?: string | string[] }>;
 };
 
 export const generateMetadata = async ({
@@ -27,15 +27,16 @@ const StudioPage = async ({ params, searchParams }: StudioPageProps) => {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const { piece } = await searchParams;
+  const { original, piece } = await searchParams;
   const requestedItemId = Array.isArray(piece) ? piece[0] : piece;
+  const requestedOriginal = (Array.isArray(original) ? original[0] : original) === "1";
   const studioPath = requestedItemId
     ? `${localizePath(locale, "/studio")}?piece=${encodeURIComponent(requestedItemId)}`
     : localizePath(locale, "/studio");
 
   await requireUser(locale, studioPath);
 
-  return <StudioView requestedItemId={requestedItemId} />;
+  return <StudioView requestedItemId={requestedItemId} requestedOriginal={requestedOriginal} />;
 };
 
 export default StudioPage;

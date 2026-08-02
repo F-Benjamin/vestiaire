@@ -310,7 +310,7 @@ préférences du navigateur.
 - analyse d’image réelle ;
 - détourage asynchrone et stockage privé de la version dérivée ;
 - scores de confiance affichés ;
-- validation utilisateur et purge différée de l’original après 30 jours ;
+- application automatique du détourage et purge différée de l’original après 10 jours ;
 - boucle de correction et évaluation.
 
 ### Phase 4 — Recommandations

@@ -3,6 +3,7 @@ import AppHeader from "@/components/wardrobe/AppHeader";
 import { WardrobeProvider } from "@/components/wardrobe/WardrobeContext";
 import type { WardrobeItem } from "@/components/wardrobe/wardrobe.types";
 import { toGarmentResponse } from "@/lib/api/garment-response";
+import { localAdminUser } from "@/lib/auth-development";
 import { getSession } from "@/lib/auth-session";
 import {
   ensureGarmentIndexes,
@@ -11,6 +12,7 @@ import {
 
 const WardrobeLayout = async ({ children }: { children: ReactNode }) => {
   const session = await getSession();
+  const isDevelopmentSession = session?.user.id === localAdminUser.id;
   let initialItems: WardrobeItem[] = [];
 
   if (session) {
@@ -21,6 +23,7 @@ const WardrobeLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <WardrobeProvider initialItems={initialItems}>
       <AppHeader
+        isDevelopmentSession={isDevelopmentSession}
         user={
           session
             ? {

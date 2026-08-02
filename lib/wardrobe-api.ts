@@ -114,6 +114,13 @@ export const acceptGarmentCutout = async (id: string) =>
     }),
   );
 
+export const restoreGarmentOriginal = async (id: string) =>
+  readData<WardrobeItem>(
+    await fetch(`/api/garments/${encodeURIComponent(id)}/cutout/restore`, {
+      method: "POST",
+    }),
+  );
+
 export const deleteGarment = async (id: string) => {
   const response = await fetch(`/api/garments/${encodeURIComponent(id)}`, {
     method: "DELETE",

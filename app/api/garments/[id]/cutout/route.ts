@@ -27,6 +27,7 @@ import {
 import {
   getOwnedWardrobeImage,
   storeDerivedWardrobeImage,
+  WardrobeImageError,
 } from "@/lib/storage/wardrobe-image-store";
 
 export const runtime = "nodejs";
@@ -60,8 +61,14 @@ const processPendingCutout = async (
       "download_failed",
       error instanceof CloudinaryCutoutDeliveryError
         ? `HTTP_${error.httpCode}`
+        : error instanceof WardrobeImageError
+          ? `STORAGE_${error.reason.toUpperCase()}`
         : undefined,
-      error instanceof CloudinaryCutoutDeliveryError ? error.detail : undefined,
+      error instanceof CloudinaryCutoutDeliveryError
+        ? error.detail
+        : error instanceof WardrobeImageError
+          ? "The optimized cutout could not be stored."
+          : undefined,
     );
     logCloudinaryCutoutFailure({
       error,

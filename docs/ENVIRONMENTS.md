@@ -29,6 +29,12 @@ cp .env.example .env.local
 Conservez `APP_ENV=development`, puis renseignez uniquement les services dont
 vous avez besoin. `.env.local` est ignoré par Git.
 
+En local, Wearsona active automatiquement une identité de développement
+`Local admin`, sans création de compte ni connexion. Elle est disponible
+uniquement avec `npm run dev` ou `netlify dev` et n’est jamais activée dans un
+déploiement Netlify. Les données Mongo locales sont isolées dans une base dont
+le nom reprend `MONGODB_DB_NAME` avec le suffixe `_local`.
+
 ## Configuration dans Netlify
 
 Dans Netlify, ouvrez :
