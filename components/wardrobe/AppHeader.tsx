@@ -14,12 +14,13 @@ import UploadButton from "./UploadButton";
 import styles from "./AppHeader.module.scss";
 
 type AppHeaderProps = {
+  isDevelopmentSession?: boolean;
   user: {
     name: string;
   } | null;
 };
 
-const AppHeader = ({ user }: AppHeaderProps) => {
+const AppHeader = ({ isDevelopmentSession = false, user }: AppHeaderProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const { notice, setNotice } = useWardrobe();
@@ -102,14 +103,16 @@ const AppHeader = ({ user }: AppHeaderProps) => {
               >
                 {user.name.slice(0, 1).toLocaleUpperCase()}
               </Link>
-              <button
-                type="button"
-                onClick={handleSignOut}
-                disabled={isSigningOut}
-                aria-label={messages.common.signOut}
-              >
-                <span>{messages.common.signOut}</span>
-              </button>
+              {!isDevelopmentSession && (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  disabled={isSigningOut}
+                  aria-label={messages.common.signOut}
+                >
+                  <span>{messages.common.signOut}</span>
+                </button>
+              )}
             </div>
           )}
         </div>
