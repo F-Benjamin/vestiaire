@@ -53,7 +53,7 @@ export type GarmentCutout = {
 export type UploadProgress = {
   current: number;
   total: number;
-  step: "analyzing" | "uploading" | "saving" | "cutout";
+  step: "optimizing" | "analyzing" | "uploading" | "saving" | "cutout";
 };
 
 export type WardrobeItem = {

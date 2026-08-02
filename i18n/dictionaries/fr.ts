@@ -370,6 +370,7 @@ export const fr = {
     choosePhotos: "Choisir mes photos",
     addItems: "Ajouter des pièces",
     uploading: "Ajout en cours…",
+    optimizingStep: "Optimisation de la photo {current}/{total}…",
     analyzingStep: "Analyse de la photo {current}/{total}…",
     uploadingStep: "Envoi sécurisé de la photo {current}/{total}…",
     savingStep: "Création de la pièce {current}/{total}…",
