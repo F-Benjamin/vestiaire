@@ -60,6 +60,7 @@ const processPendingCutout = async (
       error instanceof CloudinaryCutoutDeliveryError
         ? `HTTP_${error.httpCode}`
         : undefined,
+      error instanceof CloudinaryCutoutDeliveryError ? error.detail : undefined,
     );
     logCloudinaryCutoutFailure({
       error,

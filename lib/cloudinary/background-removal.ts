@@ -15,11 +15,19 @@ type CloudinaryBackgroundRemoval = {
 };
 
 export class CloudinaryCutoutDeliveryError extends Error {
-  constructor(public readonly httpCode: number) {
-    super(`Cloudinary cutout download failed with status ${httpCode}.`);
+  constructor(
+    public readonly httpCode: number,
+    public readonly detail?: string,
+  ) {
+    super(detail ?? `Cloudinary cutout download failed with status ${httpCode}.`);
     this.name = "CloudinaryCutoutDeliveryError";
   }
 }
+
+const sanitizeCloudinaryDeliveryError = (detail: string | null) =>
+  detail
+    ?.replace(/https?:\/\/\S+/gi, "[redacted-url]")
+    .slice(0, 240);
 
 let isConfigured = false;
 
@@ -91,7 +99,10 @@ export const downloadBackgroundRemovedImage = async (publicId: string) => {
   }
 
   if (!response.ok) {
-    throw new CloudinaryCutoutDeliveryError(response.status);
+    throw new CloudinaryCutoutDeliveryError(
+      response.status,
+      sanitizeCloudinaryDeliveryError(response.headers.get("x-cld-error")),
+    );
   }
 
   return { status: "ready" as const, image: await response.arrayBuffer() };
