@@ -48,15 +48,17 @@ export const GET = async (
       });
     }
 
-    return new Response(image.data, {
-      headers: {
-        "Cache-Control": "private, max-age=86400",
-        "Content-Length": String(image.metadata.size),
-        "Content-Type": image.metadata.contentType,
-        "X-Content-Type-Options": "nosniff",
-        ...(image.etag ? { ETag: image.etag } : {}),
+    return new Response(
+      new Blob([image.data], { type: image.metadata.contentType }),
+      {
+        headers: {
+          "Cache-Control": "private, max-age=86400",
+          "Content-Type": image.metadata.contentType,
+          "X-Content-Type-Options": "nosniff",
+          ...(image.etag ? { ETag: image.etag } : {}),
+        },
       },
-    });
+    );
   } catch (error) {
     if (error instanceof WardrobeImageError) {
       return wardrobeImageErrorResponse(request, error);
